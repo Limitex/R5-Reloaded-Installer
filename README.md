@@ -16,7 +16,7 @@ This is because others may not be able to download it.
 
 #How to use
 
-1. Download and unzip the Zip file from the release.
+1. Download and unzip the Zip file from the [release](https://github.com/Limitex/R5-Reloaded-Installer/releases).
 2. Click R5-Reloaded-Installer.exe to launch it.
 3. You will be asked for firewall permission immediately, so please allow it.
 4. All you have to do is wait. R5 is stored in the R5-Reloaded directory in the directory.
