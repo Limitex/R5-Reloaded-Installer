@@ -14,7 +14,7 @@ Also, the game client is torrent, but this software has stopped seeding.
 So seed using different torrent software as much as possible. 
 This is because others may not be able to download it.
 
-#How to use
+# How to use
 
 1. Download and unzip the Zip file from the [release](https://github.com/Limitex/R5-Reloaded-Installer/releases).
 2. Click R5-Reloaded-Installer.exe to launch it.
