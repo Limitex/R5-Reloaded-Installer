@@ -47,4 +47,16 @@ It runs using .NET Core 3.1, so please install it beforehand.
 
 ![Reference image 4](https://user-images.githubusercontent.com/76650151/134641336-ef1d93bb-fd1c-4366-838d-672c81422d1e.png)
 
+![Reference image 5](https://user-images.githubusercontent.com/76650151/134642206-32b81ba9-3ef6-4113-99a2-bd379c996e62.png)
 
+4. Permission (Will be displayed soon)
+
+![Reference image 6](https://user-images.githubusercontent.com/76650151/134643037-81c3db10-ef54-4236-89a7-2c411c0514c8.png)
+
+5. Wait for about an hour. (This will fluctuate)
+
+![Reference image 7](https://user-images.githubusercontent.com/76650151/134644151-96f48c1a-b419-4d62-af82-09ebe4ff450f.png)
+
+6. Complete
+
+![Reference image 8](https://user-images.githubusercontent.com/76650151/134644790-6defa178-f173-47b0-ac93-b234f46edef5.png)
