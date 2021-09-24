@@ -33,8 +33,11 @@ It runs using .NET Core 3.1, so please install it beforehand.
 
 (5. Launch another torrent software and select the torrent file in the directory to download and seed.)
 
-1. ![Reference image 2](https://user-images.githubusercontent.com/76650151/134640203-9f503fe3-a0a5-404a-bc2a-45ca64358015.png)
-2. ![Reference image 3](https://user-images.githubusercontent.com/76650151/134640981-e3c90857-aa8a-4b9d-8140-a46a78aa60c8.png)
-3. ![Reference image 4](https://user-images.githubusercontent.com/76650151/134641336-ef1d93bb-fd1c-4366-838d-672c81422d1e.png)
+1. Download
+![Reference image 2](https://user-images.githubusercontent.com/76650151/134640203-9f503fe3-a0a5-404a-bc2a-45ca64358015.png)
+2. Unzip
+![Reference image 3](https://user-images.githubusercontent.com/76650151/134640981-e3c90857-aa8a-4b9d-8140-a46a78aa60c8.png)
+3. Run
+![Reference image 4](https://user-images.githubusercontent.com/76650151/134641336-ef1d93bb-fd1c-4366-838d-672c81422d1e.png)
 
 
