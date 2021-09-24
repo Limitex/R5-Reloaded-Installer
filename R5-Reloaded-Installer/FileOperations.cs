@@ -27,13 +27,14 @@ namespace R5_Reloaded_Installer
 
         public static void ReadSettingFile(string path)
         {
+            ConsoleExpansion.LogWriteLine("Loading config file.");
             var DownloadLinks = new Hashtable();
             try
             {
                 using (var reader = new StreamReader(path))
                 {
                     var rawData = Regex.Replace(reader.ReadToEnd(), @"( |　|\t)", "").Split("\r\n");
-
+                    ConsoleExpansion.LogWriteLine("Checking the integrity of the configuration file.");
                     for (int i = 0; i < rawData.Length; i++)
                     {
                         var data = rawData[i].Split('>');
@@ -41,7 +42,7 @@ namespace R5_Reloaded_Installer
                             DownloadLinks[data[0]] = data[1];
                         if (!Regex.IsMatch(data[1], @"^s?https?://[-_.!~*'()a-zA-Z0-9;/?:@&=+$,%#]+$"))
                         {
-                            Console.WriteLine("Contains a string that is not a URI.");
+                            ConsoleExpansion.LogWriteLine("Contains a string that is not a URI.");
                             Environment.Exit(0x8020);
                         }
                     }
@@ -49,7 +50,7 @@ namespace R5_Reloaded_Installer
             }
             catch
             {
-                Console.WriteLine("There is something wrong with the \'" + path + "\' file.");
+                ConsoleExpansion.LogWriteLine("There is something wrong with the \'" + path + "\' file.");
                 Environment.Exit(0x8020);
             }
 
@@ -57,13 +58,14 @@ namespace R5_Reloaded_Installer
             {
                 if (!DownloadLinks.ContainsKey(flag))
                 {
-                    Console.WriteLine("The\'" + path + "\' file is incorrect.");
+                    ConsoleExpansion.LogWriteLine("The\'" + path + "\' file is incorrect.");
                     Environment.Exit(0x8020);
                     break;
                 }
             }
 
             SettingData = DownloadLinks;
+            ConsoleExpansion.LogWriteLine("Success.");
         }
 
         public static void DownloadFiles()
@@ -76,14 +78,15 @@ namespace R5_Reloaded_Installer
             ExtractZipFile(FlagName_scripts);
             DownloadTorrentFile(FlagName_apex);
 
-            Console.WriteLine("Removing " + FlagName_Aria2 + "...");
+            ConsoleExpansion.LogWriteLine("Removing " + FlagName_Aria2 + "file.");
             DirectoryExpansion.AllDelete(FlagName_Aria2);
         }
 
         private static void DownloadZipFile(string flag)
         {
-            Console.WriteLine("Downloading " + flag + "...");
+            ConsoleExpansion.LogWriteLine("Downloading " + flag + " file.");
             new WebClient().DownloadFile(SettingData[flag].ToString(), flag + ZipExtension);
+            ConsoleExpansion.LogWriteLine("Success.");
         }
 
         private static void DownloadTorrentFile(string flag)
@@ -91,26 +94,27 @@ namespace R5_Reloaded_Installer
             var link = SettingData[flag].ToString();
             var FileName = Path.GetFileName(link);
             var DirName = FileName.Replace(Path.GetExtension(FileName), "");
-
-            Console.WriteLine("Since it is a torrent file, it may take some time to download.\n");
-            Console.WriteLine("============= Download the APEX client with aria2 =============");
+            ConsoleExpansion.LogWriteLine("Start downloading torrents with " + FlagName_Aria2 + ".");
+            ConsoleExpansion.LogWriteLine("It takes about 40GB to download, So it will take some time.\n");
+            Console.WriteLine("================= Download the APEX client with aria2 =================");
             Process proc = new Process();
             proc.StartInfo.FileName = FlagName_Aria2 + "\\" + Aria2ExecutableFileName;
             proc.StartInfo.Arguments = link + " --seed-time=0";
             proc.Start();
             proc.WaitForExit();
             proc.Close();
-            Console.WriteLine("===============================================================");
-            Console.WriteLine("This program stops seeding, but If possible, Please use torrent software to seed. No one may be able to download it from torrents.\nThe torrent file exists in the directory.");
-            
+            Console.WriteLine("=======================================================================");
             new WebClient().DownloadFile(link, FileName);
-
             Directory.Move(DirName, flag);
+            ConsoleExpansion.LogWriteLine("Success.");
+            ConsoleExpansion.LogWriteLine("This program stops seeding, but If possible, Please use torrent software to seed.");
+            ConsoleExpansion.LogWriteLine("No one may be able to download it from torrents.");
+            ConsoleExpansion.LogWriteLine("The torrent file exists in the directory.");
         }
 
         private static void ExtractZipFile(string flag)
         {
-            Console.WriteLine("Extracting " + flag + "...");
+            ConsoleExpansion.LogWriteLine("Extracting " + flag + " file.");
 
             if (Directory.Exists(flag)) DirectoryExpansion.AllDelete(flag);
             Directory.CreateDirectory(flag);
@@ -127,6 +131,7 @@ namespace R5_Reloaded_Installer
                 Directory.Delete(flag);
                 Directory.Move(flag + "_Buffer", flag);
             }
+            ConsoleExpansion.LogWriteLine("Success.");
         }
     }
 }
