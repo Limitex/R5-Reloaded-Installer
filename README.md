@@ -20,4 +20,5 @@ This is because others may not be able to download it.
 2. Click R5-Reloaded-Installer.exe to launch it.
 3. You will be asked for firewall permission immediately, so please allow it.
 4. All you have to do is wait. R5 is stored in the R5-Reloaded directory in the directory.
+
 (5. Launch another torrent software and select the torrent file in the directory to download and seed.)
