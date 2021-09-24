@@ -10,6 +10,18 @@ namespace R5_Reloaded_Installer
         private static string FinalDirectoryName = "R5-Reloaded";
         static void Main(string[] args)
         {
+            Console.WriteLine("\n" + 
+                "  -----------------------------------\n" +
+                "  ||                               ||\n" +
+                "  ||     R5-Reloaded Installer     ||\n" +
+                "  ||                               ||\n" +
+                "  -----------------------------------\n\n" +
+                "  This program was created by Limitex.\n" +
+                "  Please refer to the link below for the latest version of this program.\n\n" +
+                "  https://github.com/Limitex/R5-Reloaded-Installer/releases \n" +
+                "\n" +
+                "Welcome!\n");
+
             FileOperations.ReadSettingFile(SettingFileName);
             FileOperations.DownloadFiles();
 
@@ -21,9 +33,12 @@ namespace R5_Reloaded_Installer
 
             ConsoleExpansion.LogWriteLine("The end process is in progress.");
             Directory.Move(FileOperations.FlagName_apex, FinalDirectoryName);
- 
+
             ConsoleExpansion.LogWriteLine("Exists in the " + FinalDirectoryName + " directory.");
             ConsoleExpansion.LogWriteLine("Done.");
+
+            Console.WriteLine("Press the key to exit");
+            Console.ReadKey();
         }
     }
 }
