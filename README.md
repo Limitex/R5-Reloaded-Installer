@@ -21,9 +21,12 @@ This is because others may not be able to download it.
 3. You will be asked for firewall permission immediately, so please allow it.
 4. All you have to do is wait. R5 is stored in the R5-Reloaded directory in the directory.
 
-(5. Launch another torrent software and select the torrent file in the directory to download and seed.)
+### Please if possible
+Launch another torrent software and select the torrent file in the directory to download and seed.
 
-# 2. How to use with images
+# How to use with images
+
+The image is old, but the click location is the same.
 
 1. Download
 
