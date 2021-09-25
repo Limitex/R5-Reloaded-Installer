@@ -10,5 +10,12 @@ namespace R5_Reloaded_Installer
         {
             Console.WriteLine("[" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss") + "] : " + value);
         }
+
+        public static void ExitConsole()
+        {
+            Console.WriteLine("Press the key to exit");
+            Console.ReadKey();
+            Environment.Exit(0x8020);
+        }
     }
 }

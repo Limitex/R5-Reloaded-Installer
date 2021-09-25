@@ -37,8 +37,7 @@ namespace R5_Reloaded_Installer
             ConsoleExpansion.LogWriteLine("Exists in the " + FinalDirectoryName + " directory.");
             ConsoleExpansion.LogWriteLine("Done.");
 
-            Console.WriteLine("Press the key to exit");
-            Console.ReadKey();
+            ConsoleExpansion.ExitConsole();
         }
     }
 }
