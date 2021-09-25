@@ -47,7 +47,7 @@ namespace R5_Reloaded_Installer
                         if (!Regex.IsMatch(data[1], @"^s?https?://[-_.!~*'()a-zA-Z0-9;/?:@&=+$,%#]+$"))
                         {
                             ConsoleExpansion.LogWriteLine("Contains a string that is not a URI.");
-                            Environment.Exit(0x8020);
+                            ConsoleExpansion.ExitConsole();
                         }
                     }
                 }
@@ -55,7 +55,7 @@ namespace R5_Reloaded_Installer
             catch
             {
                 ConsoleExpansion.LogWriteLine("There is something wrong with the \'" + path + "\' file.");
-                Environment.Exit(0x8020);
+                ConsoleExpansion.ExitConsole();
             }
 
             foreach (var flag in SettingFlags)
@@ -63,7 +63,7 @@ namespace R5_Reloaded_Installer
                 if (!DownloadLinks.ContainsKey(flag))
                 {
                     ConsoleExpansion.LogWriteLine("The\'" + path + "\' file is incorrect.");
-                    Environment.Exit(0x8020);
+                    ConsoleExpansion.ExitConsole();
                     break;
                 }
             }
@@ -110,7 +110,7 @@ namespace R5_Reloaded_Installer
             if (TorerntByteSize > DriveByteSize)
             {
                 ConsoleExpansion.LogWriteLine("There is not enough disk space.");
-                Environment.Exit(0x8020);
+                ConsoleExpansion.ExitConsole();
             }
             ConsoleExpansion.LogWriteLine("Success.");
 
