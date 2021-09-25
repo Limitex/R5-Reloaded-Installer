@@ -6,4 +6,8 @@
     <RootNamespace>R5_Reloaded_Installer</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="BencodeNET" Version="4.0.0" />
+  </ItemGroup>
+
 </Project>

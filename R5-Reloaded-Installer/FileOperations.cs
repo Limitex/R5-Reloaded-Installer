@@ -8,6 +8,10 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Reflection;
+using BencodeNET.Objects;
+using BencodeNET.Parsing;
+using BencodeNET.Torrents;
 
 namespace R5_Reloaded_Installer
 {
@@ -94,6 +98,22 @@ namespace R5_Reloaded_Installer
             var link = SettingData[flag].ToString();
             var FileName = Path.GetFileName(link);
             var DirName = FileName.Replace(Path.GetExtension(FileName), "");
+            var driveInfo = new DriveInfo(Path.GetPathRoot(Assembly.GetExecutingAssembly().Location));
+
+            ConsoleExpansion.LogWriteLine("Checking disk capacity and download capacity.");
+            new WebClient().DownloadFile(link, FileName);
+            var TorerntByteSize = new BencodeParser().Parse<Torrent>(FileName).TotalSize;
+            var DriveByteSize = driveInfo.AvailableFreeSpace;
+            ConsoleExpansion.LogWriteLine("Torrent Download Size : " + ByteToGByte(TorerntByteSize) + " GByte");
+            // if(driveInfo.IsReady)
+            ConsoleExpansion.LogWriteLine("Drive Free Space: " + ByteToGByte(DriveByteSize) + " GByte");
+            if (TorerntByteSize > DriveByteSize)
+            {
+                ConsoleExpansion.LogWriteLine("There is not enough disk space.");
+                Environment.Exit(0x8020);
+            }
+            ConsoleExpansion.LogWriteLine("Success.");
+
             ConsoleExpansion.LogWriteLine("Start downloading torrents with " + FlagName_Aria2 + ".");
             ConsoleExpansion.LogWriteLine("It takes about 40GB to download, So it will take some time.\n");
             Console.WriteLine("================= Download the APEX client with aria2 =================");
@@ -104,7 +124,6 @@ namespace R5_Reloaded_Installer
             proc.WaitForExit();
             proc.Close();
             Console.WriteLine("=======================================================================");
-            new WebClient().DownloadFile(link, FileName);
             Directory.Move(DirName, flag);
             ConsoleExpansion.LogWriteLine("Success.");
             ConsoleExpansion.LogWriteLine("This program stops seeding, but If possible, Please use torrent software to seed.");
@@ -133,5 +152,7 @@ namespace R5_Reloaded_Installer
             }
             ConsoleExpansion.LogWriteLine("Success.");
         }
+
+        private static float ByteToGByte(long value) => value / 1024f / 1024f / 1024f;
     }
 }
