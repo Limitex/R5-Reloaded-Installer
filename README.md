@@ -37,8 +37,7 @@ The image is old, but the click location is the same.
 ![Reference image 3](https://user-images.githubusercontent.com/76650151/134640981-e3c90857-aa8a-4b9d-8140-a46a78aa60c8.png)
 
 3. Run
-
-![Reference image 4](https://user-images.githubusercontent.com/76650151/134641336-ef1d93bb-fd1c-4366-838d-672c81422d1e.png)
+![Reference image 4](https://user-images.githubusercontent.com/76650151/134815992-d4ad1fa5-e685-46e6-a406-67a5a37b8d6a.png)
 
 ![Reference image 5](https://user-images.githubusercontent.com/76650151/134642206-32b81ba9-3ef6-4113-99a2-bd379c996e62.png)
 
