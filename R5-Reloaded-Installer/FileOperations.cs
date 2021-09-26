@@ -31,24 +31,19 @@ namespace R5_Reloaded_Installer
 
         public static void ReadSettingFile(string path)
         {
-            ConsoleExpansion.LogWriteLine("Loading config file.");
-            var DownloadLinks = new Hashtable();
+            var rawData = ReadFile(path);
+            ConsoleExpansion.LogWriteLine("Checking the integrity of the configuration file.");
             try
             {
-                using (var reader = new StreamReader(path))
+                for (int i = 0; i < rawData.Length; i++)
                 {
-                    var rawData = Regex.Replace(reader.ReadToEnd(), @"( |　|\t)", "").Split("\r\n");
-                    ConsoleExpansion.LogWriteLine("Checking the integrity of the configuration file.");
-                    for (int i = 0; i < rawData.Length; i++)
+                    var data = rawData[i].Split('>');
+                    if (SettingFlags.Contains(data[0]))
+                        SettingData[data[0]] = data[1];
+                    if (!Regex.IsMatch(data[1], @"^s?https?://[-_.!~*'()a-zA-Z0-9;/?:@&=+$,%#]+$"))
                     {
-                        var data = rawData[i].Split('>');
-                        if (SettingFlags.Contains(data[0]))
-                            DownloadLinks[data[0]] = data[1];
-                        if (!Regex.IsMatch(data[1], @"^s?https?://[-_.!~*'()a-zA-Z0-9;/?:@&=+$,%#]+$"))
-                        {
-                            ConsoleExpansion.LogWriteLine("Contains a string that is not a URI.");
-                            ConsoleExpansion.ExitConsole();
-                        }
+                        ConsoleExpansion.LogWriteLine("Contains a string that is not a URI.");
+                        ConsoleExpansion.ExitConsole();
                     }
                 }
             }
@@ -57,19 +52,36 @@ namespace R5_Reloaded_Installer
                 ConsoleExpansion.LogWriteLine("There is something wrong with the \'" + path + "\' file.");
                 ConsoleExpansion.ExitConsole();
             }
-
             foreach (var flag in SettingFlags)
             {
-                if (!DownloadLinks.ContainsKey(flag))
+                if (!SettingData.ContainsKey(flag))
                 {
                     ConsoleExpansion.LogWriteLine("The\'" + path + "\' file is incorrect.");
                     ConsoleExpansion.ExitConsole();
-                    break;
                 }
             }
-
-            SettingData = DownloadLinks;
             ConsoleExpansion.LogWriteLine("Success.");
+        }
+
+        private static string[] ReadFile(string path)
+        {
+            var fileName = Path.GetFileName(path);
+            ConsoleExpansion.LogWriteLine("Loading " + fileName + " file.");
+            try
+            {
+                using (var reader = new StreamReader(path))
+                {
+                    var data = Regex.Replace(reader.ReadToEnd(), @"( |　|\t)", "").Split("\r\n");
+                    ConsoleExpansion.LogWriteLine("Success.");
+                    return data;
+                }
+            }
+            catch
+            {
+                ConsoleExpansion.LogWriteLine("Failed to read the " + fileName + " file.");
+                ConsoleExpansion.ExitConsole();
+                return null;
+            }
         }
 
         public static void DownloadFiles()
