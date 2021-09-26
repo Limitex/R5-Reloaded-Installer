@@ -38,11 +38,10 @@ namespace R5_Reloaded_Installer
                 for (int i = 0; i < rawData.Length; i++)
                 {
                     var data = rawData[i].Split('>');
-                    if (SettingFlags.Contains(data[0]))
-                        SettingData[data[0]] = data[1];
-                    if (!Regex.IsMatch(data[1], @"^s?https?://[-_.!~*'()a-zA-Z0-9;/?:@&=+$,%#]+$"))
+                    if (SettingFlags.Contains(data[0])) SettingData[data[0]] = data[1];
+                    if (!isURL(data[1]))
                     {
-                        ConsoleExpansion.LogWriteLine("Contains a string that is not a URI.");
+                        ConsoleExpansion.LogWriteLine("Contains a string that is not a URL.");
                         ConsoleExpansion.ExitConsole();
                     }
                 }
@@ -66,7 +65,7 @@ namespace R5_Reloaded_Installer
         private static string[] ReadFile(string path)
         {
             var fileName = Path.GetFileName(path);
-            ConsoleExpansion.LogWriteLine("Loading " + fileName + " file.");
+            ConsoleExpansion.LogWriteLine("Loading \'" + fileName + "\' file.");
             try
             {
                 using (var reader = new StreamReader(path))
@@ -78,7 +77,7 @@ namespace R5_Reloaded_Installer
             }
             catch
             {
-                ConsoleExpansion.LogWriteLine("Failed to read the " + fileName + " file.");
+                ConsoleExpansion.LogWriteLine("Failed to read the \'" + fileName + "\' file.");
                 ConsoleExpansion.ExitConsole();
                 return null;
             }
@@ -170,5 +169,6 @@ namespace R5_Reloaded_Installer
         }
 
         private static float ByteToGByte(long value) => value / 1024f / 1024f / 1024f;
+        private static bool isURL(string data) => Regex.IsMatch(data, @"^s?https?://[-_.!~*'()a-zA-Z0-9;/?:@&=+$,%#]+$");
     }
 }
