@@ -23,6 +23,30 @@ namespace R5_Reloaded_Installer
                 "Welcome!\n");
 
             FileOperations.ReadSettingFile(SettingFileName);
+
+            ConsoleExpansion.LogWriteLine("Do you want to continue the installation ?");
+            ConsoleExpansion.LogWriteLine("Installation takes about an hour.");
+            ConsoleExpansion.LogWrite("Yes No (y/n) : ");
+            var key = Console.ReadKey().Key;
+            Console.WriteLine();
+
+            switch (key)
+            {
+                case ConsoleKey.Y:
+                    Install_R5();
+                    break;
+                case ConsoleKey.N:
+                    ConsoleExpansion.LogWriteLine("The installation has been cancelled.");
+                    break;
+                default:
+                    ConsoleExpansion.LogWriteLine("Enter either Y or N.");
+                    break;
+            }
+            ConsoleExpansion.ExitConsole();
+        }
+
+        private static void Install_R5()
+        {
             FileOperations.DownloadFiles();
 
             ConsoleExpansion.LogWriteLine("Moving " + FileOperations.FlagName_detours + " to APEX Client.");
@@ -36,8 +60,6 @@ namespace R5_Reloaded_Installer
 
             ConsoleExpansion.LogWriteLine("Exists in the " + FinalDirectoryName + " directory.");
             ConsoleExpansion.LogWriteLine("Done.");
-
-            ConsoleExpansion.ExitConsole();
         }
     }
 }
