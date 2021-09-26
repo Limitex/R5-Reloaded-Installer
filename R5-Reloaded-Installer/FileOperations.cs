@@ -95,15 +95,19 @@ namespace R5_Reloaded_Installer
 
         private static void DownloadTorrentFile(string flag)
         {
+            var bufferName = "data";
             var link = SettingData[flag].ToString();
             var FileName = Path.GetFileName(link);
             var DirName = FileName.Replace(Path.GetExtension(FileName), "");
             var driveInfo = new DriveInfo(Path.GetPathRoot(Assembly.GetExecutingAssembly().Location));
 
+            if(File.Exists(FileName)) File.Delete(FileName);
             ConsoleExpansion.LogWriteLine("Checking disk capacity and download capacity.");
-            new WebClient().DownloadFile(link, FileName);
-            var TorerntByteSize = new BencodeParser().Parse<Torrent>(FileName).TotalSize;
+            new WebClient().DownloadFile(link, bufferName);
+            var TorerntByteSize = new BencodeParser().Parse<Torrent>(bufferName).TotalSize;
             var DriveByteSize = driveInfo.AvailableFreeSpace;
+            File.Delete(bufferName);
+
             ConsoleExpansion.LogWriteLine("Torrent Download Size : " + ByteToGByte(TorerntByteSize) + " GByte");
             // if(driveInfo.IsReady)
             ConsoleExpansion.LogWriteLine("Drive Free Space: " + ByteToGByte(DriveByteSize) + " GByte");
