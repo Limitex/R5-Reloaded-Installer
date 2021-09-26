@@ -51,5 +51,4 @@ The image is old, but the click location is the same.
 ![Reference image 7](https://user-images.githubusercontent.com/76650151/134644151-96f48c1a-b419-4d62-af82-09ebe4ff450f.png)
 
 6. Complete
-
-![Reference image 8](https://user-images.githubusercontent.com/76650151/134644790-6defa178-f173-47b0-ac93-b234f46edef5.png)
+![Reference image 8](https://user-images.githubusercontent.com/76650151/134815670-11adc19e-83da-491a-846c-33121569e7c2.png)
