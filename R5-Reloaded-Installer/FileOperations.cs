@@ -138,7 +138,7 @@ namespace R5_Reloaded_Installer
             ConsoleExpansion.LogWriteLine("Success.");
 
             ConsoleExpansion.LogWriteLine("Start downloading torrents with " + FlagName_Aria2 + ".");
-            ConsoleExpansion.LogWriteLine("It takes about 40GB to download, So it will take some time.\n");
+            ConsoleExpansion.LogWriteLine("If the file size is large, it will take time to download.\n");
             Console.WriteLine("================= Download the APEX client with aria2 =================");
             Process proc = new Process();
             proc.StartInfo.FileName = FlagName_Aria2 + "\\" + Aria2ExecutableFileName;
@@ -149,6 +149,7 @@ namespace R5_Reloaded_Installer
             Console.WriteLine("=======================================================================");
             Directory.Move(DirName, flag);
             ConsoleExpansion.LogWriteLine("Success.");
+            Console.WriteLine();
             ConsoleExpansion.LogWriteLine("This program stops seeding, but If possible, Please use torrent software to seed.");
             ConsoleExpansion.LogWriteLine("No one may be able to download it from torrents.");
             ConsoleExpansion.LogWriteLine("The torrent file exists in the directory.");

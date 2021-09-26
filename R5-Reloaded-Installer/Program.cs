@@ -18,8 +18,7 @@ namespace R5_Reloaded_Installer
                 "  -----------------------------------\n\n" +
                 "  This program was created by Limitex.\n" +
                 "  Please refer to the link below for the latest version of this program.\n\n" +
-                "  https://github.com/Limitex/R5-Reloaded-Installer/releases \n" +
-                "\n" +
+                "  https://github.com/Limitex/R5-Reloaded-Installer/releases \n\n" +
                 "Welcome!\n");
 
             FileOperations.ReadSettingFile(SettingFileName);
