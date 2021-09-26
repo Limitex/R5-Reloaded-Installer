@@ -62,6 +62,20 @@ namespace R5_Reloaded_Installer
             ConsoleExpansion.LogWriteLine("Success.");
         }
 
+        public static void DownloadFiles()
+        {
+            DownloadZipFile(FlagName_Aria2);
+            DownloadZipFile(FlagName_detours);
+            DownloadZipFile(FlagName_scripts);
+            ExtractZipFile(FlagName_Aria2);
+            ExtractZipFile(FlagName_detours);
+            ExtractZipFile(FlagName_scripts);
+            DownloadTorrentFile(FlagName_apex);
+
+            ConsoleExpansion.LogWriteLine("Removing " + FlagName_Aria2 + "file.");
+            DirectoryExpansion.AllDelete(FlagName_Aria2);
+        }
+
         private static string[] ReadFile(string path)
         {
             var fileName = Path.GetFileName(path);
@@ -81,20 +95,6 @@ namespace R5_Reloaded_Installer
                 ConsoleExpansion.ExitConsole();
                 return null;
             }
-        }
-
-        public static void DownloadFiles()
-        {
-            DownloadZipFile(FlagName_Aria2);
-            DownloadZipFile(FlagName_detours);
-            DownloadZipFile(FlagName_scripts);
-            ExtractZipFile(FlagName_Aria2);
-            ExtractZipFile(FlagName_detours);
-            ExtractZipFile(FlagName_scripts);
-            DownloadTorrentFile(FlagName_apex);
-
-            ConsoleExpansion.LogWriteLine("Removing " + FlagName_Aria2 + "file.");
-            DirectoryExpansion.AllDelete(FlagName_Aria2);
         }
 
         private static void DownloadZipFile(string flag)
