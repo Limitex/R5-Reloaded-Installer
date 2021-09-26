@@ -43,7 +43,7 @@ namespace R5_Reloaded_Installer
             {
                 fileInfo.CopyTo(destinationDirectory.FullName + @"\" + fileInfo.Name, true);
             }
-            foreach (System.IO.DirectoryInfo directoryInfo in sourceDirectory.GetDirectories())
+            foreach (DirectoryInfo directoryInfo in sourceDirectory.GetDirectories())
             {
                 AllCopy(directoryInfo.FullName, destinationDirectory.FullName + @"\" + directoryInfo.Name);
             }

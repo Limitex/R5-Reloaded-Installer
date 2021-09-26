@@ -41,21 +41,21 @@ namespace R5_Reloaded_Installer
                     if (SettingFlags.Contains(data[0])) SettingData[data[0]] = data[1];
                     if (!isURL(data[1]))
                     {
-                        ConsoleExpansion.LogWriteLine("Contains a string that is not a URL.");
+                        ConsoleExpansion.LogWriteLineError("Contains a string that is not a URL.");
                         ConsoleExpansion.ExitConsole();
                     }
                 }
             }
             catch
             {
-                ConsoleExpansion.LogWriteLine("There is something wrong with the \'" + path + "\' file.");
+                ConsoleExpansion.LogWriteLineError("There is something wrong with the \'" + path + "\' file.");
                 ConsoleExpansion.ExitConsole();
             }
             foreach (var flag in SettingFlags)
             {
                 if (!SettingData.ContainsKey(flag))
                 {
-                    ConsoleExpansion.LogWriteLine("The\'" + path + "\' file is incorrect.");
+                    ConsoleExpansion.LogWriteLineError("The\'" + path + "\' file is incorrect.");
                     ConsoleExpansion.ExitConsole();
                 }
             }
@@ -91,7 +91,7 @@ namespace R5_Reloaded_Installer
             }
             catch
             {
-                ConsoleExpansion.LogWriteLine("Failed to read the \'" + fileName + "\' file.");
+                ConsoleExpansion.LogWriteLineError("Failed to read the \'" + fileName + "\' file.");
                 ConsoleExpansion.ExitConsole();
                 return null;
             }
@@ -100,7 +100,15 @@ namespace R5_Reloaded_Installer
         private static void DownloadZipFile(string flag)
         {
             ConsoleExpansion.LogWriteLine("Downloading " + flag + " file.");
-            new WebClient().DownloadFile(SettingData[flag].ToString(), flag + ZipExtension);
+            try
+            {
+                new WebClient().DownloadFile(SettingData[flag].ToString(), flag + ZipExtension);
+            }
+            catch
+            {
+                ConsoleExpansion.LogWriteError("Failed to download the file.");
+                ConsoleExpansion.ExitConsole();
+            }
             ConsoleExpansion.LogWriteLine("Success.");
         }
 
@@ -124,7 +132,7 @@ namespace R5_Reloaded_Installer
             ConsoleExpansion.LogWriteLine("Drive Free Space: " + ByteToGByte(DriveByteSize) + " GByte");
             if (TorerntByteSize > DriveByteSize)
             {
-                ConsoleExpansion.LogWriteLine("There is not enough disk space.");
+                ConsoleExpansion.LogWriteLineError("There is not enough disk space.");
                 ConsoleExpansion.ExitConsole();
             }
             ConsoleExpansion.LogWriteLine("Success.");
@@ -152,10 +160,16 @@ namespace R5_Reloaded_Installer
 
             if (Directory.Exists(flag)) DirectoryExpansion.AllDelete(flag);
             Directory.CreateDirectory(flag);
-
-            ZipFile.ExtractToDirectory(flag + ZipExtension, flag);
-            File.Delete(flag + ZipExtension);
-
+            try
+            {
+                ZipFile.ExtractToDirectory(flag + ZipExtension, flag);
+                File.Delete(flag + ZipExtension);
+            }
+            catch
+            {
+                ConsoleExpansion.LogWriteLineError("Failed to extract Zip file.");
+                ConsoleExpansion.ExitConsole();
+            }
             var files = Directory.GetFiles(flag);
             var dirs = Directory.GetDirectories(flag);
 

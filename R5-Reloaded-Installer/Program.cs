@@ -39,7 +39,7 @@ namespace R5_Reloaded_Installer
                     ConsoleExpansion.LogWriteLine("The installation has been cancelled.");
                     break;
                 default:
-                    ConsoleExpansion.LogWriteLine("Enter either Y or N.");
+                    ConsoleExpansion.LogWriteLineError("Enter either Y or N.");
                     break;
             }
             ConsoleExpansion.ExitConsole();
