@@ -118,7 +118,7 @@ namespace R5_Reloaded_Installer
             var link = SettingData[flag].ToString();
             var FileName = Path.GetFileName(link);
             var DirName = FileName.Replace(Path.GetExtension(FileName), "");
-            var driveInfo = new DriveInfo(Path.GetPathRoot(Assembly.GetExecutingAssembly().Location));
+            var driveInfo = new DriveInfo(Path.GetPathRoot(Process.GetCurrentProcess().MainModule.FileName));
 
             if(File.Exists(FileName)) File.Delete(FileName);
             ConsoleExpansion.LogWriteLine("Checking disk capacity and download capacity.");
