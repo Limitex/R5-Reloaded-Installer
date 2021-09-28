@@ -129,11 +129,13 @@ namespace R5_Reloaded_Installer
 
             ConsoleExpansion.LogWriteLine("Torrent Download Size : " + ByteToGByte(TorerntByteSize) + " GByte");
             // if(driveInfo.IsReady)
-            ConsoleExpansion.LogWriteLine("Drive Free Space: " + ByteToGByte(DriveByteSize) + " GByte");
+            ConsoleExpansion.LogWriteLine(driveInfo.Name + " Drive Free Space  : " + ByteToGByte(DriveByteSize) + " GByte");
             if (TorerntByteSize > DriveByteSize)
             {
                 ConsoleExpansion.LogWriteLineError("There is not enough disk space.");
-                ConsoleExpansion.ExitConsole();
+                ConsoleExpansion.LogWriteLineError("Do you want to force the installation?");
+                ConsoleExpansion.LogWriteLineError("An error may occur.");
+                if (!ConsoleExpansion.ConsentInput()) ConsoleExpansion.ExitConsole();
             }
             ConsoleExpansion.LogWriteLine("Success.");
 

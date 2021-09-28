@@ -25,22 +25,9 @@ namespace R5_Reloaded_Installer
 
             ConsoleExpansion.LogWriteLine("Do you want to continue the installation ?");
             ConsoleExpansion.LogWriteLine("Installation takes about an hour.");
-            ConsoleExpansion.LogWrite("Yes No (y/n) : ");
-            var key = Console.ReadKey().Key;
-            Console.WriteLine();
 
-            switch (key)
-            {
-                case ConsoleKey.Y:
-                    Install_R5();
-                    break;
-                case ConsoleKey.N:
-                    ConsoleExpansion.LogWriteLine("The installation has been cancelled.");
-                    break;
-                default:
-                    ConsoleExpansion.LogWriteLineError("Enter either Y or N.");
-                    break;
-            }
+            if (ConsoleExpansion.ConsentInput()) Install_R5();
+            
             ConsoleExpansion.ExitConsole();
         }
 
