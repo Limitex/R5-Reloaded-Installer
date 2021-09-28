@@ -60,6 +60,7 @@ namespace R5_Reloaded_Installer
                 }
             }
             LogWriteError("The trial limit has been reached.");
+            ExitConsole();
             return false;
         }
 
