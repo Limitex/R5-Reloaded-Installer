@@ -5,8 +5,6 @@ namespace R5_Reloaded_Installer
 {
     class Program
     {
-        private static string SettingFileName = "info.links";
-
         private static string FinalDirectoryName = "R5-Reloaded";
         static void Main(string[] args)
         {
@@ -21,13 +19,13 @@ namespace R5_Reloaded_Installer
                 "  https://github.com/Limitex/R5-Reloaded-Installer/releases \n\n" +
                 "Welcome!\n");
 
-            FileOperations.ReadSettingFile(SettingFileName);
+            FileOperations.SetDownloadLink();
 
             ConsoleExpansion.LogWriteLine("Do you want to continue the installation ?");
             ConsoleExpansion.LogWriteLine("Installation takes about an hour.");
 
             if (ConsoleExpansion.ConsentInput()) Install_R5();
-            
+
             ConsoleExpansion.ExitConsole();
         }
 

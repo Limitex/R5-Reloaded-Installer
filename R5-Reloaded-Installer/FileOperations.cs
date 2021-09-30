@@ -25,41 +25,14 @@ namespace R5_Reloaded_Installer
         public static string FlagName_apex { get; private set; } = "apex_client";
         public static string R5_ScriptsPath { get; private set; } = FlagName_apex + "\\platform\\scripts";
 
-        private static string[] SettingFlags = { FlagName_Aria2, FlagName_detours, FlagName_scripts, FlagName_apex };
-
         private static Hashtable SettingData = new Hashtable();
 
-        public static void ReadSettingFile(string path)
+        public static void SetDownloadLink()
         {
-            var rawData = ReadFile(path);
-            ConsoleExpansion.LogWriteLine("Checking the integrity of the configuration file.");
-            try
-            {
-                for (int i = 0; i < rawData.Length; i++)
-                {
-                    var data = rawData[i].Split('>');
-                    if (SettingFlags.Contains(data[0])) SettingData[data[0]] = data[1];
-                    if (!isURL(data[1]))
-                    {
-                        ConsoleExpansion.LogWriteLineError("Contains a string that is not a URL.");
-                        ConsoleExpansion.ExitConsole();
-                    }
-                }
-            }
-            catch
-            {
-                ConsoleExpansion.LogWriteLineError("There is something wrong with the \'" + path + "\' file.");
-                ConsoleExpansion.ExitConsole();
-            }
-            foreach (var flag in SettingFlags)
-            {
-                if (!SettingData.ContainsKey(flag))
-                {
-                    ConsoleExpansion.LogWriteLineError("The\'" + path + "\' file is incorrect.");
-                    ConsoleExpansion.ExitConsole();
-                }
-            }
-            ConsoleExpansion.LogWriteLine("Success.");
+            SettingData[FlagName_Aria2] = WebGetLink.GetAria2Link();
+            SettingData[FlagName_detours] = WebGetLink.GetDetoursR5Link();
+            SettingData[FlagName_scripts] = WebGetLink.GetScriptsR5Link();
+            SettingData[FlagName_apex] = WebGetLink.GetApexClientLink();
         }
 
         public static void DownloadFiles()
@@ -186,6 +159,5 @@ namespace R5_Reloaded_Installer
         }
 
         private static float ByteToGByte(long value) => value / 1024f / 1024f / 1024f;
-        private static bool isURL(string data) => Regex.IsMatch(data, @"^s?https?://[-_.!~*'()a-zA-Z0-9;/?:@&=+$,%#]+$");
     }
 }
