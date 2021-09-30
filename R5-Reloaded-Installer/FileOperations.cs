@@ -19,55 +19,34 @@ namespace R5_Reloaded_Installer
     {
         private static string ZipExtension = ".zip";
         private static string Aria2ExecutableFileName = "aria2c.exe";
-        public static string FlagName_Aria2 { get; private set; } = "aria2";
-        public static string FlagName_detours { get; private set; } = "detours_r5";
-        public static string FlagName_scripts { get; private set; } = "scripts_r5";
-        public static string FlagName_apex { get; private set; } = "apex_client";
-        public static string R5_ScriptsPath { get; private set; } = FlagName_apex + "\\platform\\scripts";
+        public static string FileName_Aria2 { get; private set; } = "aria2";
+        public static string FileName_detours { get; private set; } = "detours_r5";
+        public static string FileName_scripts { get; private set; } = "scripts_r5";
+        public static string FileName_apex { get; private set; } = "apex_client";
+        public static string R5_ScriptsPath { get; private set; } = FileName_apex + @"\platform\scripts";
 
         private static Hashtable SettingData = new Hashtable();
 
         public static void SetDownloadLink()
         {
-            SettingData[FlagName_Aria2] = WebGetLink.GetAria2Link();
-            SettingData[FlagName_detours] = WebGetLink.GetDetoursR5Link();
-            SettingData[FlagName_scripts] = WebGetLink.GetScriptsR5Link();
-            SettingData[FlagName_apex] = WebGetLink.GetApexClientLink();
+            SettingData[FileName_Aria2] = WebGetLink.GetAria2Link();
+            SettingData[FileName_detours] = WebGetLink.GetDetoursR5Link();
+            SettingData[FileName_scripts] = WebGetLink.GetScriptsR5Link();
+            SettingData[FileName_apex] = WebGetLink.GetApexClientLink();
         }
 
         public static void DownloadFiles()
         {
-            DownloadZipFile(FlagName_Aria2);
-            DownloadZipFile(FlagName_detours);
-            DownloadZipFile(FlagName_scripts);
-            ExtractZipFile(FlagName_Aria2);
-            ExtractZipFile(FlagName_detours);
-            ExtractZipFile(FlagName_scripts);
-            DownloadTorrentFile(FlagName_apex);
+            DownloadZipFile(FileName_Aria2);
+            DownloadZipFile(FileName_detours);
+            DownloadZipFile(FileName_scripts);
+            ExtractZipFile(FileName_Aria2);
+            ExtractZipFile(FileName_detours);
+            ExtractZipFile(FileName_scripts);
+            DownloadTorrentFile(FileName_apex);
 
-            ConsoleExpansion.LogWriteLine("Removing " + FlagName_Aria2 + "file.");
-            DirectoryExpansion.AllDelete(FlagName_Aria2);
-        }
-
-        private static string[] ReadFile(string path)
-        {
-            var fileName = Path.GetFileName(path);
-            ConsoleExpansion.LogWriteLine("Loading \'" + fileName + "\' file.");
-            try
-            {
-                using (var reader = new StreamReader(path))
-                {
-                    var data = Regex.Replace(reader.ReadToEnd(), @"( |　|\t)", "").Split("\r\n");
-                    ConsoleExpansion.LogWriteLine("Success.");
-                    return data;
-                }
-            }
-            catch
-            {
-                ConsoleExpansion.LogWriteLineError("Failed to read the \'" + fileName + "\' file.");
-                ConsoleExpansion.ExitConsole();
-                return null;
-            }
+            ConsoleExpansion.LogWriteLine("Removing " + FileName_Aria2 + "file.");
+            DirectoryExpansion.AllDelete(FileName_Aria2);
         }
 
         private static void DownloadZipFile(string flag)
@@ -112,11 +91,11 @@ namespace R5_Reloaded_Installer
             }
             ConsoleExpansion.LogWriteLine("Success.");
 
-            ConsoleExpansion.LogWriteLine("Start downloading torrents with " + FlagName_Aria2 + ".");
+            ConsoleExpansion.LogWriteLine("Start downloading torrents with " + FileName_Aria2 + ".");
             ConsoleExpansion.LogWriteLine("If the file size is large, it will take time to download.\n");
             Console.WriteLine("================= Download the APEX client with aria2 =================");
             Process proc = new Process();
-            proc.StartInfo.FileName = FlagName_Aria2 + "\\" + Aria2ExecutableFileName;
+            proc.StartInfo.FileName = FileName_Aria2 + "\\" + Aria2ExecutableFileName;
             proc.StartInfo.Arguments = link + " --seed-time=0";
             proc.Start();
             proc.WaitForExit();
