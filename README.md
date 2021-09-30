@@ -4,9 +4,8 @@ This is the initial installer for R5 Reloaded.
 
 It is an installer that even installs detours_r5 and scripts_r5 on the game client.
 
-The URL required for installation can be found in info.links.
-If the wrong URL or format is incorrect, an error may occur.
 Since the game client is in Torrent format, I use aria2 to download it.
+The torrent file is generated when you run it.
 
 [Click here for aria2 release](https://github.com/aria2/aria2/releases/)
 
