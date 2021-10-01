@@ -9,6 +9,7 @@ namespace R5_Reloaded_Installer
 
         public static void WriteWidth(char c, string text = null)
         {
+            Console.WriteLine();
             if (text != null)
             {
                 var size = (Console.WindowWidth / 2f) - (text.Length / 2f) - 2f;

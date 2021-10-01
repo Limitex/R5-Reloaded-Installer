@@ -35,8 +35,8 @@ namespace R5_Reloaded_Installer
                 DirectoryExpansion.MoveOverwrite(detoursR5FileName, FinalDirectoryName);
                 ConsoleExpansion.LogWrite("The scripts_r5 file is being moved.");
                 Directory.Move(scriptsR5FileName, ScriptsDirectoryPath);
-                ConsoleExpansion.LogWrite("Done.");
                 ConsoleExpansion.LogWrite("The entire process has been completed!");
+                ConsoleExpansion.LogWrite("Done.");
             }
             ConsoleExpansion.Exit();
         }
