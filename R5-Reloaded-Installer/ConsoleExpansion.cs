@@ -1,0 +1,97 @@
+﻿using System;
+
+namespace R5_Reloaded_Installer
+{
+    public static class ConsoleExpansion
+    {
+        private readonly static int InformationMaxWidth = 5;
+        private readonly static int ConsentMaxAttempts = 5;
+
+        public static void WriteWidth(char c, string text = null)
+        {
+            if (text != null)
+            {
+                var size = (Console.WindowWidth / 2f) - (text.Length / 2f) - 2f;
+                text = ' ' + text + ' ';
+                for (int i = 0; i <= size; i++) Console.Write(c);
+                Console.Write(text);
+                for (int i = 0; i <= size; i++) Console.Write(c);
+            }
+            else
+            {
+                for (int i = 0; i < Console.WindowWidth; i++) Console.Write(c);
+            }
+            Console.WriteLine();
+        }
+
+        public static void LogWrite(string value)
+        {
+            LogInfo("Info", ConsoleColor.DarkGreen, value);
+        }
+        public static void LogError(string value)
+        {
+            LogInfo("Error", ConsoleColor.DarkRed, value);
+        }
+        public static void LogDebug(string value)
+        {
+            LogInfo("Debug", ConsoleColor.DarkYellow, value);
+        }
+        public static void LogInput(string value, bool NewLine = false)
+        {
+            LogInfo("Input", ConsoleColor.DarkCyan, value, NewLine);
+        }
+        public static bool ConsentInput(string CanselMassage = null)
+        {
+            var ConsentAttempts = 0;
+            while (ConsentAttempts < ConsentMaxAttempts)
+            {
+                LogInput("Yes No (y/n) : ");
+                var key = Console.ReadKey().Key;
+                Console.WriteLine();
+                switch (key)
+                {
+                    case ConsoleKey.Y:
+                        return true;
+                    case ConsoleKey.N:
+                        if (CanselMassage == null)
+                            LogWrite("The operation was canceled by the user.");
+                        else
+                            LogWrite(CanselMassage);
+                        return false;
+                    default:
+                        ConsentAttempts++;
+                        if (ConsentAttempts < ConsentMaxAttempts) 
+                            LogError("Enter either Y or N. Type it again.");
+                        break;
+                }
+            }
+            LogError("Max attempts has been reached.");
+            Exit();
+            return false;
+        }
+        public static void Exit()
+        {
+            Console.WriteLine("Press the key to exit.");
+            Console.ReadKey();
+            Environment.Exit(0x8020);
+        }
+
+        private static void LogInfo(string info, ConsoleColor color, string str, bool NewLine = true)
+        {
+            ColorWrite("[ ", ConsoleColor.DarkMagenta);
+            ColorWrite(info.PadRight(InformationMaxWidth), color);
+            ColorWrite(" ][", ConsoleColor.DarkMagenta);
+            ColorWrite(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"), ConsoleColor.DarkGray);
+            ColorWrite("] ", ConsoleColor.DarkMagenta);
+            ColorWrite(": ", ConsoleColor.DarkGray);
+            Console.Write(str);
+            if (NewLine) Console.WriteLine();
+        }
+        private static void ColorWrite(string value, ConsoleColor color)
+        {
+            Console.ForegroundColor = color;
+            Console.Write(value);
+            Console.ResetColor();
+        }
+    }
+}
