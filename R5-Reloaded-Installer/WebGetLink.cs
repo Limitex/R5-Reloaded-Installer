@@ -25,16 +25,10 @@ namespace R5_Reloaded_Installer
 
         public static string GetAria2Link()
         {
-            ConsoleExpansion.LogWrite("Getting a download link for aria2.");
             var links = GetGitHubLatestRelease("aria2", "aria2");
             foreach (var link in links)
-            {
-                if (Path.GetFileName(link).Contains("win-64bit"))
-                {
-                    ConsoleExpansion.LogWrite("Success.");
+                if (Path.GetFileName(link).Contains("win-64bit")) 
                     return link;
-                }
-            }
             ConsoleExpansion.LogError("The aria2 link was not found.");
             ConsoleExpansion.LogError("Please contact the developer.");
             ConsoleExpansion.Exit();

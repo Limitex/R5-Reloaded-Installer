@@ -20,18 +20,24 @@ namespace R5_Reloaded_Installer
                 "  https://github.com/Limitex/R5-Reloaded-Installer/releases \n\n" +
                 "Welcome!\n");
 
-            string detoursR5FileName, scriptsR5FileName;
-            using (new Download())
+            ConsoleExpansion.LogWrite("Do you want to continue the installation ?");
+            ConsoleExpansion.LogWrite("Installation takes about an hour.");
+            if (ConsoleExpansion.ConsentInput())
             {
-                detoursR5FileName = Download.RunZip(WebGetLink.GetDetoursR5Link(), "detours_r5");
-                scriptsR5FileName = Download.RunZip(WebGetLink.GetScriptsR5Link(), "scripts_r5");
-                Download.RunTorrent(WebGetLink.GetApexClientLink(), FinalDirectoryName);
+                string detoursR5FileName, scriptsR5FileName;
+                using (new Download())
+                {
+                    detoursR5FileName = Download.RunZip(WebGetLink.GetDetoursR5Link(), "detours_r5");
+                    scriptsR5FileName = Download.RunZip(WebGetLink.GetScriptsR5Link(), "scripts_r5");
+                    Download.RunTorrent(WebGetLink.GetApexClientLink(), FinalDirectoryName);
+                }
+                ConsoleExpansion.LogWrite("The detours_r5 file is being moved.");
+                DirectoryExpansion.MoveOverwrite(detoursR5FileName, FinalDirectoryName);
+                ConsoleExpansion.LogWrite("The scripts_r5 file is being moved.");
+                Directory.Move(scriptsR5FileName, ScriptsDirectoryPath);
+                ConsoleExpansion.LogWrite("Done.");
+                ConsoleExpansion.LogWrite("The entire process has been completed!");
             }
-
-            DirectoryExpansion.MoveOverwrite(detoursR5FileName, FinalDirectoryName);
-            Directory.Move(scriptsR5FileName, ScriptsDirectoryPath);
-
-            ConsoleExpansion.LogWrite("Done.");
             ConsoleExpansion.Exit();
         }
 

@@ -16,18 +16,23 @@ namespace R5_Reloaded_Installer
 
         public Download()
         {
-            Aria2Path = Path.Combine(RunZip(WebGetLink.GetAria2Link(), "aria2"), Aria2ExecutableFileName);
+            ConsoleExpansion.LogWrite("Preparing for download.");
+            Aria2Path = Path.Combine(RunZip(WebGetLink.GetAria2Link(), "aria2", false), Aria2ExecutableFileName);
+            ConsoleExpansion.LogWrite("Success.");
+            ConsoleExpansion.LogWrite("Start downloading the file.");
         }
         public void Dispose()
         {
+            ConsoleExpansion.LogWrite("The download end process is in progress.");
             DirectoryExpansion.AllDelete(Path.GetDirectoryName(Aria2Path));
+            ConsoleExpansion.LogWrite("All files have been downloaded.");
         }
 
-        private static string Run(string url, string fileName = null)
+        private static string Run(string url, string fileName = null, bool log = true)
         {
             var FileName = fileName != null ? fileName + Path.GetExtension(url) : Path.GetFileName(url);
             if (File.Exists(FileName)) File.Delete(FileName);
-            ConsoleExpansion.LogWrite("Downloading " + FileName + " file.");
+            if(log) ConsoleExpansion.LogWrite("Downloading " + FileName + " file.");
             try
             {
                 new WebClient().DownloadFile(url, FileName);
@@ -37,10 +42,10 @@ namespace R5_Reloaded_Installer
                 ConsoleExpansion.LogError("Failed to download the file.");
                 ConsoleExpansion.Exit();
             }
-            ConsoleExpansion.LogWrite("Success.");
+            if (log) ConsoleExpansion.LogWrite("Success.");
             return FileName;
         }
-        public static string RunZip(string url, string directoryName = null)
+        public static string RunZip(string url, string directoryName = null, bool log = true)
         {
             if (GetExtension(url) != "zip")
             {
@@ -51,8 +56,8 @@ namespace R5_Reloaded_Installer
 
             var DirectoryName = directoryName != null ? directoryName : Path.GetFileName(url).Replace(Path.GetExtension(url), "");
 
-            var FileName = Run(url, DirectoryName);
-            ConsoleExpansion.LogWrite("Unzip the zip file.");
+            var FileName = Run(url, DirectoryName, log);
+            if (log) ConsoleExpansion.LogWrite("Unzip the zip file.");
 
             if (Directory.Exists(DirectoryName)) DirectoryExpansion.AllDelete(DirectoryName);
             Directory.CreateDirectory(DirectoryName);
@@ -76,7 +81,7 @@ namespace R5_Reloaded_Installer
                 Directory.Delete(DirectoryName);
                 Directory.Move(DirectoryName + "_Buffer", DirectoryName);
             }
-            ConsoleExpansion.LogWrite("Success.");
+            if (log) ConsoleExpansion.LogWrite("Success.");
             return DirectoryName;
         }
         public static string RunTorrent(string url, string directoryName = null)
@@ -104,6 +109,9 @@ namespace R5_Reloaded_Installer
             }
             ConsoleExpansion.LogWrite("Success.");
 
+            ConsoleExpansion.LogWrite("Continue downloading the torrent.");
+            ConsoleExpansion.LogWrite("It may take a few moments depending on the status of the destination.");
+            Console.WriteLine();
             ConsoleExpansion.WriteWidth('=', "Download with aria2");
             Process aria2Process = new Process();
             aria2Process.StartInfo.FileName = Aria2Path;
@@ -113,6 +121,7 @@ namespace R5_Reloaded_Installer
             aria2Process.Close();
             ConsoleExpansion.WriteWidth('=');
             ConsoleExpansion.LogWrite("Success.");
+            Console.WriteLine();
 
             var rawName = FileName.Replace(Path.GetExtension(FileName), "");
             if (directoryName != null)
