@@ -47,7 +47,7 @@ namespace R5_Reloaded_Installer
                     return link;
                 }
             }
-            ConsoleExpansion.LogError("The aria2 link was not found.");
+            ConsoleExpansion.LogError("The detours_r5 link was not found.");
             ConsoleExpansion.LogError("Please contact the developer.");
             ConsoleExpansion.Exit();
             return null;
