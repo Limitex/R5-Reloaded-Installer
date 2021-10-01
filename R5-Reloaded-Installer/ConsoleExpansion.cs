@@ -47,7 +47,9 @@ namespace R5_Reloaded_Installer
             while (ConsentAttempts < ConsentMaxAttempts)
             {
                 LogInput("Yes No (y/n) : ");
-                var key = Console.ReadKey().Key;
+                ConsoleKey key;
+                do key = Console.ReadKey().Key;
+                while (key == ConsoleKey.Escape);
                 Console.WriteLine();
                 switch (key)
                 {
