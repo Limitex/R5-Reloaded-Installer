@@ -81,9 +81,10 @@ namespace R5_Reloaded_Installer
         {
             ColorWrite("[ ", ConsoleColor.DarkMagenta);
             ColorWrite(info.PadRight(InformationMaxWidth), color);
-            ColorWrite(" ][", ConsoleColor.DarkMagenta);
-            ColorWrite(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"), ConsoleColor.DarkGray);
-            ColorWrite("] ", ConsoleColor.DarkMagenta);
+            ColorWrite(" ][ ", ConsoleColor.DarkMagenta);
+            ColorWrite(DateTime.Now.ToString("yyyy/MM/dd"), ConsoleColor.DarkGray);
+            Console.Write(' ' + DateTime.Now.ToString("HH:mm:ss"));
+            ColorWrite(" ] ", ConsoleColor.DarkMagenta);
             ColorWrite(": ", ConsoleColor.DarkGray);
             Console.Write(str);
             if (NewLine) Console.WriteLine();
