@@ -29,6 +29,10 @@ namespace R5_Reloaded_Installer
         {
             LogInfo("Info", ConsoleColor.DarkGreen, value);
         }
+        public static void LogNotes(string value)
+        {
+            LogInfo("Notes", ConsoleColor.Yellow, value);
+        }
         public static void LogError(string value)
         {
             LogInfo("Error", ConsoleColor.DarkRed, value);
