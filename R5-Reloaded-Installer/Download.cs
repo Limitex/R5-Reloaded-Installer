@@ -32,7 +32,7 @@ namespace R5_Reloaded_Installer
         {
             var FileName = fileName != null ? fileName + Path.GetExtension(url) : Path.GetFileName(url);
             if (File.Exists(FileName)) File.Delete(FileName);
-            if(log) ConsoleExpansion.LogWrite("Downloading " + FileName + " file.");
+            if(log) ConsoleExpansion.LogWrite("Downloading " + Path.GetFileName(url) + " file.");
             try
             {
                 new WebClient().DownloadFile(url, FileName);
@@ -42,7 +42,6 @@ namespace R5_Reloaded_Installer
                 ConsoleExpansion.LogError("Failed to download the file.");
                 ConsoleExpansion.Exit();
             }
-            if (log) ConsoleExpansion.LogWrite("Success.");
             return FileName;
         }
         public static string RunZip(string url, string directoryName = null, bool log = true)

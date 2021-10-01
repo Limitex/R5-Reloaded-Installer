@@ -43,7 +43,7 @@ namespace R5_Reloaded_Installer
             {
                 if (Path.GetExtension(Path.GetFileName(link)).Replace(".", "") == "zip")
                 {
-                    ConsoleExpansion.LogWrite("Success.");
+                    ConsoleExpansion.LogWrite(link);
                     return link;
                 }
             }
