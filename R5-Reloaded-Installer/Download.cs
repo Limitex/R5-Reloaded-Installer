@@ -109,7 +109,7 @@ namespace R5_Reloaded_Installer
             ConsoleExpansion.LogWrite("Success.");
 
             ConsoleExpansion.LogWrite("Continue downloading the torrent.");
-            ConsoleExpansion.LogWrite("It may take a few moments depending on the status of the destination.");
+            ConsoleExpansion.LogNotes("It may take a few moments depending on the status of the destination.");
             ConsoleExpansion.WriteWidth('=', "Download with aria2");
             Process aria2Process = new Process();
             aria2Process.StartInfo.FileName = Aria2Path;
@@ -119,6 +119,10 @@ namespace R5_Reloaded_Installer
             aria2Process.Close();
             ConsoleExpansion.WriteWidth('=');
             ConsoleExpansion.LogWrite("Success.");
+
+            ConsoleExpansion.LogNotes("This program stops seeding, but If possible, Please use torrent software to seed.");
+            ConsoleExpansion.LogNotes("No one may be able to download it from torrents.");
+            ConsoleExpansion.LogNotes("The torrent file exists in the directory.");
 
             var rawName = FileName.Replace(Path.GetExtension(FileName), "");
             if (directoryName != null)
