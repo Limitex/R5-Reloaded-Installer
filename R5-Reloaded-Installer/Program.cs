@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 
 namespace R5_Reloaded_Installer
 {
@@ -21,6 +22,18 @@ namespace R5_Reloaded_Installer
                 "  Please refer to the link below for the latest version of this program.\n\n" +
                 "  https://github.com/Limitex/R5-Reloaded-Installer/releases \n\n" +
                 "Welcome!\n");
+
+            var applicationList = GetInstalledApps.AllList();
+            if (!(applicationList.Contains("Origin") && applicationList.Contains("Apex Legends")))
+            {
+                ConsoleExpansion.LogError("\'Origin\' or \'Apex Legends\' is not installed.");
+                ConsoleExpansion.LogError("Do you want to continue?");
+                ConsoleExpansion.LogError("R5 Reloaded cannot be run without \'Origin\' and \'Apex Legends\' installed.");
+                if (!ConsoleExpansion.ConsentInput())
+                {
+                    ConsoleExpansion.Exit();
+                }
+            }
 
             ConsoleExpansion.LogWrite("Do you want to continue the installation ?");
             ConsoleExpansion.LogWrite("Installation takes about an hour.");
