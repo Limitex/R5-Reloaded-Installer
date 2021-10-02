@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 
 namespace R5_Reloaded_Installer
 {
@@ -6,6 +7,20 @@ namespace R5_Reloaded_Installer
     {
         private readonly static int InformationMaxWidth = 5;
         private readonly static int ConsentMaxAttempts = 5;
+
+        [DllImport("kernel32.dll", SetLastError = true)] static extern IntPtr GetStdHandle(int nStdHandle);
+        [DllImport("kernel32.dll")] static extern bool GetConsoleMode(IntPtr hConsoleHandle, out uint lpMode);
+        [DllImport("kernel32.dll")] static extern bool SetConsoleMode(IntPtr hConsoleHandle, uint dwMode);
+
+        public static void DisableEasyEditMode()
+        {
+            const int STD_INPUT_HANDLE = -10;
+            const uint ENABLE_QUICK_EDIT = 0x0040;
+            
+            var consoleHandle = GetStdHandle(STD_INPUT_HANDLE);
+            GetConsoleMode(consoleHandle, out uint consoleMode);
+            SetConsoleMode(consoleHandle, consoleMode & ~ENABLE_QUICK_EDIT);
+        }
 
         public static void WriteWidth(char c, string text = null)
         {

@@ -9,6 +9,8 @@ namespace R5_Reloaded_Installer
         private static string ScriptsDirectoryPath = Path.Combine(FinalDirectoryName, "platform", "scripts");
         static void Main(string[] args)
         {
+            ConsoleExpansion.DisableEasyEditMode();
+
             Console.WriteLine("\n" +
                 "  -----------------------------------\n" +
                 "  ||                               ||\n" +
