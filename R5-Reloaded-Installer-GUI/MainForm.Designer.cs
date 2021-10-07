@@ -51,6 +51,7 @@ namespace R5_Reloaded_Installer_GUI
             this.CancelButton.TabIndex = 0;
             this.CancelButton.Text = "Cancel";
             this.CancelButton.UseVisualStyleBackColor = true;
+            this.CancelButton.Click += new System.EventHandler(this.CancelButton_Click);
             // 
             // InstallButton
             // 
@@ -60,6 +61,7 @@ namespace R5_Reloaded_Installer_GUI
             this.InstallButton.TabIndex = 0;
             this.InstallButton.Text = "Install";
             this.InstallButton.UseVisualStyleBackColor = true;
+            this.InstallButton.Click += new System.EventHandler(this.InstallButton_Click);
             // 
             // NextButton
             // 
@@ -168,6 +170,7 @@ namespace R5_Reloaded_Installer_GUI
             this.MinimumSize = new System.Drawing.Size(500, 400);
             this.Name = "MainForm";
             this.Text = "R5-Reloaded Installer";
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.MainTabControl.ResumeLayout(false);
             this.ResumeLayout(false);
 
