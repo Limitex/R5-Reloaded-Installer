@@ -35,7 +35,11 @@ namespace R5_Reloaded_Installer_GUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(484, 361);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(500, 400);
+            this.MinimumSize = new System.Drawing.Size(500, 400);
             this.Name = "MainForm";
             this.Text = "R5-Reloaded Installer";
             this.ResumeLayout(false);
