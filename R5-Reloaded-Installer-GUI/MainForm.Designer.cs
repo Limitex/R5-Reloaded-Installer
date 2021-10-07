@@ -69,6 +69,7 @@ namespace R5_Reloaded_Installer_GUI
             this.NextButton.TabIndex = 0;
             this.NextButton.Text = "Next >";
             this.NextButton.UseVisualStyleBackColor = true;
+            this.NextButton.Click += new System.EventHandler(this.NextButton_Click);
             // 
             // BackButton
             // 
@@ -78,6 +79,7 @@ namespace R5_Reloaded_Installer_GUI
             this.BackButton.TabIndex = 0;
             this.BackButton.Text = "< Back";
             this.BackButton.UseVisualStyleBackColor = true;
+            this.BackButton.Click += new System.EventHandler(this.BackButton_Click);
             // 
             // MainTabControl
             // 
@@ -92,6 +94,7 @@ namespace R5_Reloaded_Installer_GUI
             this.MainTabControl.SelectedIndex = 0;
             this.MainTabControl.Size = new System.Drawing.Size(460, 308);
             this.MainTabControl.TabIndex = 1;
+            this.MainTabControl.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.MainTabControl_Selecting);
             // 
             // IntroductionTabPage
             // 
