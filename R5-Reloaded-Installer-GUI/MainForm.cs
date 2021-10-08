@@ -22,8 +22,8 @@ namespace R5_Reloaded_Installer_GUI
 
         private static bool ExitFlug = false;
         private static bool ButtonSelectFlug = false;
-        private static long FileSize = 0;
-        private static long DriveSize = 0;
+        private static long FileSize = -1;
+        private static long DriveSize = -1;
         delegate void Delegate();
 
         public MainForm()
@@ -157,7 +157,7 @@ namespace R5_Reloaded_Installer_GUI
             if (nowTab == PlaceOfInstallationTabPage.Name)
             {
                 BackButton.Enabled = true;
-                NextButton.Enabled = false;
+                NextButton.Enabled = CheckSize();
                 InstallButton.Enabled = false;
             }
             if (nowTab == OptionTabPage.Name)
@@ -200,7 +200,7 @@ namespace R5_Reloaded_Installer_GUI
                 GetFileSize.ByteToGByte(driveSize).ToString("0.00") + " GB";
         }
 
-        private bool CheckSize() => DriveSize > FileSize;
+        private bool CheckSize() => (DriveSize > FileSize) && (DriveSize != -1) && (FileSize != -1);
 
         private void CompleteProcess()
         {
