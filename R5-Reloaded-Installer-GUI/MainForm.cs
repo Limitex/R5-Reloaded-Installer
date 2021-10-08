@@ -29,6 +29,14 @@ namespace R5_Reloaded_Installer_GUI
         public MainForm()
         {
             InitializeComponent();
+
+            if (!CheckApplication())
+            {
+                MessageBox.Show("Origin or Apex Legends were not detected.\n" +
+                    "This is required to run R5 - Reloaded.\n" +
+                    "We recommend that you install it before installing R5.\n", "Warning",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
         private void MainForm_Load(object sender, EventArgs e)

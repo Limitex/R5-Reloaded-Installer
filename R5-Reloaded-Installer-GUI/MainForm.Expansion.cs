@@ -141,5 +141,11 @@ namespace R5_Reloaded_Installer_GUI
             OverallStatusLabel.Text = "Complete!";
             NextButton.Enabled = true;
         }
+
+        private bool CheckApplication()
+        {
+            var applicationList = GetInstalledApps.AllList();
+            return applicationList.Contains("Origin") && applicationList.Contains("Apex Legends");
+        }
     }
 }
