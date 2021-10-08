@@ -80,6 +80,11 @@ namespace R5_Reloaded_Installer_GUI
             OpenSite(WebsiteLinkLabel.Text);
         }
 
+        private void AgreeCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            SetButtonEnebled();
+        }
+
         private void ButtonToTabNext(int i)
         {
             ButtonSelectFlug = true;
@@ -103,7 +108,7 @@ namespace R5_Reloaded_Installer_GUI
             if (nowTab == InformationTabPage.Name)
             {
                 BackButton.Enabled = true;
-                NextButton.Enabled = true;
+                NextButton.Enabled = AgreeCheckBox.Checked;
                 InstallButton.Enabled = false;
             }
             if (nowTab == PlaceOfInstallationTabPage.Name)

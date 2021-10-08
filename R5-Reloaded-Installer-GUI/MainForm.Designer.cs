@@ -216,6 +216,7 @@ namespace R5_Reloaded_Installer_GUI
             this.AgreeCheckBox.TabIndex = 0;
             this.AgreeCheckBox.Text = " I don\'t allow cosmetics from the game.";
             this.AgreeCheckBox.UseVisualStyleBackColor = true;
+            this.AgreeCheckBox.CheckedChanged += new System.EventHandler(this.AgreeCheckBox_CheckedChanged);
             // 
             // PlaceOfInstallationTabPage
             // 
