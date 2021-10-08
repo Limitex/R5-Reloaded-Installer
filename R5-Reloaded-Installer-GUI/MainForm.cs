@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,11 @@ namespace R5_Reloaded_Installer_GUI
 {
     public partial class MainForm : Form
     {
+        public static string DirName = "R5-Reloaded";
+        public static string AppDataLocalPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+        public static string InstallPath = Path.Combine(AppDataLocalPath, DirName);
+
+
         private static bool ExitFlug = false;
         private static bool ButtonSelectFlug = false;
         
@@ -24,6 +30,7 @@ namespace R5_Reloaded_Installer_GUI
         private void MainForm_Load(object sender, EventArgs e)
         {
             SetButtonEnebled();
+            InstallLinkTextBox.Text = InstallPath;
         }
 
         private void MainTabControl_Selecting(object sender, TabControlCancelEventArgs e)
