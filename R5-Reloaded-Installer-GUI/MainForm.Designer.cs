@@ -52,11 +52,15 @@ namespace R5_Reloaded_Installer_GUI
             this.OptionTabPage = new System.Windows.Forms.TabPage();
             this.ProcessTabPage = new System.Windows.Forms.TabPage();
             this.CompletionTabPage = new System.Windows.Forms.TabPage();
+            this.label6 = new System.Windows.Forms.Label();
+            this.CreateDesktopShortcutCheckBox = new System.Windows.Forms.CheckBox();
+            this.AddToStartMenuCheckBox = new System.Windows.Forms.CheckBox();
             this.MainTabControl.SuspendLayout();
             this.IntroductionTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TopIcon)).BeginInit();
             this.InformationTabPage.SuspendLayout();
             this.PlaceOfInstallationTabPage.SuspendLayout();
+            this.OptionTabPage.SuspendLayout();
             this.SuspendLayout();
             // 
             // CancelButton
@@ -217,9 +221,9 @@ namespace R5_Reloaded_Installer_GUI
             this.AgreeCheckBox.AutoSize = true;
             this.AgreeCheckBox.Location = new System.Drawing.Point(28, 223);
             this.AgreeCheckBox.Name = "AgreeCheckBox";
-            this.AgreeCheckBox.Size = new System.Drawing.Size(232, 19);
+            this.AgreeCheckBox.Size = new System.Drawing.Size(318, 19);
             this.AgreeCheckBox.TabIndex = 0;
-            this.AgreeCheckBox.Text = " I don\'t allow cosmetics from the game.";
+            this.AgreeCheckBox.Text = "I won\'t use cosmetics such as heirlooms from the game.\r\n";
             this.AgreeCheckBox.UseVisualStyleBackColor = true;
             this.AgreeCheckBox.CheckedChanged += new System.EventHandler(this.AgreeCheckBox_CheckedChanged);
             // 
@@ -274,6 +278,9 @@ namespace R5_Reloaded_Installer_GUI
             // 
             // OptionTabPage
             // 
+            this.OptionTabPage.Controls.Add(this.AddToStartMenuCheckBox);
+            this.OptionTabPage.Controls.Add(this.CreateDesktopShortcutCheckBox);
+            this.OptionTabPage.Controls.Add(this.label6);
             this.OptionTabPage.Location = new System.Drawing.Point(4, 24);
             this.OptionTabPage.Name = "OptionTabPage";
             this.OptionTabPage.Size = new System.Drawing.Size(452, 280);
@@ -298,6 +305,40 @@ namespace R5_Reloaded_Installer_GUI
             this.CompletionTabPage.TabIndex = 5;
             this.CompletionTabPage.Text = "Completion";
             this.CompletionTabPage.UseVisualStyleBackColor = true;
+            // 
+            // label6
+            // 
+            this.label6.Location = new System.Drawing.Point(24, 28);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(389, 42);
+            this.label6.TabIndex = 0;
+            this.label6.Text = "Select the additional tasks you would like Setup to perform while installing R5-R" +
+    "eloaded, then click next.";
+            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // CreateDesktopShortcutCheckBox
+            // 
+            this.CreateDesktopShortcutCheckBox.AutoSize = true;
+            this.CreateDesktopShortcutCheckBox.Checked = true;
+            this.CreateDesktopShortcutCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.CreateDesktopShortcutCheckBox.Location = new System.Drawing.Point(40, 87);
+            this.CreateDesktopShortcutCheckBox.Name = "CreateDesktopShortcutCheckBox";
+            this.CreateDesktopShortcutCheckBox.Size = new System.Drawing.Size(160, 19);
+            this.CreateDesktopShortcutCheckBox.TabIndex = 1;
+            this.CreateDesktopShortcutCheckBox.Text = "Create a desktop shortcut";
+            this.CreateDesktopShortcutCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // AddToStartMenuCheckBox
+            // 
+            this.AddToStartMenuCheckBox.AutoSize = true;
+            this.AddToStartMenuCheckBox.Checked = true;
+            this.AddToStartMenuCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.AddToStartMenuCheckBox.Location = new System.Drawing.Point(40, 112);
+            this.AddToStartMenuCheckBox.Name = "AddToStartMenuCheckBox";
+            this.AddToStartMenuCheckBox.Size = new System.Drawing.Size(121, 19);
+            this.AddToStartMenuCheckBox.TabIndex = 1;
+            this.AddToStartMenuCheckBox.Text = "Add to start menu";
+            this.AddToStartMenuCheckBox.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
@@ -324,6 +365,8 @@ namespace R5_Reloaded_Installer_GUI
             this.InformationTabPage.PerformLayout();
             this.PlaceOfInstallationTabPage.ResumeLayout(false);
             this.PlaceOfInstallationTabPage.PerformLayout();
+            this.OptionTabPage.ResumeLayout(false);
+            this.OptionTabPage.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -353,6 +396,9 @@ namespace R5_Reloaded_Installer_GUI
         private System.Windows.Forms.Button BrowseButton;
         private System.Windows.Forms.TextBox InstallLinkTextBox;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.CheckBox AddToStartMenuCheckBox;
+        private System.Windows.Forms.CheckBox CreateDesktopShortcutCheckBox;
+        private System.Windows.Forms.Label label6;
     }
 }
 
