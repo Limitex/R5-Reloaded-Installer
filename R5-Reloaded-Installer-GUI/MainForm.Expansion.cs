@@ -135,6 +135,10 @@ namespace R5_Reloaded_Installer_GUI
 
         private void CompleteProcess()
         {
+            DownloadProgressBar.Value = 100;
+            OverallProgressBar.Value = 100;
+            DownloadStatusLabel.Text = "Complete!";
+            OverallStatusLabel.Text = "Complete!";
             NextButton.Enabled = true;
         }
     }

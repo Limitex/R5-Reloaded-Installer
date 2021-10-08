@@ -84,6 +84,7 @@ namespace R5_Reloaded_Installer_GUI
             if (dr == DialogResult.OK && CheckValue())
             {
                 ButtonToTabNext(1);
+                StartProcessInitialize();
                 StartProcess();
             }
         }

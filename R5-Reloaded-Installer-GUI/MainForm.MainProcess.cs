@@ -16,9 +16,24 @@ namespace R5_Reloaded_Installer_GUI
 {
     partial class MainForm
     {
+        private static string TargetDirectory;
+        private static bool CreateShortcutFlug;
+        private static bool AddStartMenuFlug;
+        private void StartProcessInitialize()
+        {
+            TargetDirectory = InstallPath;
+            CreateShortcutFlug = CreateDesktopShortcutCheckBox.Checked;
+            AddStartMenuFlug = AddToStartMenuCheckBox.Checked;
+        }
+
         private void StartProcess()
         {
-            MessageBox.Show("Installing Process");
+            DownloadProgressBar.Value = 50;
+            OverallProgressBar.Value = 50;
+            DownloadStatusLabel.Text = "Download Status";
+            OverallStatusLabel.Text = "Overall Status";
+
+
             CompleteProcess();
         }
     }
