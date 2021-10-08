@@ -10,6 +10,10 @@ namespace R5_Reloaded_Installer
 {
     public static class GetFileSize
     {
+        public static long DriveFreeSpace(string path)
+        {
+            return new DriveInfo(Path.GetPathRoot(path)).AvailableFreeSpace;
+        }
         public static long Torrent(string url)
         {
             var file = Download.Run(url);
@@ -23,5 +27,6 @@ namespace R5_Reloaded_Installer
             client.OpenRead(url);
             return Convert.ToInt64(client.ResponseHeaders["Content-Length"]);
         }
+        public static float ByteToGByte(long value) => value / 1024f / 1024f / 1024f;
     }
 }

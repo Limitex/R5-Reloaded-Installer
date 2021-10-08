@@ -97,8 +97,8 @@ namespace R5_Reloaded_Installer
             var DriveInfo = new DriveInfo(Path.GetPathRoot(Process.GetCurrentProcess().MainModule.FileName));
             var TorerntByteSize = new BencodeParser().Parse<Torrent>(FileName).TotalSize;
             var DriveByteSize = DriveInfo.AvailableFreeSpace;
-            ConsoleExpansion.LogWrite("Torrent Download Size : " + ByteToGByte(TorerntByteSize) + " GByte");
-            ConsoleExpansion.LogWrite(DriveInfo.Name + " Drive Free Space  : " + ByteToGByte(DriveByteSize) + " GByte");
+            ConsoleExpansion.LogWrite("Torrent Download Size : " + GetFileSize.ByteToGByte(TorerntByteSize) + " GByte");
+            ConsoleExpansion.LogWrite(DriveInfo.Name + " Drive Free Space  : " + GetFileSize.ByteToGByte(DriveByteSize) + " GByte");
             if (TorerntByteSize > DriveByteSize)
             {
                 ConsoleExpansion.LogError("There is not enough disk space.");
@@ -136,6 +136,5 @@ namespace R5_Reloaded_Installer
             }
         }
         private static string GetExtension(string url) => Path.GetExtension(url).Replace(".", "").ToLower();
-        private static float ByteToGByte(long value) => value / 1024f / 1024f / 1024f;
     }
 }

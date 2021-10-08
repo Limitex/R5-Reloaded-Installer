@@ -1,4 +1,5 @@
-﻿using System;
+﻿using R5_Reloaded_Installer;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,6 +8,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -20,7 +22,10 @@ namespace R5_Reloaded_Installer_GUI
 
         private static bool ExitFlug = false;
         private static bool ButtonSelectFlug = false;
-        
+        private static long FileSize = 0;
+        private static long DriveSize = 0;
+        delegate void Delegate();
+
         public MainForm()
         {
             InitializeComponent();
@@ -30,6 +35,16 @@ namespace R5_Reloaded_Installer_GUI
         {
             SetButtonEnebled();
             InstallLinkTextBox.Text = InstallPath;
+            DriveSize = GetFileSize.DriveFreeSpace(InstallPath);
+            new Thread(() =>
+            {
+                Invoke(new Delegate(() => SetSizesText(0, DriveSize)));
+                FileSize = GetFileSize.Torrent(WebGetLink.GetApexClientLink()) +
+                    GetFileSize.Zip(WebGetLink.GetDetoursR5Link()) +
+                    GetFileSize.Zip(WebGetLink.GetScriptsR5Link()) +
+                    GetFileSize.Zip(WebGetLink.GetAria2Link());
+                Invoke(new Delegate(() => SetSizesText(FileSize, DriveSize)));
+            }).Start();
         }
 
         private void MainTabControl_Selecting(object sender, TabControlCancelEventArgs e)
@@ -104,6 +119,8 @@ namespace R5_Reloaded_Installer_GUI
             {
                 InstallPath = Path.Combine(fbd.SelectedPath, DirName);
                 InstallLinkTextBox.Text = InstallPath;
+                DriveSize = GetFileSize.DriveFreeSpace(InstallPath);
+                SetSizesText(FileSize, DriveSize);
             }
         }
 
@@ -169,6 +186,14 @@ namespace R5_Reloaded_Installer_GUI
                 FileName = url,
             };
             Process.Start(info);
+        }
+
+        private void SetSizesText(long fileSize, long driveSize)
+        {
+            SizeLabel.Text = "File size : " +
+                GetFileSize.ByteToGByte(fileSize).ToString("0.00") + " GB" +
+                "\n\nDrive size : " +
+                GetFileSize.ByteToGByte(driveSize).ToString("0.00") + " GB";
         }
 
         private void CompleteProcess()
