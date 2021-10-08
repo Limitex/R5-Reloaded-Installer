@@ -50,17 +50,26 @@ namespace R5_Reloaded_Installer_GUI
             this.InstallLinkTextBox = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.OptionTabPage = new System.Windows.Forms.TabPage();
-            this.ProcessTabPage = new System.Windows.Forms.TabPage();
-            this.CompletionTabPage = new System.Windows.Forms.TabPage();
-            this.label6 = new System.Windows.Forms.Label();
-            this.CreateDesktopShortcutCheckBox = new System.Windows.Forms.CheckBox();
             this.AddToStartMenuCheckBox = new System.Windows.Forms.CheckBox();
+            this.CreateDesktopShortcutCheckBox = new System.Windows.Forms.CheckBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.ProcessTabPage = new System.Windows.Forms.TabPage();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.OverallStatusLabel = new System.Windows.Forms.Label();
+            this.DownloadStatusLabel = new System.Windows.Forms.Label();
+            this.OverallProgressBar = new System.Windows.Forms.ProgressBar();
+            this.DownloadProgressBar = new System.Windows.Forms.ProgressBar();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.CompletionTabPage = new System.Windows.Forms.TabPage();
             this.MainTabControl.SuspendLayout();
             this.IntroductionTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TopIcon)).BeginInit();
             this.InformationTabPage.SuspendLayout();
             this.PlaceOfInstallationTabPage.SuspendLayout();
             this.OptionTabPage.SuspendLayout();
+            this.ProcessTabPage.SuspendLayout();
             this.SuspendLayout();
             // 
             // CancelButton
@@ -288,33 +297,17 @@ namespace R5_Reloaded_Installer_GUI
             this.OptionTabPage.Text = "Option";
             this.OptionTabPage.UseVisualStyleBackColor = true;
             // 
-            // ProcessTabPage
+            // AddToStartMenuCheckBox
             // 
-            this.ProcessTabPage.Location = new System.Drawing.Point(4, 24);
-            this.ProcessTabPage.Name = "ProcessTabPage";
-            this.ProcessTabPage.Size = new System.Drawing.Size(452, 280);
-            this.ProcessTabPage.TabIndex = 4;
-            this.ProcessTabPage.Text = "Process";
-            this.ProcessTabPage.UseVisualStyleBackColor = true;
-            // 
-            // CompletionTabPage
-            // 
-            this.CompletionTabPage.Location = new System.Drawing.Point(4, 24);
-            this.CompletionTabPage.Name = "CompletionTabPage";
-            this.CompletionTabPage.Size = new System.Drawing.Size(452, 280);
-            this.CompletionTabPage.TabIndex = 5;
-            this.CompletionTabPage.Text = "Completion";
-            this.CompletionTabPage.UseVisualStyleBackColor = true;
-            // 
-            // label6
-            // 
-            this.label6.Location = new System.Drawing.Point(24, 28);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(389, 42);
-            this.label6.TabIndex = 0;
-            this.label6.Text = "Select the additional tasks you would like Setup to perform while installing R5-R" +
-    "eloaded, then click next.";
-            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.AddToStartMenuCheckBox.AutoSize = true;
+            this.AddToStartMenuCheckBox.Checked = true;
+            this.AddToStartMenuCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.AddToStartMenuCheckBox.Location = new System.Drawing.Point(40, 112);
+            this.AddToStartMenuCheckBox.Name = "AddToStartMenuCheckBox";
+            this.AddToStartMenuCheckBox.Size = new System.Drawing.Size(121, 19);
+            this.AddToStartMenuCheckBox.TabIndex = 1;
+            this.AddToStartMenuCheckBox.Text = "Add to start menu";
+            this.AddToStartMenuCheckBox.UseVisualStyleBackColor = true;
             // 
             // CreateDesktopShortcutCheckBox
             // 
@@ -328,17 +321,110 @@ namespace R5_Reloaded_Installer_GUI
             this.CreateDesktopShortcutCheckBox.Text = "Create a desktop shortcut";
             this.CreateDesktopShortcutCheckBox.UseVisualStyleBackColor = true;
             // 
-            // AddToStartMenuCheckBox
+            // label6
             // 
-            this.AddToStartMenuCheckBox.AutoSize = true;
-            this.AddToStartMenuCheckBox.Checked = true;
-            this.AddToStartMenuCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.AddToStartMenuCheckBox.Location = new System.Drawing.Point(40, 112);
-            this.AddToStartMenuCheckBox.Name = "AddToStartMenuCheckBox";
-            this.AddToStartMenuCheckBox.Size = new System.Drawing.Size(121, 19);
-            this.AddToStartMenuCheckBox.TabIndex = 1;
-            this.AddToStartMenuCheckBox.Text = "Add to start menu";
-            this.AddToStartMenuCheckBox.UseVisualStyleBackColor = true;
+            this.label6.Location = new System.Drawing.Point(24, 28);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(389, 42);
+            this.label6.TabIndex = 0;
+            this.label6.Text = "Select the additional tasks you would like Setup to perform while installing R5-R" +
+    "eloaded, then click next.";
+            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // ProcessTabPage
+            // 
+            this.ProcessTabPage.Controls.Add(this.label10);
+            this.ProcessTabPage.Controls.Add(this.label9);
+            this.ProcessTabPage.Controls.Add(this.OverallStatusLabel);
+            this.ProcessTabPage.Controls.Add(this.DownloadStatusLabel);
+            this.ProcessTabPage.Controls.Add(this.OverallProgressBar);
+            this.ProcessTabPage.Controls.Add(this.DownloadProgressBar);
+            this.ProcessTabPage.Controls.Add(this.label8);
+            this.ProcessTabPage.Controls.Add(this.label7);
+            this.ProcessTabPage.Location = new System.Drawing.Point(4, 24);
+            this.ProcessTabPage.Name = "ProcessTabPage";
+            this.ProcessTabPage.Size = new System.Drawing.Size(452, 280);
+            this.ProcessTabPage.TabIndex = 4;
+            this.ProcessTabPage.Text = "Process";
+            this.ProcessTabPage.UseVisualStyleBackColor = true;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(15, 174);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(102, 15);
+            this.label10.TabIndex = 6;
+            this.label10.Text = "Installer progress :";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(15, 86);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(101, 15);
+            this.label9.TabIndex = 5;
+            this.label9.Text = "Download status :";
+            // 
+            // OverallStatusLabel
+            // 
+            this.OverallStatusLabel.AutoSize = true;
+            this.OverallStatusLabel.Location = new System.Drawing.Point(15, 218);
+            this.OverallStatusLabel.Name = "OverallStatusLabel";
+            this.OverallStatusLabel.Size = new System.Drawing.Size(39, 15);
+            this.OverallStatusLabel.TabIndex = 4;
+            this.OverallStatusLabel.Text = "Status";
+            // 
+            // DownloadStatusLabel
+            // 
+            this.DownloadStatusLabel.AutoSize = true;
+            this.DownloadStatusLabel.Location = new System.Drawing.Point(15, 130);
+            this.DownloadStatusLabel.Name = "DownloadStatusLabel";
+            this.DownloadStatusLabel.Size = new System.Drawing.Size(39, 15);
+            this.DownloadStatusLabel.TabIndex = 3;
+            this.DownloadStatusLabel.Text = "Status";
+            // 
+            // OverallProgressBar
+            // 
+            this.OverallProgressBar.Location = new System.Drawing.Point(19, 192);
+            this.OverallProgressBar.Name = "OverallProgressBar";
+            this.OverallProgressBar.Size = new System.Drawing.Size(416, 23);
+            this.OverallProgressBar.TabIndex = 2;
+            // 
+            // DownloadProgressBar
+            // 
+            this.DownloadProgressBar.Location = new System.Drawing.Point(19, 104);
+            this.DownloadProgressBar.Name = "DownloadProgressBar";
+            this.DownloadProgressBar.Size = new System.Drawing.Size(416, 23);
+            this.DownloadProgressBar.TabIndex = 2;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(24, 42);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(149, 15);
+            this.label8.TabIndex = 1;
+            this.label8.Text = "Do not shut down your PC.";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Yu Gothic UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label7.Location = new System.Drawing.Point(24, 17);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(101, 25);
+            this.label7.TabIndex = 0;
+            this.label7.Text = "Installing...";
+            // 
+            // CompletionTabPage
+            // 
+            this.CompletionTabPage.Location = new System.Drawing.Point(4, 24);
+            this.CompletionTabPage.Name = "CompletionTabPage";
+            this.CompletionTabPage.Size = new System.Drawing.Size(452, 280);
+            this.CompletionTabPage.TabIndex = 5;
+            this.CompletionTabPage.Text = "Completion";
+            this.CompletionTabPage.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
@@ -367,6 +453,8 @@ namespace R5_Reloaded_Installer_GUI
             this.PlaceOfInstallationTabPage.PerformLayout();
             this.OptionTabPage.ResumeLayout(false);
             this.OptionTabPage.PerformLayout();
+            this.ProcessTabPage.ResumeLayout(false);
+            this.ProcessTabPage.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -399,6 +487,14 @@ namespace R5_Reloaded_Installer_GUI
         private System.Windows.Forms.CheckBox AddToStartMenuCheckBox;
         private System.Windows.Forms.CheckBox CreateDesktopShortcutCheckBox;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label OverallStatusLabel;
+        private System.Windows.Forms.Label DownloadStatusLabel;
+        private System.Windows.Forms.ProgressBar OverallProgressBar;
+        private System.Windows.Forms.ProgressBar DownloadProgressBar;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label7;
     }
 }
 
