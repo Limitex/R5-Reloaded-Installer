@@ -6,7 +6,7 @@ using System.Text;
 
 namespace R5_Reloaded_Installer
 {
-    class GetInstalledApps
+    public class GetInstalledApps
     {
         private static string RegistryPath_64 = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall";
         private static string RegistryPath_32 = @"SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall";

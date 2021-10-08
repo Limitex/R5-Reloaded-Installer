@@ -5,7 +5,7 @@ using AngleSharp.Html.Parser;
 
 namespace R5_Reloaded_Installer
 {
-    static class WebGetLink
+    public static class WebGetLink
     {
         private static string[] GetGitHubLatestRelease(string username, string repository)
         {
