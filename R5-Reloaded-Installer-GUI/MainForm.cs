@@ -50,6 +50,12 @@ namespace R5_Reloaded_Installer_GUI
         }
         private void InstallButton_Click(object sender, EventArgs e)
         {
+            if (!AgreeCheckBox.Checked)
+            {
+                MessageBox.Show("Check the checkbox on the Information tab to continue.", "Error",
+                MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             var dr = MessageBox.Show("Do you want to start the installation?", "Installer",
                 MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
             if (dr == DialogResult.OK)
