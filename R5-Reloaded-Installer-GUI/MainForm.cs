@@ -39,11 +39,12 @@ namespace R5_Reloaded_Installer_GUI
             new Thread(() =>
             {
                 Invoke(new Delegate(() => SetSizesText(0, DriveSize)));
-
-                if (!ExitFlug) FileSize = GetFileSize.Torrent(WebGetLink.GetApexClientLink());
-                if (!ExitFlug) FileSize += GetFileSize.Zip(WebGetLink.GetDetoursR5Link());
-                if (!ExitFlug) FileSize += GetFileSize.Zip(WebGetLink.GetScriptsR5Link());
-                if (!ExitFlug) FileSize += GetFileSize.Zip(WebGetLink.GetAria2Link());
+                long size = 0;
+                if (!ExitFlug) size = GetFileSize.Torrent(WebGetLink.GetApexClientLink());
+                if (!ExitFlug) size += GetFileSize.Zip(WebGetLink.GetDetoursR5Link());
+                if (!ExitFlug) size += GetFileSize.Zip(WebGetLink.GetScriptsR5Link());
+                if (!ExitFlug) size += GetFileSize.Zip(WebGetLink.GetAria2Link());
+                if (!ExitFlug) FileSize = size;
                 if (!ExitFlug) Invoke(new Delegate(() => {
                     SetSizesText(FileSize, DriveSize);
                     NextButton.Enabled = CheckSize();
