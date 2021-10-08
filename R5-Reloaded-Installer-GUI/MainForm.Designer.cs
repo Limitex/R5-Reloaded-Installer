@@ -48,10 +48,15 @@ namespace R5_Reloaded_Installer_GUI
             this.OptionTabPage = new System.Windows.Forms.TabPage();
             this.ProcessTabPage = new System.Windows.Forms.TabPage();
             this.CompletionTabPage = new System.Windows.Forms.TabPage();
+            this.label5 = new System.Windows.Forms.Label();
+            this.InstallLinkTextBox = new System.Windows.Forms.TextBox();
+            this.BrowseButton = new System.Windows.Forms.Button();
+            this.SizeLabel = new System.Windows.Forms.Label();
             this.MainTabControl.SuspendLayout();
             this.IntroductionTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TopIcon)).BeginInit();
             this.InformationTabPage.SuspendLayout();
+            this.PlaceOfInstallationTabPage.SuspendLayout();
             this.SuspendLayout();
             // 
             // CancelButton
@@ -220,6 +225,10 @@ namespace R5_Reloaded_Installer_GUI
             // 
             // PlaceOfInstallationTabPage
             // 
+            this.PlaceOfInstallationTabPage.Controls.Add(this.SizeLabel);
+            this.PlaceOfInstallationTabPage.Controls.Add(this.BrowseButton);
+            this.PlaceOfInstallationTabPage.Controls.Add(this.InstallLinkTextBox);
+            this.PlaceOfInstallationTabPage.Controls.Add(this.label5);
             this.PlaceOfInstallationTabPage.Location = new System.Drawing.Point(4, 24);
             this.PlaceOfInstallationTabPage.Name = "PlaceOfInstallationTabPage";
             this.PlaceOfInstallationTabPage.Size = new System.Drawing.Size(452, 280);
@@ -254,6 +263,41 @@ namespace R5_Reloaded_Installer_GUI
             this.CompletionTabPage.Text = "Completion";
             this.CompletionTabPage.UseVisualStyleBackColor = true;
             // 
+            // label5
+            // 
+            this.label5.Location = new System.Drawing.Point(24, 28);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(403, 40);
+            this.label5.TabIndex = 0;
+            this.label5.Text = "Setup will install Everything in the following folder. To install in a different " +
+    "folder, click Browse and select another folder, Click Next to continue.";
+            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // InstallLinkTextBox
+            // 
+            this.InstallLinkTextBox.Location = new System.Drawing.Point(24, 118);
+            this.InstallLinkTextBox.Name = "InstallLinkTextBox";
+            this.InstallLinkTextBox.Size = new System.Drawing.Size(322, 23);
+            this.InstallLinkTextBox.TabIndex = 1;
+            // 
+            // BrowseButton
+            // 
+            this.BrowseButton.Location = new System.Drawing.Point(352, 118);
+            this.BrowseButton.Name = "BrowseButton";
+            this.BrowseButton.Size = new System.Drawing.Size(75, 23);
+            this.BrowseButton.TabIndex = 2;
+            this.BrowseButton.Text = "Browse";
+            this.BrowseButton.UseVisualStyleBackColor = true;
+            // 
+            // SizeLabel
+            // 
+            this.SizeLabel.AutoSize = true;
+            this.SizeLabel.Location = new System.Drawing.Point(36, 194);
+            this.SizeLabel.Name = "SizeLabel";
+            this.SizeLabel.Size = new System.Drawing.Size(101, 45);
+            this.SizeLabel.TabIndex = 3;
+            this.SizeLabel.Text = "File size : 0.00GB\r\n\r\nDrive size : 0.00GB";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -276,6 +320,8 @@ namespace R5_Reloaded_Installer_GUI
             ((System.ComponentModel.ISupportInitialize)(this.TopIcon)).EndInit();
             this.InformationTabPage.ResumeLayout(false);
             this.InformationTabPage.PerformLayout();
+            this.PlaceOfInstallationTabPage.ResumeLayout(false);
+            this.PlaceOfInstallationTabPage.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -301,6 +347,10 @@ namespace R5_Reloaded_Installer_GUI
         private System.Windows.Forms.LinkLabel DiscordLinkLabel;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.CheckBox AgreeCheckBox;
+        private System.Windows.Forms.Label SizeLabel;
+        private System.Windows.Forms.Button BrowseButton;
+        private System.Windows.Forms.TextBox InstallLinkTextBox;
+        private System.Windows.Forms.Label label5;
     }
 }
 
