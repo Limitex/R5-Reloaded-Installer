@@ -39,15 +39,27 @@ namespace R5_Reloaded_Installer_GUI
             new Thread(() =>
             {
                 Invoke(new Delegate(() => SetSizesText(0, DriveSize)));
-                FileSize = GetFileSize.Torrent(WebGetLink.GetApexClientLink()) +
-                    GetFileSize.Zip(WebGetLink.GetDetoursR5Link()) +
-                    GetFileSize.Zip(WebGetLink.GetScriptsR5Link()) +
-                    GetFileSize.Zip(WebGetLink.GetAria2Link());
-                Invoke(new Delegate(() => {
+
+                if (!ExitFlug) FileSize = GetFileSize.Torrent(WebGetLink.GetApexClientLink());
+                if (!ExitFlug) FileSize += GetFileSize.Zip(WebGetLink.GetDetoursR5Link());
+                if (!ExitFlug) FileSize += GetFileSize.Zip(WebGetLink.GetScriptsR5Link());
+                if (!ExitFlug) FileSize += GetFileSize.Zip(WebGetLink.GetAria2Link());
+                if (!ExitFlug) Invoke(new Delegate(() => {
                     SetSizesText(FileSize, DriveSize);
                     NextButton.Enabled = CheckSize();
                 }));
             }).Start();
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (!ExitFlug)
+            {
+                var dr = MessageBox.Show("Do you want to quit?", "Warning",
+                    MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+                if (dr == DialogResult.OK) ExitFlug = true;
+                else e.Cancel = true;
+            }
         }
 
         private void MainTabControl_Selecting(object sender, TabControlCancelEventArgs e)
@@ -95,9 +107,13 @@ namespace R5_Reloaded_Installer_GUI
                 Application.Exit();
                 return;
             }
-            var dr = MessageBox.Show("Would you like to cancel?", "Warning",
+            var dr = MessageBox.Show("Would you like to cancel the installation?", "Warning",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-            if (dr == DialogResult.Yes) Application.Exit();
+            if (dr == DialogResult.Yes)
+            {
+                ExitFlug = true;
+                Application.Exit();
+            }
         }
 
         private void DiscordLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -212,5 +228,6 @@ namespace R5_Reloaded_Installer_GUI
             MessageBox.Show("Installing Process");
             CompleteProcess();
         }
+
     }
 }
