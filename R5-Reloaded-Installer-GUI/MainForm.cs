@@ -43,7 +43,10 @@ namespace R5_Reloaded_Installer_GUI
                     GetFileSize.Zip(WebGetLink.GetDetoursR5Link()) +
                     GetFileSize.Zip(WebGetLink.GetScriptsR5Link()) +
                     GetFileSize.Zip(WebGetLink.GetAria2Link());
-                Invoke(new Delegate(() => SetSizesText(FileSize, DriveSize)));
+                Invoke(new Delegate(() => {
+                    SetSizesText(FileSize, DriveSize);
+                    NextButton.Enabled = CheckSize();
+                }));
             }).Start();
         }
 
@@ -121,6 +124,7 @@ namespace R5_Reloaded_Installer_GUI
                 InstallLinkTextBox.Text = InstallPath;
                 DriveSize = GetFileSize.DriveFreeSpace(InstallPath);
                 SetSizesText(FileSize, DriveSize);
+                NextButton.Enabled = CheckSize();
             }
         }
 
@@ -153,7 +157,7 @@ namespace R5_Reloaded_Installer_GUI
             if (nowTab == PlaceOfInstallationTabPage.Name)
             {
                 BackButton.Enabled = true;
-                NextButton.Enabled = true;
+                NextButton.Enabled = false;
                 InstallButton.Enabled = false;
             }
             if (nowTab == OptionTabPage.Name)
@@ -195,6 +199,8 @@ namespace R5_Reloaded_Installer_GUI
                 "\n\nDrive size : " +
                 GetFileSize.ByteToGByte(driveSize).ToString("0.00") + " GB";
         }
+
+        private bool CheckSize() => DriveSize > FileSize;
 
         private void CompleteProcess()
         {
