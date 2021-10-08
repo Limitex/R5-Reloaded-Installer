@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -69,6 +70,16 @@ namespace R5_Reloaded_Installer_GUI
             if (dr == DialogResult.Yes) Application.Exit();
         }
 
+        private void DiscordLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            OpenSite(DiscordLinkLabel.Text);
+        }
+
+        private void WebsiteLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            OpenSite(WebsiteLinkLabel.Text);
+        }
+
         private void ButtonToTabNext(int i)
         {
             ButtonSelectFlug = true;
@@ -121,6 +132,16 @@ namespace R5_Reloaded_Installer_GUI
                 CancelButton.Text = "Exit";
                 ExitFlug = true;
             }
+        }
+
+        private void OpenSite(string url)
+        {
+            var info = new ProcessStartInfo
+            {
+                UseShellExecute = true,
+                FileName = url,
+            };
+            Process.Start(info);
         }
 
         private void CompleteProcess()

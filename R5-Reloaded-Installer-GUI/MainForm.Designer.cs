@@ -39,6 +39,11 @@ namespace R5_Reloaded_Installer_GUI
             this.label1 = new System.Windows.Forms.Label();
             this.TopIcon = new System.Windows.Forms.PictureBox();
             this.InformationTabPage = new System.Windows.Forms.TabPage();
+            this.WebsiteLinkLabel = new System.Windows.Forms.LinkLabel();
+            this.label4 = new System.Windows.Forms.Label();
+            this.DiscordLinkLabel = new System.Windows.Forms.LinkLabel();
+            this.label3 = new System.Windows.Forms.Label();
+            this.AgreeCheckBox = new System.Windows.Forms.CheckBox();
             this.PlaceOfInstallationTabPage = new System.Windows.Forms.TabPage();
             this.OptionTabPage = new System.Windows.Forms.TabPage();
             this.ProcessTabPage = new System.Windows.Forms.TabPage();
@@ -46,6 +51,7 @@ namespace R5_Reloaded_Installer_GUI
             this.MainTabControl.SuspendLayout();
             this.IntroductionTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TopIcon)).BeginInit();
+            this.InformationTabPage.SuspendLayout();
             this.SuspendLayout();
             // 
             // CancelButton
@@ -148,6 +154,11 @@ namespace R5_Reloaded_Installer_GUI
             // 
             // InformationTabPage
             // 
+            this.InformationTabPage.Controls.Add(this.WebsiteLinkLabel);
+            this.InformationTabPage.Controls.Add(this.label4);
+            this.InformationTabPage.Controls.Add(this.DiscordLinkLabel);
+            this.InformationTabPage.Controls.Add(this.label3);
+            this.InformationTabPage.Controls.Add(this.AgreeCheckBox);
             this.InformationTabPage.Location = new System.Drawing.Point(4, 24);
             this.InformationTabPage.Name = "InformationTabPage";
             this.InformationTabPage.Padding = new System.Windows.Forms.Padding(3);
@@ -155,6 +166,56 @@ namespace R5_Reloaded_Installer_GUI
             this.InformationTabPage.TabIndex = 1;
             this.InformationTabPage.Text = "Information";
             this.InformationTabPage.UseVisualStyleBackColor = true;
+            // 
+            // WebsiteLinkLabel
+            // 
+            this.WebsiteLinkLabel.AutoSize = true;
+            this.WebsiteLinkLabel.Location = new System.Drawing.Point(28, 119);
+            this.WebsiteLinkLabel.Name = "WebsiteLinkLabel";
+            this.WebsiteLinkLabel.Size = new System.Drawing.Size(165, 15);
+            this.WebsiteLinkLabel.TabIndex = 4;
+            this.WebsiteLinkLabel.TabStop = true;
+            this.WebsiteLinkLabel.Text = "https://r5reloaded.gitbook.io/";
+            this.WebsiteLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.WebsiteLinkLabel_LinkClicked);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(28, 94);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(255, 15);
+            this.label4.TabIndex = 3;
+            this.label4.Text = "Click here for a reference to the official website.";
+            // 
+            // DiscordLinkLabel
+            // 
+            this.DiscordLinkLabel.AutoSize = true;
+            this.DiscordLinkLabel.Location = new System.Drawing.Point(28, 49);
+            this.DiscordLinkLabel.Name = "DiscordLinkLabel";
+            this.DiscordLinkLabel.Size = new System.Drawing.Size(215, 15);
+            this.DiscordLinkLabel.TabIndex = 2;
+            this.DiscordLinkLabel.TabStop = true;
+            this.DiscordLinkLabel.Text = "https://discord.com/invite/jqMkUdXrBr";
+            this.DiscordLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.DiscordLinkLabel_LinkClicked);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(28, 25);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(225, 15);
+            this.label3.TabIndex = 1;
+            this.label3.Text = "Join us for the official Discord server here.";
+            // 
+            // AgreeCheckBox
+            // 
+            this.AgreeCheckBox.AutoSize = true;
+            this.AgreeCheckBox.Location = new System.Drawing.Point(28, 223);
+            this.AgreeCheckBox.Name = "AgreeCheckBox";
+            this.AgreeCheckBox.Size = new System.Drawing.Size(232, 19);
+            this.AgreeCheckBox.TabIndex = 0;
+            this.AgreeCheckBox.Text = " I don\'t allow cosmetics from the game.";
+            this.AgreeCheckBox.UseVisualStyleBackColor = true;
             // 
             // PlaceOfInstallationTabPage
             // 
@@ -212,6 +273,8 @@ namespace R5_Reloaded_Installer_GUI
             this.MainTabControl.ResumeLayout(false);
             this.IntroductionTabPage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.TopIcon)).EndInit();
+            this.InformationTabPage.ResumeLayout(false);
+            this.InformationTabPage.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -232,6 +295,11 @@ namespace R5_Reloaded_Installer_GUI
         private System.Windows.Forms.PictureBox TopIcon;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.LinkLabel WebsiteLinkLabel;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.LinkLabel DiscordLinkLabel;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.CheckBox AgreeCheckBox;
     }
 }
 
