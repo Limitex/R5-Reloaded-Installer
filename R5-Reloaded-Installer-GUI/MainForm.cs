@@ -18,7 +18,6 @@ namespace R5_Reloaded_Installer_GUI
         public static string AppDataLocalPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
         public static string InstallPath = Path.Combine(AppDataLocalPath, DirName);
 
-
         private static bool ExitFlug = false;
         private static bool ButtonSelectFlug = false;
         
@@ -96,6 +95,16 @@ namespace R5_Reloaded_Installer_GUI
         private void AgreeCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             SetButtonEnebled();
+        }
+
+        private void BrowseButton_Click(object sender, EventArgs e)
+        {
+            var fbd = new FolderBrowserDialog();
+            if (fbd.ShowDialog(this) == DialogResult.OK)
+            {
+                InstallPath = Path.Combine(fbd.SelectedPath, DirName);
+                InstallLinkTextBox.Text = InstallPath;
+            }
         }
 
         private void ButtonToTabNext(int i)
