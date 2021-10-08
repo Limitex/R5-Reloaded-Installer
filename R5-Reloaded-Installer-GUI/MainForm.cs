@@ -95,7 +95,7 @@ namespace R5_Reloaded_Installer_GUI
             }
             var dr = MessageBox.Show("Do you want to start the installation?", "Installer",
                 MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
-            if (dr == DialogResult.OK)
+            if (dr == DialogResult.OK && CheckValue())
             {
                 ButtonToTabNext(1);
                 StartProcess();
@@ -218,6 +218,30 @@ namespace R5_Reloaded_Installer_GUI
         }
 
         private bool CheckSize() => (DriveSize > FileSize) && (DriveSize != -1) && (FileSize != -1);
+
+        private bool CheckValue()
+        {
+            if (!AgreeCheckBox.Checked)
+            {
+                MessageBox.Show("Select the check box on the Information tab before continuing.",
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            if (!(DriveSize > FileSize))
+            {
+                MessageBox.Show("There is no free space on the optical disc.",
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            if (Directory.Exists(InstallPath))
+            {
+                MessageBox.Show("The specified directory already exists.\n" +
+                    "Please move or delete the file and try again.",
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            return true;
+        }
 
         private void CompleteProcess()
         {
