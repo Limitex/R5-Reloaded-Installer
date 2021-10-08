@@ -28,7 +28,7 @@ namespace R5_Reloaded_Installer
             ConsoleExpansion.LogWrite("All files have been downloaded.");
         }
 
-        private static string Run(string url, string fileName = null, bool log = true)
+        public static string Run(string url, string fileName = null, bool log = true)
         {
             var FileName = fileName != null ? fileName + Path.GetExtension(url) : Path.GetFileName(url);
             if (File.Exists(FileName)) File.Delete(FileName);
