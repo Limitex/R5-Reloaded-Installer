@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace R5_Reloaded_Installer
+namespace R5_Reloaded_Installer.SharedClass
 {
     public static class DirectoryExpansion
     {

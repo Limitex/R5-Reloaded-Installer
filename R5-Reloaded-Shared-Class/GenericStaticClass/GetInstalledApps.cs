@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace R5_Reloaded_Installer
+namespace R5_Reloaded_Installer.SharedClass
 {
     public class GetInstalledApps
     {

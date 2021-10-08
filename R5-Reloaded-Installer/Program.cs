@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using R5_Reloaded_Installer.SharedClass;
 
 namespace R5_Reloaded_Installer
 {

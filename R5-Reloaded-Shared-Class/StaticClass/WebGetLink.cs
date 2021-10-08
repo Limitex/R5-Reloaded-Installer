@@ -3,7 +3,7 @@ using System.IO;
 using System.Net;
 using AngleSharp.Html.Parser;
 
-namespace R5_Reloaded_Installer
+namespace R5_Reloaded_Installer.SharedClass
 {
     public static class WebGetLink
     {

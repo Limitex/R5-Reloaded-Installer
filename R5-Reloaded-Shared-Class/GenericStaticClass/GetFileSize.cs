@@ -6,7 +6,7 @@ using System.IO;
 using System.Net;
 using System.Text;
 
-namespace R5_Reloaded_Installer
+namespace R5_Reloaded_Installer.SharedClass
 {
     public static class GetFileSize
     {

@@ -6,7 +6,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Net;
 
-namespace R5_Reloaded_Installer
+namespace R5_Reloaded_Installer.SharedClass
 {
     public class Download : IDisposable
     {
