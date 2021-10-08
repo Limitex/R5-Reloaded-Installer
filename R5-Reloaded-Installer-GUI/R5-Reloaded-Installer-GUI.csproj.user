@@ -4,5 +4,11 @@
     <Compile Update="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="MainForm.Expansion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="MainForm.MainProcess.cs">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
 </Project>
