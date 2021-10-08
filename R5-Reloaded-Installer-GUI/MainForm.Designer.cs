@@ -35,12 +35,17 @@ namespace R5_Reloaded_Installer_GUI
             this.BackButton = new System.Windows.Forms.Button();
             this.MainTabControl = new System.Windows.Forms.TabControl();
             this.IntroductionTabPage = new System.Windows.Forms.TabPage();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.TopIcon = new System.Windows.Forms.PictureBox();
             this.InformationTabPage = new System.Windows.Forms.TabPage();
             this.PlaceOfInstallationTabPage = new System.Windows.Forms.TabPage();
             this.OptionTabPage = new System.Windows.Forms.TabPage();
             this.ProcessTabPage = new System.Windows.Forms.TabPage();
             this.CompletionTabPage = new System.Windows.Forms.TabPage();
             this.MainTabControl.SuspendLayout();
+            this.IntroductionTabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.TopIcon)).BeginInit();
             this.SuspendLayout();
             // 
             // CancelButton
@@ -100,6 +105,9 @@ namespace R5_Reloaded_Installer_GUI
             // 
             // IntroductionTabPage
             // 
+            this.IntroductionTabPage.Controls.Add(this.label2);
+            this.IntroductionTabPage.Controls.Add(this.label1);
+            this.IntroductionTabPage.Controls.Add(this.TopIcon);
             this.IntroductionTabPage.Location = new System.Drawing.Point(4, 24);
             this.IntroductionTabPage.Name = "IntroductionTabPage";
             this.IntroductionTabPage.Padding = new System.Windows.Forms.Padding(3);
@@ -107,6 +115,36 @@ namespace R5_Reloaded_Installer_GUI
             this.IntroductionTabPage.TabIndex = 0;
             this.IntroductionTabPage.Text = "Introduction";
             this.IntroductionTabPage.UseVisualStyleBackColor = true;
+            // 
+            // label2
+            // 
+            this.label2.Location = new System.Drawing.Point(134, 120);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(296, 116);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "Welcome to the installer for Your R5-Reloaded.\r\n\r\nThe Installer will install R5-R" +
+    "eloaded on your computer.\r\n\r\nPress the Cancel button at the bottom right, if you" +
+    " want to cancel.";
+            // 
+            // label1
+            // 
+            this.label1.Font = new System.Drawing.Font("Yu Gothic UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label1.Location = new System.Drawing.Point(134, 33);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(123, 34);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Welcome!";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // TopIcon
+            // 
+            this.TopIcon.Image = global::R5_Reloaded_Installer_GUI.Properties.Resources.r5_icon;
+            this.TopIcon.Location = new System.Drawing.Point(16, 87);
+            this.TopIcon.Name = "TopIcon";
+            this.TopIcon.Size = new System.Drawing.Size(100, 100);
+            this.TopIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.TopIcon.TabIndex = 0;
+            this.TopIcon.TabStop = false;
             // 
             // InformationTabPage
             // 
@@ -172,6 +210,8 @@ namespace R5_Reloaded_Installer_GUI
             this.Text = "R5-Reloaded Installer";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.MainTabControl.ResumeLayout(false);
+            this.IntroductionTabPage.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.TopIcon)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -189,6 +229,9 @@ namespace R5_Reloaded_Installer_GUI
         private System.Windows.Forms.TabPage OptionTabPage;
         private System.Windows.Forms.TabPage ProcessTabPage;
         private System.Windows.Forms.TabPage CompletionTabPage;
+        private System.Windows.Forms.PictureBox TopIcon;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
     }
 }
 
