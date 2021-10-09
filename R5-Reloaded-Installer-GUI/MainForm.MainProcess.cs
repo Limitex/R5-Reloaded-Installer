@@ -40,7 +40,6 @@ namespace R5_Reloaded_Installer_GUI
 
         private void StartProcess()
         {
-            MessageBox.Show(InstallPath);
             new Thread(() => {
                 Invoke(new SetStatusDelgete(SetStatus), -1, -1, "Preparing...", "Waiting for download process");
                 
