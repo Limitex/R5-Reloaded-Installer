@@ -41,7 +41,7 @@ namespace R5_Reloaded_Installer_GUI
         private void StartProcess()
         {
             new Thread(() => {
-                Invoke(new SetStatusDelgete(SetStatus), -1, -1, "Preparing...", "Waiting for download process");
+                if (!ExitFlug) Invoke(new SetStatusDelgete(SetStatus), -1, -1, "Preparing...", "Waiting for download process");
                 
                 var link = WebGetLink.GetApexClientLink();
                 var TorrentFile = Path.GetFileName(link);
@@ -50,12 +50,12 @@ namespace R5_Reloaded_Installer_GUI
                 string detoursR5FileName, scriptsR5FileName;
                 using (new Download(InstallPath))
                 {
-                    if (!ExitFlug) Invoke(new SetStatusDelgete(SetStatus), -1, -1, "Downloading detours_r5", null);
+                    if (!ExitFlug) Invoke(new SetStatusDelgete(SetStatus), -1, -1, "Downloading detours_r5", null); else return;
                     detoursR5FileName = Download.RunZip(WebGetLink.GetDetoursR5Link(), InstallPath, "detours_r5");
-                    if (!ExitFlug) Invoke(new SetStatusDelgete(SetStatus), -1, -1, "Downloading scripts_r5", null);
+                    if (!ExitFlug) Invoke(new SetStatusDelgete(SetStatus), -1, -1, "Downloading scripts_r5", null); else return;
                     scriptsR5FileName = Download.RunZip(WebGetLink.GetScriptsR5Link(), InstallPath, "scripts_r5");
 
-                    if (!ExitFlug) Invoke(new SetStatusDelgete(SetStatus), 0, -1, "Preparing to download...", null);
+                    if (!ExitFlug) Invoke(new SetStatusDelgete(SetStatus), 0, -1, "Preparing to download...", null); else return;
 
                     aria2c.StartInfo = new ProcessStartInfo()
                     {
