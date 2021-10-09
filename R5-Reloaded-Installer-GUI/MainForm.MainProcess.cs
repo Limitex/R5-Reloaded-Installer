@@ -148,7 +148,7 @@ namespace R5_Reloaded_Installer_GUI
                             if (mat.Contains(exc) && (exc.Length != 0))
                                 DownloadStatusLabel.Text = mat.Replace(exc, " ");
                             else
-                                DownloadStatusLabel.Text = match;
+                                DownloadStatusLabel.Text = mat;
                         }
                     }
                 }));
