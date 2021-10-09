@@ -16,6 +16,11 @@ namespace R5_Reloaded_Installer.SharedClass
 
         public Download(string directoryPath = "")
         {
+            if (directoryPath != "")
+            {
+                if (Directory.Exists(directoryPath)) DirectoryExpansion.AllDelete(directoryPath);
+                Directory.CreateDirectory(directoryPath);
+            }
             ConsoleExpansion.LogWrite("Preparing for download.");
             Aria2Path = Path.Combine(RunZip(WebGetLink.GetAria2Link(), directoryPath, "aria2" , false), Aria2ExecutableFileName);
             ConsoleExpansion.LogWrite("Success.");
@@ -78,7 +83,7 @@ namespace R5_Reloaded_Installer.SharedClass
             var dirs = Directory.GetDirectories(DirectoryPath);
             if (files.Length == 0 && dirs.Length == 1)
             {
-                Directory.Move(dirs[0], DirectoryName + "_Buffer");
+                Directory.Move(dirs[0], DirectoryPath + "_Buffer");
                 Directory.Delete(DirectoryPath);
                 Directory.Move(DirectoryPath + "_Buffer", DirectoryPath);
             }
