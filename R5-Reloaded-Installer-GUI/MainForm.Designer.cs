@@ -57,6 +57,7 @@ namespace R5_Reloaded_Installer_GUI
             this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.OverallStatusLabel = new System.Windows.Forms.Label();
+            this.TimeLeftLabel = new System.Windows.Forms.Label();
             this.DownloadStatusLabel = new System.Windows.Forms.Label();
             this.OverallProgressBar = new System.Windows.Forms.ProgressBar();
             this.DownloadProgressBar = new System.Windows.Forms.ProgressBar();
@@ -336,6 +337,7 @@ namespace R5_Reloaded_Installer_GUI
             this.ProcessTabPage.Controls.Add(this.label10);
             this.ProcessTabPage.Controls.Add(this.label9);
             this.ProcessTabPage.Controls.Add(this.OverallStatusLabel);
+            this.ProcessTabPage.Controls.Add(this.TimeLeftLabel);
             this.ProcessTabPage.Controls.Add(this.DownloadStatusLabel);
             this.ProcessTabPage.Controls.Add(this.OverallProgressBar);
             this.ProcessTabPage.Controls.Add(this.DownloadProgressBar);
@@ -375,10 +377,20 @@ namespace R5_Reloaded_Installer_GUI
             this.OverallStatusLabel.TabIndex = 4;
             this.OverallStatusLabel.Text = "Status";
             // 
+            // TimeLeftLabel
+            // 
+            this.TimeLeftLabel.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.TimeLeftLabel.Location = new System.Drawing.Point(122, 86);
+            this.TimeLeftLabel.Name = "TimeLeftLabel";
+            this.TimeLeftLabel.Size = new System.Drawing.Size(313, 15);
+            this.TimeLeftLabel.TabIndex = 3;
+            this.TimeLeftLabel.Text = "0 : TimeLeft";
+            this.TimeLeftLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // DownloadStatusLabel
             // 
             this.DownloadStatusLabel.AutoSize = true;
-            this.DownloadStatusLabel.Location = new System.Drawing.Point(15, 130);
+            this.DownloadStatusLabel.Location = new System.Drawing.Point(19, 130);
             this.DownloadStatusLabel.Name = "DownloadStatusLabel";
             this.DownloadStatusLabel.Size = new System.Drawing.Size(39, 15);
             this.DownloadStatusLabel.TabIndex = 3;
@@ -495,6 +507,7 @@ namespace R5_Reloaded_Installer_GUI
         private System.Windows.Forms.ProgressBar DownloadProgressBar;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label TimeLeftLabel;
     }
 }
 

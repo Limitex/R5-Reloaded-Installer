@@ -7,6 +7,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -49,12 +50,12 @@ namespace R5_Reloaded_Installer_GUI
                 string detoursR5FileName, scriptsR5FileName;
                 using (new Download(InstallPath))
                 {
-                    if (!ExitFlug) Invoke(new SetStatusDelgete(SetStatus), 1, -1, "Downloading detours_r5", null);
+                    if (!ExitFlug) Invoke(new SetStatusDelgete(SetStatus), -1, -1, "Downloading detours_r5", null);
                     detoursR5FileName = Download.RunZip(WebGetLink.GetDetoursR5Link(), InstallPath, "detours_r5");
-                    if (!ExitFlug) Invoke(new SetStatusDelgete(SetStatus), 2, -1, "Downloading scripts_r5", null);
+                    if (!ExitFlug) Invoke(new SetStatusDelgete(SetStatus), -1, -1, "Downloading scripts_r5", null);
                     scriptsR5FileName = Download.RunZip(WebGetLink.GetScriptsR5Link(), InstallPath, "scripts_r5");
 
-                    if (!ExitFlug) Invoke(new SetStatusDelgete(SetStatus), 3, -1, "Preparing to download...", null);
+                    if (!ExitFlug) Invoke(new SetStatusDelgete(SetStatus), 0, -1, "Preparing to download...", null);
 
                     aria2c.StartInfo = new ProcessStartInfo()
                     {
@@ -78,26 +79,28 @@ namespace R5_Reloaded_Installer_GUI
                     aria2c.WaitForExit();
                     aria2c.Close();
                 }
-                var BufferPath = Path.Combine(new DirectoryInfo(InstallPath).Parent.FullName, DirName + "_Buffer"); // DirName
-                Directory.Move(TorrentPath, BufferPath);
-                DirectoryExpansion.MoveOverwrite(detoursR5FileName, BufferPath);
-                Directory.Move(scriptsR5FileName, Path.Combine(BufferPath, ScriptsDirectoryPath));
-                System.IO.File.Move(Path.Combine(InstallPath, TorrentFile), Path.Combine(BufferPath, TorrentFile));
-                Directory.Delete(InstallPath);
-                Directory.Move(BufferPath, InstallPath);
-
-                var AppPath = Path.Combine(InstallPath, ExecutableFileName);
-                var desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
-                var startMenuPath = Directory.GetDirectories(Environment.GetFolderPath(Environment.SpecialFolder.StartMenu))[0];
-                var startmenuShortcutPath = Path.Combine(startMenuPath, "R5-Reloaded");
-
-                if(CreateShortcutFlug)
-                    CreateR5Shortcut(desktopPath, AppPath);
-
-                if (AddStartMenuFlug)
+                if (!ExitFlug)
                 {
-                    Directory.CreateDirectory(startmenuShortcutPath);
-                    CreateR5Shortcut(startmenuShortcutPath, AppPath);
+                    var BufferPath = Path.Combine(new DirectoryInfo(InstallPath).Parent.FullName, DirName + "_Buffer"); // DirName
+                    Directory.Move(TorrentPath, BufferPath);
+                    DirectoryExpansion.MoveOverwrite(detoursR5FileName, BufferPath);
+                    Directory.Move(scriptsR5FileName, Path.Combine(BufferPath, ScriptsDirectoryPath));
+                    File.Move(Path.Combine(InstallPath, TorrentFile), Path.Combine(BufferPath, TorrentFile));
+                    DirectoryExpansion.AllDelete(InstallPath);
+                    Directory.Move(BufferPath, InstallPath);
+
+                    var AppPath = Path.Combine(InstallPath, ExecutableFileName);
+                    var desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
+                    var startMenuPath = Directory.GetDirectories(Environment.GetFolderPath(Environment.SpecialFolder.StartMenu))[0];
+                    var startmenuShortcutPath = Path.Combine(startMenuPath, "R5-Reloaded");
+
+                    if (CreateShortcutFlug)
+                        CreateR5Shortcut(desktopPath, AppPath);
+                    if (AddStartMenuFlug)
+                    {
+                        Directory.CreateDirectory(startmenuShortcutPath);
+                        CreateR5Shortcut(startmenuShortcutPath, AppPath);
+                    }
                 }
 
                 if (!ExitFlug) Invoke(new Delegate(() => CompleteProcess()));
@@ -112,7 +115,27 @@ namespace R5_Reloaded_Installer_GUI
                     string vs = outLine.Data;
                     if (vs[0] == '[')
                     {
-                        DownloadStatusLabel.Text = outLine.Data;
+                        var match = Regex.Match(vs, @"\[(.*?)\]").Value;
+
+                        if (match.Contains("ETA:"))
+                        {
+                            var GB = Regex.Match(match, @"(?<=( )).*?(?=\()").Value;
+                            var PA = Regex.Match(match, @"(?<=\().*?(?=%\))").Value;
+                            var CN = Regex.Match(match, @"(?<=CN:).*?(?=( ))").Value;
+                            var SD = Regex.Match(match, @"(?<=SD:).*?(?=( ))").Value;
+                            var DL = Regex.Match(match, @"(?<=DL:).*?(?=( ))").Value;
+                            var UL = Regex.Match(match, @"(?<=UL:).*?(?=( ))").Value;
+                            var ET = Regex.Match(match, @"(?<=ETA:).*?(?=(\]))").Value;
+
+                            TimeLeftLabel.Text = ET + " : Time left";
+                            SetStatus(int.Parse(PA), -1, null, null);
+                            DownloadStatusLabel.Text = "Size : " + GB + " , Speed : " + DL;
+                        }
+                        else
+                        {
+                            DownloadStatusLabel.Text = "Securing area... : " + 
+                                Regex.Match(vs.Remove(0, 1), @"(?<=(\[)).*?(?=\])").Value;
+                        }
                     }
                 }));
             }
