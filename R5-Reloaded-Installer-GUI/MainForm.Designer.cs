@@ -64,6 +64,9 @@ namespace R5_Reloaded_Installer_GUI
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.CompletionTabPage = new System.Windows.Forms.TabPage();
+            this.LaunchCheckBox = new System.Windows.Forms.CheckBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
             this.MainTabControl.SuspendLayout();
             this.IntroductionTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TopIcon)).BeginInit();
@@ -71,6 +74,7 @@ namespace R5_Reloaded_Installer_GUI
             this.PlaceOfInstallationTabPage.SuspendLayout();
             this.OptionTabPage.SuspendLayout();
             this.ProcessTabPage.SuspendLayout();
+            this.CompletionTabPage.SuspendLayout();
             this.SuspendLayout();
             // 
             // CancelButton
@@ -431,12 +435,45 @@ namespace R5_Reloaded_Installer_GUI
             // 
             // CompletionTabPage
             // 
+            this.CompletionTabPage.Controls.Add(this.LaunchCheckBox);
+            this.CompletionTabPage.Controls.Add(this.label12);
+            this.CompletionTabPage.Controls.Add(this.label11);
             this.CompletionTabPage.Location = new System.Drawing.Point(4, 24);
             this.CompletionTabPage.Name = "CompletionTabPage";
             this.CompletionTabPage.Size = new System.Drawing.Size(452, 280);
             this.CompletionTabPage.TabIndex = 5;
             this.CompletionTabPage.Text = "Completion";
             this.CompletionTabPage.UseVisualStyleBackColor = true;
+            // 
+            // LaunchCheckBox
+            // 
+            this.LaunchCheckBox.AutoSize = true;
+            this.LaunchCheckBox.Checked = true;
+            this.LaunchCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.LaunchCheckBox.Location = new System.Drawing.Point(35, 170);
+            this.LaunchCheckBox.Name = "LaunchCheckBox";
+            this.LaunchCheckBox.Size = new System.Drawing.Size(155, 19);
+            this.LaunchCheckBox.TabIndex = 2;
+            this.LaunchCheckBox.Text = "Launch the R5-Reloaded";
+            this.LaunchCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // label12
+            // 
+            this.label12.Location = new System.Drawing.Point(35, 66);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(372, 39);
+            this.label12.TabIndex = 1;
+            this.label12.Text = "The download and installation of R5-Reloaded has been completed successfully.";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Yu Gothic UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label11.Location = new System.Drawing.Point(24, 28);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(213, 25);
+            this.label11.TabIndex = 0;
+            this.label11.Text = "Installation is Complete.";
             // 
             // MainForm
             // 
@@ -467,6 +504,8 @@ namespace R5_Reloaded_Installer_GUI
             this.OptionTabPage.PerformLayout();
             this.ProcessTabPage.ResumeLayout(false);
             this.ProcessTabPage.PerformLayout();
+            this.CompletionTabPage.ResumeLayout(false);
+            this.CompletionTabPage.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -508,6 +547,9 @@ namespace R5_Reloaded_Installer_GUI
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label TimeLeftLabel;
+        private System.Windows.Forms.CheckBox LaunchCheckBox;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label11;
     }
 }
 

@@ -90,6 +90,7 @@ namespace R5_Reloaded_Installer_GUI
         {
             if (ExitFlug)
             {
+                if(LaunchCheckBox.Checked) Process.Start(Path.Combine(InstallPath, ExecutableFileName));
                 Application.Exit();
                 return;
             }
