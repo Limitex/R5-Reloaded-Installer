@@ -161,6 +161,7 @@ namespace R5_Reloaded_Installer_GUI
             GetInstalledApps.CreateShortcut(path, "R5-Reloaded (Debug)", LinkDestination, "-debug");
             GetInstalledApps.CreateShortcut(path, "R5-Reloaded (Release)", LinkDestination, "-release");
             GetInstalledApps.CreateShortcut(path, "R5-Reloaded (Dedicated)", LinkDestination, "-dedicated");
+            GetInstalledApps.CreateShortcut(path, "Scripts", Path.Combine(InstallPath, ScriptsDirectoryPath), "");
         }
 
         private delegate void SetStatusDelgete(int dpValue, int opValue, string dsText, string osText);
