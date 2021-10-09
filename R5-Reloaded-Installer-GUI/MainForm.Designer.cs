@@ -67,6 +67,7 @@ namespace R5_Reloaded_Installer_GUI
             this.LaunchCheckBox = new System.Windows.Forms.CheckBox();
             this.label12 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
             this.MainTabControl.SuspendLayout();
             this.IntroductionTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TopIcon)).BeginInit();
@@ -436,6 +437,7 @@ namespace R5_Reloaded_Installer_GUI
             // CompletionTabPage
             // 
             this.CompletionTabPage.Controls.Add(this.LaunchCheckBox);
+            this.CompletionTabPage.Controls.Add(this.label13);
             this.CompletionTabPage.Controls.Add(this.label12);
             this.CompletionTabPage.Controls.Add(this.label11);
             this.CompletionTabPage.Location = new System.Drawing.Point(4, 24);
@@ -474,6 +476,15 @@ namespace R5_Reloaded_Installer_GUI
             this.label11.Size = new System.Drawing.Size(213, 25);
             this.label11.TabIndex = 0;
             this.label11.Text = "Installation is Complete.";
+            // 
+            // label13
+            // 
+            this.label13.Location = new System.Drawing.Point(35, 105);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(372, 39);
+            this.label13.TabIndex = 1;
+            this.label13.Text = "Also, since the game client torrent file is generated in the installed directory," +
+    " please seed it using the existing torrent client software.";
             // 
             // MainForm
             // 
@@ -550,6 +561,7 @@ namespace R5_Reloaded_Installer_GUI
         private System.Windows.Forms.CheckBox LaunchCheckBox;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label13;
     }
 }
 
