@@ -10,7 +10,6 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using IWshRuntimeLibrary;
 using R5_Reloaded_Installer.SharedClass;
 
 namespace R5_Reloaded_Installer_GUI
@@ -29,7 +28,7 @@ namespace R5_Reloaded_Installer_GUI
 
         private void StartProcessInitialize()
         {
-            TargetDirectory = InstallPath; // Installer
+            TargetDirectory = InstallPath;
             CreateShortcutFlug = CreateDesktopShortcutCheckBox.Checked;
             AddStartMenuFlug = AddToStartMenuCheckBox.Checked;
         }
@@ -118,6 +117,7 @@ namespace R5_Reloaded_Installer_GUI
                 }));
             }
         }
+
         private void CreateR5Shortcut(string path, string LinkDestination)
         {
             GetInstalledApps.CreateShortcut(path, "R5-Reloaded", LinkDestination, "");
