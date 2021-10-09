@@ -146,7 +146,11 @@ namespace R5_Reloaded_Installer_GUI
                             var mat = Regex.Match(vs.Remove(0, 1), @"(?<=(\[)).*?(?=\])").Value;
                             var exc = Regex.Match(mat, @"#(.*?)( )").Value;
                             if (mat.Contains(exc) && (exc.Length != 0))
+                            {
                                 DownloadStatusLabel.Text = mat.Replace(exc, " ");
+                                TimeLeftLabel.Text = "in preparation : TimeLeft.";
+                            }
+                                
                             else if (!match.Contains("SEED"))
                             {
                                 DownloadStatusLabel.Text = "Please wait for a while until you can connect to the tracker.";
