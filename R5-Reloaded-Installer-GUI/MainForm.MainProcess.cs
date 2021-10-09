@@ -95,10 +95,16 @@ namespace R5_Reloaded_Installer_GUI
                 var AppPath = Path.Combine(TargetDirectory, ExecutableFileName);
                 var desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
                 var startMenuPath = Directory.GetDirectories(Environment.GetFolderPath(Environment.SpecialFolder.StartMenu))[0];
-                CreateR5Shortcut(desktopPath, AppPath);
                 var startmenuShortcutPath = Path.Combine(startMenuPath, "R5-Reloaded");
-                Directory.CreateDirectory(startmenuShortcutPath);
-                CreateR5Shortcut(startmenuShortcutPath, AppPath);
+
+                if(CreateShortcutFlug)
+                    CreateR5Shortcut(desktopPath, AppPath);
+
+                if (AddStartMenuFlug)
+                {
+                    Directory.CreateDirectory(startmenuShortcutPath);
+                    CreateR5Shortcut(startmenuShortcutPath, AppPath);
+                }
 
                 if (!ExitFlug) Invoke(new Delegate(() => CompleteProcess()));
             }).Start();
