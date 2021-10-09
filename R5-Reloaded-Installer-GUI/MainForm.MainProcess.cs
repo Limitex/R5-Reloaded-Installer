@@ -143,8 +143,12 @@ namespace R5_Reloaded_Installer_GUI
                         }
                         else
                         {
-                            DownloadStatusLabel.Text = "Securing area... : " + 
-                                Regex.Match(vs.Remove(0, 1), @"(?<=(\[)).*?(?=\])").Value;
+                            var mat = Regex.Match(vs.Remove(0, 1), @"(?<=(\[)).*?(?=\])").Value;
+                            var exc = Regex.Match(mat, @"#(.*?)( )").Value;
+                            if (mat.Contains(exc))
+                                DownloadStatusLabel.Text = mat.Replace(exc, " ");
+                            else
+                                DownloadStatusLabel.Text = match;
                         }
                     }
                 }));

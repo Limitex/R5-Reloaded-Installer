@@ -384,7 +384,7 @@ namespace R5_Reloaded_Installer_GUI
             this.TimeLeftLabel.Name = "TimeLeftLabel";
             this.TimeLeftLabel.Size = new System.Drawing.Size(313, 15);
             this.TimeLeftLabel.TabIndex = 3;
-            this.TimeLeftLabel.Text = "0 : TimeLeft";
+            this.TimeLeftLabel.Text = "in preparation : TimeLeft";
             this.TimeLeftLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // DownloadStatusLabel
