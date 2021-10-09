@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31515.178
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "R5-Reloaded-Installer", "R5-Reloaded-Installer\R5-Reloaded-Installer.csproj", "{B53CCEB6-B87B-41E5-99C5-C735B011B31F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "R5-Reloaded-Installer", "R5-Reloaded-Installer\R5-Reloaded-Installer.csproj", "{B53CCEB6-B87B-41E5-99C5-C735B011B31F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "R5-Reloaded-Installer-GUI", "R5-Reloaded-Installer-GUI\R5-Reloaded-Installer-GUI.csproj", "{C372D380-7FC7-4F45-A093-18DA6933743E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "R5-Reloaded-Shared-Class", "R5-Reloaded-Shared-Class\R5-Reloaded-Shared-Class.csproj", "{781AA839-AB09-40F3-92D6-7E9AC197E196}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{B53CCEB6-B87B-41E5-99C5-C735B011B31F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B53CCEB6-B87B-41E5-99C5-C735B011B31F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B53CCEB6-B87B-41E5-99C5-C735B011B31F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C372D380-7FC7-4F45-A093-18DA6933743E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C372D380-7FC7-4F45-A093-18DA6933743E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C372D380-7FC7-4F45-A093-18DA6933743E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C372D380-7FC7-4F45-A093-18DA6933743E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{781AA839-AB09-40F3-92D6-7E9AC197E196}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{781AA839-AB09-40F3-92D6-7E9AC197E196}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{781AA839-AB09-40F3-92D6-7E9AC197E196}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{781AA839-AB09-40F3-92D6-7E9AC197E196}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -6,18 +6,23 @@ using System.IO;
 using System.IO.Compression;
 using System.Net;
 
-namespace R5_Reloaded_Installer
+namespace R5_Reloaded_Installer.SharedClass
 {
     public class Download : IDisposable
     {
-        private static string Aria2Path;
-        private static string Aria2ExecutableFileName = "aria2c.exe";
-        private static string Argument = "--seed-time=0";
+        public static string Aria2Path { get; private set; }
+        public static string Aria2ExecutableFileName { get; private set; } = "aria2c.exe";
+        public static string Argument { get; private set; } = "--seed-time=0";
 
-        public Download()
+        public Download(string directoryPath = "")
         {
+            if (directoryPath != "")
+            {
+                if (Directory.Exists(directoryPath)) DirectoryExpansion.AllDelete(directoryPath);
+                Directory.CreateDirectory(directoryPath);
+            }
             ConsoleExpansion.LogWrite("Preparing for download.");
-            Aria2Path = Path.Combine(RunZip(WebGetLink.GetAria2Link(), "aria2", false), Aria2ExecutableFileName);
+            Aria2Path = Path.Combine(RunZip(WebGetLink.GetAria2Link(), directoryPath, "aria2" , false), Aria2ExecutableFileName);
             ConsoleExpansion.LogWrite("Success.");
             ConsoleExpansion.LogWrite("Start downloading the file.");
         }
@@ -28,23 +33,24 @@ namespace R5_Reloaded_Installer
             ConsoleExpansion.LogWrite("All files have been downloaded.");
         }
 
-        private static string Run(string url, string fileName = null, bool log = true)
+        public static string Run(string url, string directoryPath = "", string fileName = null, bool log = true)
         {
             var FileName = fileName != null ? fileName + Path.GetExtension(url) : Path.GetFileName(url);
-            if (File.Exists(FileName)) File.Delete(FileName);
+            var FilePath = Path.Combine(directoryPath, FileName);
+            if (File.Exists(FilePath)) File.Delete(FilePath);
             if(log) ConsoleExpansion.LogWrite("Downloading " + Path.GetFileName(url) + " file.");
             try
             {
-                new WebClient().DownloadFile(url, FileName);
+                new WebClient().DownloadFile(url, FilePath);
             }
             catch
             {
                 ConsoleExpansion.LogError("Failed to download the file.");
                 ConsoleExpansion.Exit();
             }
-            return FileName;
+            return FilePath;
         }
-        public static string RunZip(string url, string directoryName = null, bool log = true)
+        public static string RunZip(string url, string directoryPath = "", string directoryName = null, bool log = true)
         {
             if (GetExtension(url) != "zip")
             {
@@ -54,16 +60,17 @@ namespace R5_Reloaded_Installer
             }
 
             var DirectoryName = directoryName != null ? directoryName : Path.GetFileName(url).Replace(Path.GetExtension(url), "");
+            var DirectoryPath = Path.Combine(directoryPath, DirectoryName);
 
-            var FileName = Run(url, DirectoryName, log);
+            var FileName = Run(url, directoryPath, DirectoryName, log);
             if (log) ConsoleExpansion.LogWrite("Unzip the zip file.");
 
-            if (Directory.Exists(DirectoryName)) DirectoryExpansion.AllDelete(DirectoryName);
-            Directory.CreateDirectory(DirectoryName);
+            if (Directory.Exists(DirectoryPath)) DirectoryExpansion.AllDelete(DirectoryPath);
+            Directory.CreateDirectory(DirectoryPath);
 
             try
             {
-                ZipFile.ExtractToDirectory(FileName, DirectoryName);
+                ZipFile.ExtractToDirectory(FileName, DirectoryPath);
                 File.Delete(FileName);
             }
             catch
@@ -72,18 +79,18 @@ namespace R5_Reloaded_Installer
                 ConsoleExpansion.Exit();
             }
 
-            var files = Directory.GetFiles(DirectoryName);
-            var dirs = Directory.GetDirectories(DirectoryName);
+            var files = Directory.GetFiles(DirectoryPath);
+            var dirs = Directory.GetDirectories(DirectoryPath);
             if (files.Length == 0 && dirs.Length == 1)
             {
-                Directory.Move(dirs[0], DirectoryName + "_Buffer");
-                Directory.Delete(DirectoryName);
-                Directory.Move(DirectoryName + "_Buffer", DirectoryName);
+                Directory.Move(dirs[0], DirectoryPath + "_Buffer");
+                Directory.Delete(DirectoryPath);
+                Directory.Move(DirectoryPath + "_Buffer", DirectoryPath);
             }
             if (log) ConsoleExpansion.LogWrite("Success.");
-            return DirectoryName;
+            return DirectoryPath;
         }
-        public static string RunTorrent(string url, string directoryName = null)
+        public static string RunTorrent(string url, string directoryPath = "", string directoryName = null)
         {
             if (GetExtension(url) != "torrent")
             {
@@ -92,13 +99,13 @@ namespace R5_Reloaded_Installer
                 return null;
             }
 
-            var FileName = Run(url);
+            var FilePath = Run(url, directoryPath);
 
             var DriveInfo = new DriveInfo(Path.GetPathRoot(Process.GetCurrentProcess().MainModule.FileName));
-            var TorerntByteSize = new BencodeParser().Parse<Torrent>(FileName).TotalSize;
+            var TorerntByteSize = new BencodeParser().Parse<Torrent>(FilePath).TotalSize;
             var DriveByteSize = DriveInfo.AvailableFreeSpace;
-            ConsoleExpansion.LogWrite("Torrent Download Size : " + ByteToGByte(TorerntByteSize) + " GByte");
-            ConsoleExpansion.LogWrite(DriveInfo.Name + " Drive Free Space  : " + ByteToGByte(DriveByteSize) + " GByte");
+            ConsoleExpansion.LogWrite("Torrent Download Size : " + GetFileSize.ByteToGByte(TorerntByteSize) + " GByte");
+            ConsoleExpansion.LogWrite(DriveInfo.Name + " Drive Free Space  : " + GetFileSize.ByteToGByte(DriveByteSize) + " GByte");
             if (TorerntByteSize > DriveByteSize)
             {
                 ConsoleExpansion.LogError("There is not enough disk space.");
@@ -113,7 +120,8 @@ namespace R5_Reloaded_Installer
             ConsoleExpansion.WriteWidth('=', "Download with aria2");
             Process aria2Process = new Process();
             aria2Process.StartInfo.FileName = Aria2Path;
-            aria2Process.StartInfo.Arguments = FileName + " " + Argument;
+            aria2Process.StartInfo.Arguments = FilePath + " " + Argument;
+            aria2Process.StartInfo.WorkingDirectory = directoryPath;
             aria2Process.Start();
             aria2Process.WaitForExit();
             aria2Process.Close();
@@ -124,18 +132,18 @@ namespace R5_Reloaded_Installer
             ConsoleExpansion.LogNotes("No one may be able to download it from torrents.");
             ConsoleExpansion.LogNotes("The torrent file exists in the directory.");
 
-            var rawName = FileName.Replace(Path.GetExtension(FileName), "");
+            var rawPath = FilePath.Replace(Path.GetExtension(FilePath), "");
+            var DirectoryPath = Path.Combine(directoryPath, directoryName);
             if (directoryName != null)
             {
-                Directory.Move(rawName, directoryName);
+                Directory.Move(rawPath, DirectoryPath);
                 return directoryName;
             }
             else
             {
-                return rawName;
+                return rawPath;
             }
         }
         private static string GetExtension(string url) => Path.GetExtension(url).Replace(".", "").ToLower();
-        private static float ByteToGByte(long value) => value / 1024f / 1024f / 1024f;
     }
 }
