@@ -10,9 +10,9 @@ namespace R5_Reloaded_Installer.SharedClass
 {
     public class Download : IDisposable
     {
-        private static string Aria2Path;
-        private static string Aria2ExecutableFileName = "aria2c.exe";
-        private static string Argument = "--seed-time=0";
+        public static string Aria2Path { get; private set; }
+        public static string Aria2ExecutableFileName { get; private set; } = "aria2c.exe";
+        public static string Argument { get; private set; } = "--seed-time=0";
 
         public Download(string directoryPath = "")
         {

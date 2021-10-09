@@ -20,6 +20,7 @@ namespace R5_Reloaded_Installer_GUI
         public static string AppDataLocalPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
         public static string InstallPath = Path.Combine(AppDataLocalPath, DirName);
 
+
         private static bool ExitFlug = false;
         private static bool ButtonSelectFlug = false;
         private static long FileSize = -1;
@@ -29,7 +30,6 @@ namespace R5_Reloaded_Installer_GUI
         public MainForm()
         {
             InitializeComponent();
-
             if (!CheckApplication())
             {
                 MessageBox.Show("Origin or Apex Legends were not detected.\n" +
@@ -52,7 +52,7 @@ namespace R5_Reloaded_Installer_GUI
             {
                 var dr = MessageBox.Show("Do you want to quit?", "Warning",
                     MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
-                if (dr == DialogResult.OK) ExitFlug = true;
+                if (dr == DialogResult.OK) ExitProcess();
                 else e.Cancel = true;
             }
         }
@@ -89,7 +89,7 @@ namespace R5_Reloaded_Installer_GUI
             }
             var dr = MessageBox.Show("Do you want to start the installation?", "Installer",
                 MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
-            if (dr == DialogResult.OK && CheckValue())
+            if (dr == DialogResult.OK /*&& CheckValue()*/)
             {
                 ButtonToTabNext(1);
                 StartProcessInitialize();
@@ -107,7 +107,7 @@ namespace R5_Reloaded_Installer_GUI
                 MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (dr == DialogResult.Yes)
             {
-                ExitFlug = true;
+                ExitProcess();
                 Application.Exit();
             }
         }

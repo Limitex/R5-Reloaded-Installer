@@ -1,6 +1,8 @@
-﻿using Microsoft.Win32;
+﻿using IWshRuntimeLibrary;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -31,6 +33,20 @@ namespace R5_Reloaded_Installer.SharedClass
                 else nameList.Add(subKey);
             }
             return nameList;
+        }
+
+        public static void CreateShortcut(string path, string name, string LinkDestination, string arguments)
+        {
+            WshShell shell = new WshShell();
+            IWshShortcut shortcut = (IWshShortcut)shell.CreateShortcut(Path.Combine(path, name + @".lnk"));
+            shortcut.TargetPath = LinkDestination;
+            shortcut.Arguments = arguments;
+            shortcut.WorkingDirectory = Path.GetDirectoryName(LinkDestination);
+            shortcut.WindowStyle = 1;
+            shortcut.IconLocation = LinkDestination + ",0";
+            shortcut.Save();
+            System.Runtime.InteropServices.Marshal.FinalReleaseComObject(shortcut);
+            System.Runtime.InteropServices.Marshal.FinalReleaseComObject(shell);
         }
     }
 }

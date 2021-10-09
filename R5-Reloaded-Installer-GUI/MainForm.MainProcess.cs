@@ -10,26 +10,49 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using IWshRuntimeLibrary;
 using R5_Reloaded_Installer.SharedClass;
 
 namespace R5_Reloaded_Installer_GUI
 {
     partial class MainForm
     {
+        private static string ExecutableFileName = "r5reloaded.exe";
+        private static string ScriptsDirectoryPath = Path.Combine("platform", "scripts");
+
         private static string TargetDirectory;
         private static bool CreateShortcutFlug;
         private static bool AddStartMenuFlug;
+
+        private static Process aria2c = new Process();
+        private static bool aria2ProcessFlug = false;
+
         private void StartProcessInitialize()
         {
-            TargetDirectory = InstallPath;
+            TargetDirectory = InstallPath; // Installer
             CreateShortcutFlug = CreateDesktopShortcutCheckBox.Checked;
             AddStartMenuFlug = AddToStartMenuCheckBox.Checked;
+        }
+
+        private void ExitProcess()
+        {
+            ExitFlug = true;
+            if (aria2ProcessFlug)
+            {
+                aria2c.Kill();
+                aria2c.Close();
+            }
         }
 
         private void StartProcess()
         {
             new Thread(() => {
                 Invoke(new SetStatusDelgete(SetStatus), -1, -1, "Preparing...", "Waiting for download process");
+                
+                var link = WebGetLink.GetApexClientLink();
+                var TorrentFile = Path.GetFileName(link);
+                var TorrentPath = Path.Combine(TargetDirectory, TorrentFile.Replace(Path.GetExtension(TorrentFile), ""));
+
                 string detoursR5FileName, scriptsR5FileName;
                 using (new Download(TargetDirectory))
                 {
@@ -37,11 +60,70 @@ namespace R5_Reloaded_Installer_GUI
                     detoursR5FileName = Download.RunZip(WebGetLink.GetDetoursR5Link(), TargetDirectory, "detours_r5");
                     Invoke(new SetStatusDelgete(SetStatus), 2, -1, "Downloading scripts_r5", null);
                     scriptsR5FileName = Download.RunZip(WebGetLink.GetScriptsR5Link(), TargetDirectory, "scripts_r5");
-                    Invoke(new SetStatusDelgete(SetStatus), 3, -1, "Downloading APEX Client", null);
-                }
 
-                Invoke(new Delegate(() => CompleteProcess()));
+                    Invoke(new SetStatusDelgete(SetStatus), 3, -1, "Preparing to download...", null);
+
+                    aria2c.StartInfo = new ProcessStartInfo()
+                    {
+                        FileName = Download.Aria2Path,
+                        Arguments = link + " " + Download.Argument,
+                        WorkingDirectory = TargetDirectory,
+                        CreateNoWindow = true,
+                        UseShellExecute = false,
+                        RedirectStandardInput = true,
+                        RedirectStandardOutput = true,
+                        RedirectStandardError = true
+                    };
+                    aria2c.EnableRaisingEvents = true;
+                    aria2c.Exited += new EventHandler((EHsender, EHe) => { });
+                    aria2c.ErrorDataReceived += new DataReceivedEventHandler(EventHandler_ConsoleOutputHandler);
+                    aria2c.OutputDataReceived += new DataReceivedEventHandler(EventHandler_ConsoleOutputHandler);
+                    aria2ProcessFlug = true;
+                    aria2c.Start();
+                    aria2c.BeginOutputReadLine();
+                    aria2c.BeginErrorReadLine();
+                    aria2c.WaitForExit();
+                    aria2c.Close();
+                }
+                var BufferPath = Path.Combine(new DirectoryInfo(TargetDirectory).Parent.FullName, DirName + "_Buffer"); // DirName
+                Directory.Move(TorrentPath, BufferPath);
+                DirectoryExpansion.MoveOverwrite(detoursR5FileName, BufferPath);
+                Directory.Move(scriptsR5FileName, Path.Combine(BufferPath, ScriptsDirectoryPath));
+                System.IO.File.Move(Path.Combine(TargetDirectory, TorrentFile), Path.Combine(BufferPath, TorrentFile));
+                Directory.Delete(TargetDirectory);
+                Directory.Move(BufferPath, TargetDirectory);
+
+                var AppPath = Path.Combine(TargetDirectory, ExecutableFileName);
+                var desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
+                var startMenuPath = Directory.GetDirectories(Environment.GetFolderPath(Environment.SpecialFolder.StartMenu))[0];
+                CreateR5Shortcut(desktopPath, AppPath);
+                var startmenuShortcutPath = Path.Combine(startMenuPath, "R5-Reloaded");
+                Directory.CreateDirectory(startmenuShortcutPath);
+                CreateR5Shortcut(startmenuShortcutPath, AppPath);
+
+                if (!ExitFlug) Invoke(new Delegate(() => CompleteProcess()));
             }).Start();
+        }
+        private void EventHandler_ConsoleOutputHandler(object sendingProcess, DataReceivedEventArgs outLine)
+        {
+            if (!String.IsNullOrEmpty(outLine.Data))
+            {
+                Invoke(new Delegate(() =>
+                {
+                    string vs = outLine.Data;
+                    if (vs[0] == '[')
+                    {
+                        DownloadStatusLabel.Text = outLine.Data;
+                    }
+                }));
+            }
+        }
+        private void CreateR5Shortcut(string path, string LinkDestination)
+        {
+            GetInstalledApps.CreateShortcut(path, "R5-Reloaded", LinkDestination, "");
+            GetInstalledApps.CreateShortcut(path, "R5-Reloaded (Debug)", LinkDestination, "-debug");
+            GetInstalledApps.CreateShortcut(path, "R5-Reloaded (Release)", LinkDestination, "-release");
+            GetInstalledApps.CreateShortcut(path, "R5-Reloaded (Dedicated)", LinkDestination, "-dedicated");
         }
 
         private delegate void SetStatusDelgete(int dpValue, int opValue, string dsText, string osText);
