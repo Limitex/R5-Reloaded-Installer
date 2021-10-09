@@ -43,9 +43,9 @@ namespace R5_Reloaded_Installer
                 string detoursR5FileName, scriptsR5FileName;
                 using (new Download())
                 {
-                    detoursR5FileName = Download.RunZip(WebGetLink.GetDetoursR5Link(), "detours_r5");
-                    scriptsR5FileName = Download.RunZip(WebGetLink.GetScriptsR5Link(), "scripts_r5");
-                    Download.RunTorrent(WebGetLink.GetApexClientLink(), FinalDirectoryName);
+                    detoursR5FileName = Download.RunZip(WebGetLink.GetDetoursR5Link(), directoryName: "detours_r5");
+                    scriptsR5FileName = Download.RunZip(WebGetLink.GetScriptsR5Link(), directoryName: "scripts_r5");
+                    Download.RunTorrent(WebGetLink.GetApexClientLink(), directoryName: FinalDirectoryName);
                 }
                 ConsoleExpansion.LogWrite("The detours_r5 file is being moved.");
                 DirectoryExpansion.MoveOverwrite(detoursR5FileName, FinalDirectoryName);
