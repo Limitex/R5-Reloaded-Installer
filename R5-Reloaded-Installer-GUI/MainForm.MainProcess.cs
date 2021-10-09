@@ -28,13 +28,29 @@ namespace R5_Reloaded_Installer_GUI
 
         private void StartProcess()
         {
-            DownloadProgressBar.Value = 50;
-            OverallProgressBar.Value = 50;
-            DownloadStatusLabel.Text = "Download Status";
-            OverallStatusLabel.Text = "Overall Status";
+            new Thread(() => {
+                Invoke(new SetStatusDelgete(SetStatus), -1, -1, "Preparing...", "Waiting for download process");
+                string detoursR5FileName, scriptsR5FileName;
+                using (new Download(TargetDirectory))
+                {
+                    Invoke(new SetStatusDelgete(SetStatus), 1, -1, "Downloading detours_r5", null);
+                    detoursR5FileName = Download.RunZip(WebGetLink.GetDetoursR5Link(), TargetDirectory, "detours_r5");
+                    Invoke(new SetStatusDelgete(SetStatus), 2, -1, "Downloading scripts_r5", null);
+                    scriptsR5FileName = Download.RunZip(WebGetLink.GetScriptsR5Link(), TargetDirectory, "scripts_r5");
+                    Invoke(new SetStatusDelgete(SetStatus), 3, -1, "Downloading APEX Client", null);
+                }
 
+                Invoke(new Delegate(() => CompleteProcess()));
+            }).Start();
+        }
 
-            CompleteProcess();
+        private delegate void SetStatusDelgete(int dpValue, int opValue, string dsText, string osText);
+        private void SetStatus(int dpValue = -1, int opValue = -1, string dsText = null, string osText = null)
+        {
+            if (dpValue != -1) DownloadProgressBar.Value = dpValue;
+            if (opValue != -1) OverallProgressBar.Value = opValue;
+            if (dsText != null) DownloadStatusLabel.Text = dsText;
+            if (osText != null) OverallStatusLabel.Text = osText;
         }
     }
 }
