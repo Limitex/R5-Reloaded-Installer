@@ -16,6 +16,17 @@ namespace R5_Reloaded_Installer_GUI
 {
     partial class MainForm
     {
+        public static string DirName = "R5-Reloaded";
+        public static string InstallPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), DirName);
+        private static string ExecutableFileName = "r5reloaded.exe";
+        private static string ScriptsDirectoryPath = Path.Combine("platform", "scripts");
+
+        private static bool ExitFlug = false;
+        private static bool ButtonSelectFlug = false;
+        private static long FileSize = -1;
+        private static long DriveSize = -1;
+        delegate void Delegate();
+
         private bool CheckSize() => (DriveSize > FileSize) && (DriveSize != -1) && (FileSize != -1);
 
         private void SetDriveAndFileSize()

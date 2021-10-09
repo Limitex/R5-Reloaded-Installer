@@ -16,20 +16,10 @@ namespace R5_Reloaded_Installer_GUI
 {
     public partial class MainForm : Form
     {
-        public static string DirName = "R5-Reloaded";
-        public static string AppDataLocalPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-        public static string InstallPath = Path.Combine(AppDataLocalPath, DirName);
-
-
-        private static bool ExitFlug = false;
-        private static bool ButtonSelectFlug = false;
-        private static long FileSize = -1;
-        private static long DriveSize = -1;
-        delegate void Delegate();
-
         public MainForm()
         {
             InitializeComponent();
+
             if (!CheckApplication())
             {
                 MessageBox.Show("Origin or Apex Legends were not detected.\n" +

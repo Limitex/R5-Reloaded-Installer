@@ -16,19 +16,13 @@ namespace R5_Reloaded_Installer_GUI
 {
     partial class MainForm
     {
-        private static string ExecutableFileName = "r5reloaded.exe";
-        private static string ScriptsDirectoryPath = Path.Combine("platform", "scripts");
-
-        private static string TargetDirectory;
         private static bool CreateShortcutFlug;
         private static bool AddStartMenuFlug;
-
         private static Process aria2c = new Process();
         private static bool aria2ProcessFlug = false;
 
         private void StartProcessInitialize()
         {
-            TargetDirectory = InstallPath;
             CreateShortcutFlug = CreateDesktopShortcutCheckBox.Checked;
             AddStartMenuFlug = AddToStartMenuCheckBox.Checked;
         }
@@ -50,23 +44,23 @@ namespace R5_Reloaded_Installer_GUI
                 
                 var link = WebGetLink.GetApexClientLink();
                 var TorrentFile = Path.GetFileName(link);
-                var TorrentPath = Path.Combine(TargetDirectory, TorrentFile.Replace(Path.GetExtension(TorrentFile), ""));
+                var TorrentPath = Path.Combine(InstallPath, TorrentFile.Replace(Path.GetExtension(TorrentFile), ""));
 
                 string detoursR5FileName, scriptsR5FileName;
-                using (new Download(TargetDirectory))
+                using (new Download(InstallPath))
                 {
-                    Invoke(new SetStatusDelgete(SetStatus), 1, -1, "Downloading detours_r5", null);
-                    detoursR5FileName = Download.RunZip(WebGetLink.GetDetoursR5Link(), TargetDirectory, "detours_r5");
-                    Invoke(new SetStatusDelgete(SetStatus), 2, -1, "Downloading scripts_r5", null);
-                    scriptsR5FileName = Download.RunZip(WebGetLink.GetScriptsR5Link(), TargetDirectory, "scripts_r5");
+                    if (!ExitFlug) Invoke(new SetStatusDelgete(SetStatus), 1, -1, "Downloading detours_r5", null);
+                    detoursR5FileName = Download.RunZip(WebGetLink.GetDetoursR5Link(), InstallPath, "detours_r5");
+                    if (!ExitFlug) Invoke(new SetStatusDelgete(SetStatus), 2, -1, "Downloading scripts_r5", null);
+                    scriptsR5FileName = Download.RunZip(WebGetLink.GetScriptsR5Link(), InstallPath, "scripts_r5");
 
-                    Invoke(new SetStatusDelgete(SetStatus), 3, -1, "Preparing to download...", null);
+                    if (!ExitFlug) Invoke(new SetStatusDelgete(SetStatus), 3, -1, "Preparing to download...", null);
 
                     aria2c.StartInfo = new ProcessStartInfo()
                     {
                         FileName = Download.Aria2Path,
                         Arguments = link + " " + Download.Argument,
-                        WorkingDirectory = TargetDirectory,
+                        WorkingDirectory = InstallPath,
                         CreateNoWindow = true,
                         UseShellExecute = false,
                         RedirectStandardInput = true,
@@ -84,15 +78,15 @@ namespace R5_Reloaded_Installer_GUI
                     aria2c.WaitForExit();
                     aria2c.Close();
                 }
-                var BufferPath = Path.Combine(new DirectoryInfo(TargetDirectory).Parent.FullName, DirName + "_Buffer"); // DirName
+                var BufferPath = Path.Combine(new DirectoryInfo(InstallPath).Parent.FullName, DirName + "_Buffer"); // DirName
                 Directory.Move(TorrentPath, BufferPath);
                 DirectoryExpansion.MoveOverwrite(detoursR5FileName, BufferPath);
                 Directory.Move(scriptsR5FileName, Path.Combine(BufferPath, ScriptsDirectoryPath));
-                System.IO.File.Move(Path.Combine(TargetDirectory, TorrentFile), Path.Combine(BufferPath, TorrentFile));
-                Directory.Delete(TargetDirectory);
-                Directory.Move(BufferPath, TargetDirectory);
+                System.IO.File.Move(Path.Combine(InstallPath, TorrentFile), Path.Combine(BufferPath, TorrentFile));
+                Directory.Delete(InstallPath);
+                Directory.Move(BufferPath, InstallPath);
 
-                var AppPath = Path.Combine(TargetDirectory, ExecutableFileName);
+                var AppPath = Path.Combine(InstallPath, ExecutableFileName);
                 var desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
                 var startMenuPath = Directory.GetDirectories(Environment.GetFolderPath(Environment.SpecialFolder.StartMenu))[0];
                 var startmenuShortcutPath = Path.Combine(startMenuPath, "R5-Reloaded");
