@@ -79,7 +79,7 @@ namespace R5_Reloaded_Installer_GUI
             }
             var dr = MessageBox.Show("Do you want to start the installation?", "Installer",
                 MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
-            if (dr == DialogResult.OK /*&& CheckValue()*/)
+            if (dr == DialogResult.OK && CheckValue())
             {
                 ButtonToTabNext(1);
                 StartProcessInitialize();

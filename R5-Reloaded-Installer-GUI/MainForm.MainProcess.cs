@@ -40,6 +40,7 @@ namespace R5_Reloaded_Installer_GUI
 
         private void StartProcess()
         {
+            MessageBox.Show(InstallPath);
             new Thread(() => {
                 Invoke(new SetStatusDelgete(SetStatus), -1, -1, "Preparing...", "Waiting for download process");
                 
@@ -81,11 +82,16 @@ namespace R5_Reloaded_Installer_GUI
                 }
                 if (!ExitFlug)
                 {
-                    var BufferPath = Path.Combine(new DirectoryInfo(InstallPath).Parent.FullName, DirName + "_Buffer"); // DirName
+                    if (!ExitFlug) Invoke(new SetStatusDelgete(SetStatus), 100, 0, "Complete.", "Moving the APEX Client.");
+                    var BufferPath = Path.Combine(new DirectoryInfo(InstallPath).Parent.FullName, DirName + "_Buffer");
                     Directory.Move(TorrentPath, BufferPath);
+                    if (!ExitFlug) Invoke(new SetStatusDelgete(SetStatus), null, 20, null, "Moving the detours_r5.");
                     DirectoryExpansion.MoveOverwrite(detoursR5FileName, BufferPath);
+                    if (!ExitFlug) Invoke(new SetStatusDelgete(SetStatus), null, 40, null, "Moving the scripts_r5.");
                     Directory.Move(scriptsR5FileName, Path.Combine(BufferPath, ScriptsDirectoryPath));
+                    if (!ExitFlug) Invoke(new SetStatusDelgete(SetStatus), null, 60, null, "Moving the torrent file.");
                     File.Move(Path.Combine(InstallPath, TorrentFile), Path.Combine(BufferPath, TorrentFile));
+                    if (!ExitFlug) Invoke(new SetStatusDelgete(SetStatus), null, 70, null, "Returning from the buffer Directory.");
                     DirectoryExpansion.AllDelete(InstallPath);
                     Directory.Move(BufferPath, InstallPath);
 
@@ -95,9 +101,14 @@ namespace R5_Reloaded_Installer_GUI
                     var startmenuShortcutPath = Path.Combine(startMenuPath, "R5-Reloaded");
 
                     if (CreateShortcutFlug)
+                    {
+                        if (!ExitFlug) Invoke(new SetStatusDelgete(SetStatus), null, 80, null, "Add a shortcut to the desktop.");
                         CreateR5Shortcut(desktopPath, AppPath);
+                    }
+                        
                     if (AddStartMenuFlug)
                     {
+                        if (!ExitFlug) Invoke(new SetStatusDelgete(SetStatus), null, 90, null, "Add a shortcut to the Start menu.");
                         Directory.CreateDirectory(startmenuShortcutPath);
                         CreateR5Shortcut(startmenuShortcutPath, AppPath);
                     }
