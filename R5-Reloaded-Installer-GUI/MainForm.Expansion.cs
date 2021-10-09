@@ -139,6 +139,7 @@ namespace R5_Reloaded_Installer_GUI
                 MessageBox.Show("The specified directory already exists.\n" +
                     "Please move or delete the file and try again.",
                     "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Process.Start("EXPLORER.EXE", InstallPath);
                 return false;
             }
             return true;
