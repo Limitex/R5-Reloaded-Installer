@@ -124,36 +124,35 @@ namespace R5_Reloaded_Installer_GUI
         }
         private void EventHandler_ConsoleOutputHandler(object sendingProcess, DataReceivedEventArgs outLine)
         {
-            if (!String.IsNullOrEmpty(outLine.Data))
+            if (String.IsNullOrEmpty(outLine.Data)) return;
+
+            Invoke(new Delegate(() =>
             {
-                Invoke(new Delegate(() =>
+                var rawLine = Regex.Replace(outLine.Data, @"(\r|\n|(  )|\t)", "");
+                if (LogForm.Visible) LogFormRichTexBox.AppendText(rawLine + "\n");
+
+                if (rawLine[0] == '[')
                 {
-                    var rawLine = Regex.Replace(outLine.Data, @"(\r|\n|(  )|\t)", "");
-                    if(LogForm.Visible) LogFormRichTexBox.AppendText(rawLine + "\n");
+                    var nakedLine = Regex.Replace(rawLine, @"((#.*?( ))|\[|\])", "");
 
-                    if (rawLine[0] == '[')
+                    if (nakedLine.Contains("ETA:"))
                     {
-                        var nakedLine = Regex.Replace(rawLine, @"((#.*?( ))|\[|\])", "");
-                        
-                        if (nakedLine.Contains("ETA:"))
-                        {
-                            var DegPercent = int.Parse(Regex.Match(nakedLine, @"(?<=\().*?(?=%\))").Value);
+                        var DegPercent = int.Parse(Regex.Match(nakedLine, @"(?<=\().*?(?=%\))").Value);
 
-                            var leftTimeRaw = Regex.Match(nakedLine, @"ETA:.*").Value;
-                            var leftTimeVal = Regex.Match(nakedLine, @"(?<=ETA:).*").Value;
+                        var leftTimeRaw = Regex.Match(nakedLine, @"ETA:.*").Value;
+                        var leftTimeVal = Regex.Match(nakedLine, @"(?<=ETA:).*").Value;
 
-                            DownloadStatusLabel.Text = Regex.Replace(nakedLine, leftTimeRaw, "");
-                            TimeLeftLabel.Text = leftTimeVal + " : Time left.";
-                            SetStatus(DegPercent, -1, null, null);
-                        }
-                        else
-                        {
-                            DownloadStatusLabel.Text = nakedLine;
-                            TimeLeftLabel.Text = "in preparation : Time Left.";
-                        }
+                        DownloadStatusLabel.Text = Regex.Replace(nakedLine, leftTimeRaw, "");
+                        TimeLeftLabel.Text = leftTimeVal + " : Time left.";
+                        SetStatus(DegPercent, -1, null, null);
                     }
-                }));
-            }
+                    else
+                    {
+                        DownloadStatusLabel.Text = nakedLine;
+                        TimeLeftLabel.Text = "in preparation : Time Left.";
+                    }
+                }
+            }));
         }
 
         private void CreateR5Shortcut(string path, string LinkDestination)
