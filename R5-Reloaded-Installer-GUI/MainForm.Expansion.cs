@@ -38,7 +38,7 @@ namespace R5_Reloaded_Installer_GUI
                 Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right,
                 Name = "logRichTextBox",
                 Location = new Point(0, 0),
-                Size = new Size(LogForm.Width, LogForm.Height),
+                Size = new Size(LogForm.Width - 16, LogForm.Height - 39),
                 BackColor = Color.White,
                 ReadOnly = true,
                 HideSelection = false
