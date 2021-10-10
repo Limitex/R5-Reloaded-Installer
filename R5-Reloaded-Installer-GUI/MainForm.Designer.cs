@@ -75,6 +75,7 @@ namespace R5_Reloaded_Installer_GUI
             this.label13 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
+            this.DetailedInfoLinkLabe = new System.Windows.Forms.LinkLabel();
             this.MainTabControl.SuspendLayout();
             this.IntroductionTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TopIcon)).BeginInit();
@@ -441,6 +442,7 @@ namespace R5_Reloaded_Installer_GUI
             // 
             // ProcessTabPage
             // 
+            this.ProcessTabPage.Controls.Add(this.DetailedInfoLinkLabe);
             this.ProcessTabPage.Controls.Add(this.label10);
             this.ProcessTabPage.Controls.Add(this.label9);
             this.ProcessTabPage.Controls.Add(this.OverallStatusLabel);
@@ -588,6 +590,18 @@ namespace R5_Reloaded_Installer_GUI
             this.label11.TabIndex = 0;
             this.label11.Text = "Installation is Complete.";
             // 
+            // DetailedInfoLinkLabe
+            // 
+            this.DetailedInfoLinkLabe.AutoSize = true;
+            this.DetailedInfoLinkLabe.LinkColor = System.Drawing.Color.Black;
+            this.DetailedInfoLinkLabe.Location = new System.Drawing.Point(306, 251);
+            this.DetailedInfoLinkLabe.Name = "DetailedInfoLinkLabe";
+            this.DetailedInfoLinkLabe.Size = new System.Drawing.Size(115, 15);
+            this.DetailedInfoLinkLabe.TabIndex = 7;
+            this.DetailedInfoLinkLabe.TabStop = true;
+            this.DetailedInfoLinkLabe.Text = "Detailed information";
+            this.DetailedInfoLinkLabe.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.DetailedInfoLinkLabe_LinkClicked);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -673,6 +687,7 @@ namespace R5_Reloaded_Installer_GUI
         private System.Windows.Forms.NumericUpDown DhtListenPortNumericUpDown;
         private System.Windows.Forms.NumericUpDown ListenPortNumericUpDown;
         private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.LinkLabel DetailedInfoLinkLabe;
     }
 }
 

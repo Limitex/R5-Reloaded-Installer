@@ -129,6 +129,7 @@ namespace R5_Reloaded_Installer_GUI
                 Invoke(new Delegate(() =>
                 {
                     string vs = Regex.Replace(outLine.Data, @"(\r|\n|(  )|\t)", "");
+                    LogFormRichTexBox.Text += vs + "\n";
                     if (vs[0] == '[')
                     {
                         var match = Regex.Match(vs, @"\[(.*?)\]").Value;

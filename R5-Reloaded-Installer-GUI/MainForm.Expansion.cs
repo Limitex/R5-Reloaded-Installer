@@ -27,6 +27,24 @@ namespace R5_Reloaded_Installer_GUI
         private static long DriveSize = -1;
         delegate void Delegate();
 
+        private static Form LogForm;
+        private static RichTextBox LogFormRichTexBox;
+
+        private void LogFormInitialize()
+        {
+            LogForm = new Form() { Text = "Log Window", ShowIcon = false };
+            LogFormRichTexBox = new RichTextBox()
+            {
+                Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right,
+                Name = "logRichTextBox",
+                Location = new Point(0, 0),
+                Size = new Size(LogForm.Width, LogForm.Height),
+                BackColor = Color.White,
+                ReadOnly = true
+            };
+            LogForm.Controls.Add(LogFormRichTexBox);
+        }
+
         private bool CheckSize() => (DriveSize > FileSize) && (DriveSize != -1) && (FileSize != -1);
 
         private void SetDriveAndFileSize()

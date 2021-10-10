@@ -19,7 +19,7 @@ namespace R5_Reloaded_Installer_GUI
         public MainForm()
         {
             InitializeComponent();
-
+            LogFormInitialize();
             if (!CheckApplication())
             {
                 MessageBox.Show("Origin or Apex Legends were not detected.\n" +
@@ -139,6 +139,17 @@ namespace R5_Reloaded_Installer_GUI
         private void DhtListenPortCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             DhtListenPortNumericUpDown.Enabled = DhtListenPortCheckBox.Checked;
+        }
+
+
+
+        private void DetailedInfoLinkLabe_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            if (!LogForm.Visible)
+            {
+                LogFormInitialize();
+                LogForm.Show();
+            }
         }
     }
 }
