@@ -130,5 +130,15 @@ namespace R5_Reloaded_Installer_GUI
                 NextButton.Enabled = CheckSize();
             }
         }
+
+        private void ListenPortCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            ListenPortNumericUpDown.Enabled = ListenPortCheckBox.Checked;
+        }
+
+        private void DhtListenPortCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            DhtListenPortNumericUpDown.Enabled = DhtListenPortCheckBox.Checked;
+        }
     }
 }

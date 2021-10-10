@@ -57,10 +57,16 @@ namespace R5_Reloaded_Installer_GUI
 
                     if (!ExitFlug) Invoke(new SetStatusDelgete(SetStatus), 0, -1, "Preparing to download...", null); else return;
 
+                    var OptionArguments = "";
+                    if (ListenPortCheckBox.Checked)
+                        OptionArguments += " --listen-port=" + ListenPortNumericUpDown.Value;
+                    if (DhtListenPortCheckBox.Checked)
+                        OptionArguments += " --dht-listen-port=" + DhtListenPortNumericUpDown.Value;
+                    
                     aria2c.StartInfo = new ProcessStartInfo()
                     {
                         FileName = Download.Aria2Path,
-                        Arguments = link + " " + Download.Argument,
+                        Arguments = link + " " + Download.Argument + OptionArguments,
                         WorkingDirectory = InstallPath,
                         CreateNoWindow = true,
                         UseShellExecute = false,

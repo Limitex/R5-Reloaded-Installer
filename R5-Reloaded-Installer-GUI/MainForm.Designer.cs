@@ -39,6 +39,7 @@ namespace R5_Reloaded_Installer_GUI
             this.label1 = new System.Windows.Forms.Label();
             this.TopIcon = new System.Windows.Forms.PictureBox();
             this.InformationTabPage = new System.Windows.Forms.TabPage();
+            this.label15 = new System.Windows.Forms.Label();
             this.WebsiteLinkLabel = new System.Windows.Forms.LinkLabel();
             this.label4 = new System.Windows.Forms.Label();
             this.DiscordLinkLabel = new System.Windows.Forms.LinkLabel();
@@ -50,6 +51,12 @@ namespace R5_Reloaded_Installer_GUI
             this.InstallLinkTextBox = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.OptionTabPage = new System.Windows.Forms.TabPage();
+            this.DhtListenPortCheckBox = new System.Windows.Forms.CheckBox();
+            this.ListenPortCheckBox = new System.Windows.Forms.CheckBox();
+            this.DhtListenPortNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.ListenPortNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
             this.AddToStartMenuCheckBox = new System.Windows.Forms.CheckBox();
             this.CreateDesktopShortcutCheckBox = new System.Windows.Forms.CheckBox();
             this.label6 = new System.Windows.Forms.Label();
@@ -65,15 +72,17 @@ namespace R5_Reloaded_Installer_GUI
             this.label7 = new System.Windows.Forms.Label();
             this.CompletionTabPage = new System.Windows.Forms.TabPage();
             this.LaunchCheckBox = new System.Windows.Forms.CheckBox();
+            this.label13 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
             this.MainTabControl.SuspendLayout();
             this.IntroductionTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TopIcon)).BeginInit();
             this.InformationTabPage.SuspendLayout();
             this.PlaceOfInstallationTabPage.SuspendLayout();
             this.OptionTabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.DhtListenPortNumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ListenPortNumericUpDown)).BeginInit();
             this.ProcessTabPage.SuspendLayout();
             this.CompletionTabPage.SuspendLayout();
             this.SuspendLayout();
@@ -178,6 +187,7 @@ namespace R5_Reloaded_Installer_GUI
             // 
             // InformationTabPage
             // 
+            this.InformationTabPage.Controls.Add(this.label15);
             this.InformationTabPage.Controls.Add(this.WebsiteLinkLabel);
             this.InformationTabPage.Controls.Add(this.label4);
             this.InformationTabPage.Controls.Add(this.DiscordLinkLabel);
@@ -191,10 +201,20 @@ namespace R5_Reloaded_Installer_GUI
             this.InformationTabPage.Text = "Information";
             this.InformationTabPage.UseVisualStyleBackColor = true;
             // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("Yu Gothic UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label15.Location = new System.Drawing.Point(19, 17);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(390, 25);
+            this.label15.TabIndex = 5;
+            this.label15.Text = "Please read and confirm the checkbox below.\r\n";
+            // 
             // WebsiteLinkLabel
             // 
             this.WebsiteLinkLabel.AutoSize = true;
-            this.WebsiteLinkLabel.Location = new System.Drawing.Point(28, 119);
+            this.WebsiteLinkLabel.Location = new System.Drawing.Point(28, 151);
             this.WebsiteLinkLabel.Name = "WebsiteLinkLabel";
             this.WebsiteLinkLabel.Size = new System.Drawing.Size(165, 15);
             this.WebsiteLinkLabel.TabIndex = 4;
@@ -205,7 +225,7 @@ namespace R5_Reloaded_Installer_GUI
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(28, 94);
+            this.label4.Location = new System.Drawing.Point(28, 126);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(255, 15);
             this.label4.TabIndex = 3;
@@ -214,7 +234,7 @@ namespace R5_Reloaded_Installer_GUI
             // DiscordLinkLabel
             // 
             this.DiscordLinkLabel.AutoSize = true;
-            this.DiscordLinkLabel.Location = new System.Drawing.Point(28, 49);
+            this.DiscordLinkLabel.Location = new System.Drawing.Point(28, 81);
             this.DiscordLinkLabel.Name = "DiscordLinkLabel";
             this.DiscordLinkLabel.Size = new System.Drawing.Size(215, 15);
             this.DiscordLinkLabel.TabIndex = 2;
@@ -225,7 +245,7 @@ namespace R5_Reloaded_Installer_GUI
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(28, 25);
+            this.label3.Location = new System.Drawing.Point(28, 57);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(225, 15);
             this.label3.TabIndex = 1;
@@ -293,6 +313,12 @@ namespace R5_Reloaded_Installer_GUI
             // 
             // OptionTabPage
             // 
+            this.OptionTabPage.Controls.Add(this.DhtListenPortCheckBox);
+            this.OptionTabPage.Controls.Add(this.ListenPortCheckBox);
+            this.OptionTabPage.Controls.Add(this.DhtListenPortNumericUpDown);
+            this.OptionTabPage.Controls.Add(this.ListenPortNumericUpDown);
+            this.OptionTabPage.Controls.Add(this.label16);
+            this.OptionTabPage.Controls.Add(this.label14);
             this.OptionTabPage.Controls.Add(this.AddToStartMenuCheckBox);
             this.OptionTabPage.Controls.Add(this.CreateDesktopShortcutCheckBox);
             this.OptionTabPage.Controls.Add(this.label6);
@@ -303,12 +329,88 @@ namespace R5_Reloaded_Installer_GUI
             this.OptionTabPage.Text = "Option";
             this.OptionTabPage.UseVisualStyleBackColor = true;
             // 
+            // DhtListenPortCheckBox
+            // 
+            this.DhtListenPortCheckBox.AutoSize = true;
+            this.DhtListenPortCheckBox.Location = new System.Drawing.Point(52, 213);
+            this.DhtListenPortCheckBox.Name = "DhtListenPortCheckBox";
+            this.DhtListenPortCheckBox.Size = new System.Drawing.Size(122, 19);
+            this.DhtListenPortCheckBox.TabIndex = 4;
+            this.DhtListenPortCheckBox.Text = "--dht-listen-port=";
+            this.DhtListenPortCheckBox.UseVisualStyleBackColor = true;
+            this.DhtListenPortCheckBox.CheckedChanged += new System.EventHandler(this.DhtListenPortCheckBox_CheckedChanged);
+            // 
+            // ListenPortCheckBox
+            // 
+            this.ListenPortCheckBox.AutoSize = true;
+            this.ListenPortCheckBox.Location = new System.Drawing.Point(52, 188);
+            this.ListenPortCheckBox.Name = "ListenPortCheckBox";
+            this.ListenPortCheckBox.Size = new System.Drawing.Size(99, 19);
+            this.ListenPortCheckBox.TabIndex = 4;
+            this.ListenPortCheckBox.Text = "--listen-port=";
+            this.ListenPortCheckBox.UseVisualStyleBackColor = true;
+            this.ListenPortCheckBox.CheckedChanged += new System.EventHandler(this.ListenPortCheckBox_CheckedChanged);
+            // 
+            // DhtListenPortNumericUpDown
+            // 
+            this.DhtListenPortNumericUpDown.Enabled = false;
+            this.DhtListenPortNumericUpDown.Location = new System.Drawing.Point(180, 212);
+            this.DhtListenPortNumericUpDown.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.DhtListenPortNumericUpDown.Name = "DhtListenPortNumericUpDown";
+            this.DhtListenPortNumericUpDown.Size = new System.Drawing.Size(105, 23);
+            this.DhtListenPortNumericUpDown.TabIndex = 3;
+            this.DhtListenPortNumericUpDown.Value = new decimal(new int[] {
+            6900,
+            0,
+            0,
+            0});
+            // 
+            // ListenPortNumericUpDown
+            // 
+            this.ListenPortNumericUpDown.Enabled = false;
+            this.ListenPortNumericUpDown.Location = new System.Drawing.Point(180, 187);
+            this.ListenPortNumericUpDown.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.ListenPortNumericUpDown.Name = "ListenPortNumericUpDown";
+            this.ListenPortNumericUpDown.Size = new System.Drawing.Size(105, 23);
+            this.ListenPortNumericUpDown.TabIndex = 3;
+            this.ListenPortNumericUpDown.Value = new decimal(new int[] {
+            6900,
+            0,
+            0,
+            0});
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(34, 160);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(91, 15);
+            this.label16.TabIndex = 2;
+            this.label16.Text = "aria2 arguments";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(24, 136);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(103, 15);
+            this.label14.TabIndex = 2;
+            this.label14.Text = "Advanced options";
+            // 
             // AddToStartMenuCheckBox
             // 
             this.AddToStartMenuCheckBox.AutoSize = true;
             this.AddToStartMenuCheckBox.Checked = true;
             this.AddToStartMenuCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.AddToStartMenuCheckBox.Location = new System.Drawing.Point(40, 112);
+            this.AddToStartMenuCheckBox.Location = new System.Drawing.Point(40, 98);
             this.AddToStartMenuCheckBox.Name = "AddToStartMenuCheckBox";
             this.AddToStartMenuCheckBox.Size = new System.Drawing.Size(121, 19);
             this.AddToStartMenuCheckBox.TabIndex = 1;
@@ -320,7 +422,7 @@ namespace R5_Reloaded_Installer_GUI
             this.CreateDesktopShortcutCheckBox.AutoSize = true;
             this.CreateDesktopShortcutCheckBox.Checked = true;
             this.CreateDesktopShortcutCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.CreateDesktopShortcutCheckBox.Location = new System.Drawing.Point(40, 87);
+            this.CreateDesktopShortcutCheckBox.Location = new System.Drawing.Point(40, 73);
             this.CreateDesktopShortcutCheckBox.Name = "CreateDesktopShortcutCheckBox";
             this.CreateDesktopShortcutCheckBox.Size = new System.Drawing.Size(160, 19);
             this.CreateDesktopShortcutCheckBox.TabIndex = 1;
@@ -459,6 +561,15 @@ namespace R5_Reloaded_Installer_GUI
             this.LaunchCheckBox.Text = "Launch the R5-Reloaded";
             this.LaunchCheckBox.UseVisualStyleBackColor = true;
             // 
+            // label13
+            // 
+            this.label13.Location = new System.Drawing.Point(35, 105);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(372, 39);
+            this.label13.TabIndex = 1;
+            this.label13.Text = "Also, since the game client torrent file is generated in the installed directory," +
+    " please seed it using the existing torrent client software.";
+            // 
             // label12
             // 
             this.label12.Location = new System.Drawing.Point(35, 66);
@@ -476,15 +587,6 @@ namespace R5_Reloaded_Installer_GUI
             this.label11.Size = new System.Drawing.Size(213, 25);
             this.label11.TabIndex = 0;
             this.label11.Text = "Installation is Complete.";
-            // 
-            // label13
-            // 
-            this.label13.Location = new System.Drawing.Point(35, 105);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(372, 39);
-            this.label13.TabIndex = 1;
-            this.label13.Text = "Also, since the game client torrent file is generated in the installed directory," +
-    " please seed it using the existing torrent client software.";
             // 
             // MainForm
             // 
@@ -513,6 +615,8 @@ namespace R5_Reloaded_Installer_GUI
             this.PlaceOfInstallationTabPage.PerformLayout();
             this.OptionTabPage.ResumeLayout(false);
             this.OptionTabPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.DhtListenPortNumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ListenPortNumericUpDown)).EndInit();
             this.ProcessTabPage.ResumeLayout(false);
             this.ProcessTabPage.PerformLayout();
             this.CompletionTabPage.ResumeLayout(false);
@@ -562,6 +666,13 @@ namespace R5_Reloaded_Installer_GUI
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.CheckBox DhtListenPortCheckBox;
+        private System.Windows.Forms.CheckBox ListenPortCheckBox;
+        private System.Windows.Forms.NumericUpDown DhtListenPortNumericUpDown;
+        private System.Windows.Forms.NumericUpDown ListenPortNumericUpDown;
+        private System.Windows.Forms.Label label16;
     }
 }
 
