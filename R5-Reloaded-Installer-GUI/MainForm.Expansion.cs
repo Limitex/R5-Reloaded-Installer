@@ -40,7 +40,8 @@ namespace R5_Reloaded_Installer_GUI
                 Location = new Point(0, 0),
                 Size = new Size(LogForm.Width, LogForm.Height),
                 BackColor = Color.White,
-                ReadOnly = true
+                ReadOnly = true,
+                HideSelection = false
             };
             LogForm.Controls.Add(LogFormRichTexBox);
         }

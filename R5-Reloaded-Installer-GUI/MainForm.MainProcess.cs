@@ -129,7 +129,7 @@ namespace R5_Reloaded_Installer_GUI
                 Invoke(new Delegate(() =>
                 {
                     var rawLine = Regex.Replace(outLine.Data, @"(\r|\n|(  )|\t)", "");
-                    LogFormRichTexBox.Text += rawLine + "\n";
+                    if(LogForm.Visible) LogFormRichTexBox.AppendText(rawLine + "\n");
 
                     if (rawLine[0] == '[')
                     {
