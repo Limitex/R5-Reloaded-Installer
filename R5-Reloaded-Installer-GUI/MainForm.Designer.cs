@@ -61,6 +61,7 @@ namespace R5_Reloaded_Installer_GUI
             this.CreateDesktopShortcutCheckBox = new System.Windows.Forms.CheckBox();
             this.label6 = new System.Windows.Forms.Label();
             this.ProcessTabPage = new System.Windows.Forms.TabPage();
+            this.DetailedInfoLinkLabe = new System.Windows.Forms.LinkLabel();
             this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.OverallStatusLabel = new System.Windows.Forms.Label();
@@ -75,7 +76,6 @@ namespace R5_Reloaded_Installer_GUI
             this.label13 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
-            this.DetailedInfoLinkLabe = new System.Windows.Forms.LinkLabel();
             this.MainTabControl.SuspendLayout();
             this.IntroductionTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TopIcon)).BeginInit();
@@ -459,6 +459,18 @@ namespace R5_Reloaded_Installer_GUI
             this.ProcessTabPage.Text = "Process";
             this.ProcessTabPage.UseVisualStyleBackColor = true;
             // 
+            // DetailedInfoLinkLabe
+            // 
+            this.DetailedInfoLinkLabe.AutoSize = true;
+            this.DetailedInfoLinkLabe.LinkColor = System.Drawing.Color.Black;
+            this.DetailedInfoLinkLabe.Location = new System.Drawing.Point(306, 251);
+            this.DetailedInfoLinkLabe.Name = "DetailedInfoLinkLabe";
+            this.DetailedInfoLinkLabe.Size = new System.Drawing.Size(115, 15);
+            this.DetailedInfoLinkLabe.TabIndex = 7;
+            this.DetailedInfoLinkLabe.TabStop = true;
+            this.DetailedInfoLinkLabe.Text = "Detailed information";
+            this.DetailedInfoLinkLabe.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.DetailedInfoLinkLabe_LinkClicked);
+            // 
             // label10
             // 
             this.label10.AutoSize = true;
@@ -589,18 +601,6 @@ namespace R5_Reloaded_Installer_GUI
             this.label11.Size = new System.Drawing.Size(213, 25);
             this.label11.TabIndex = 0;
             this.label11.Text = "Installation is Complete.";
-            // 
-            // DetailedInfoLinkLabe
-            // 
-            this.DetailedInfoLinkLabe.AutoSize = true;
-            this.DetailedInfoLinkLabe.LinkColor = System.Drawing.Color.Black;
-            this.DetailedInfoLinkLabe.Location = new System.Drawing.Point(306, 251);
-            this.DetailedInfoLinkLabe.Name = "DetailedInfoLinkLabe";
-            this.DetailedInfoLinkLabe.Size = new System.Drawing.Size(115, 15);
-            this.DetailedInfoLinkLabe.TabIndex = 7;
-            this.DetailedInfoLinkLabe.TabStop = true;
-            this.DetailedInfoLinkLabe.Text = "Detailed information";
-            this.DetailedInfoLinkLabe.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.DetailedInfoLinkLabe_LinkClicked);
             // 
             // MainForm
             // 

@@ -128,42 +128,28 @@ namespace R5_Reloaded_Installer_GUI
             {
                 Invoke(new Delegate(() =>
                 {
-                    string vs = Regex.Replace(outLine.Data, @"(\r|\n|(  )|\t)", "");
-                    LogFormRichTexBox.Text += vs + "\n";
-                    if (vs[0] == '[')
+                    var rawLine = Regex.Replace(outLine.Data, @"(\r|\n|(  )|\t)", "");
+                    LogFormRichTexBox.Text += rawLine + "\n";
+
+                    if (rawLine[0] == '[')
                     {
-                        var match = Regex.Match(vs, @"\[(.*?)\]").Value;
-
-                        if (match.Contains("ETA:"))
+                        var nakedLine = Regex.Replace(rawLine, @"((#.*?( ))|\[|\])", "");
+                        
+                        if (nakedLine.Contains("ETA:"))
                         {
-                            var GB = Regex.Match(match, @"(?<=( )).*?(?=\()").Value;
-                            var PA = Regex.Match(match, @"(?<=\().*?(?=%\))").Value;
-                            var CN = Regex.Match(match, @"(?<=CN:).*?(?=( ))").Value;
-                            var SD = Regex.Match(match, @"(?<=SD:).*?(?=( ))").Value;
-                            var DL = Regex.Match(match, @"(?<=DL:).*?(?=( ))").Value;
-                            var UL = Regex.Match(match, @"(?<=UL:).*?(?=( ))").Value;
-                            var ET = Regex.Match(match, @"(?<=ETA:).*?(?=(\]))").Value;
+                            var DegPercent = int.Parse(Regex.Match(nakedLine, @"(?<=\().*?(?=%\))").Value);
 
-                            TimeLeftLabel.Text = ET + " : Time left";
-                            SetStatus(int.Parse(PA), -1, null, null);
-                            DownloadStatusLabel.Text = "Size : " + GB + " , Speed : " + DL;
+                            var leftTimeRaw = Regex.Match(nakedLine, @"ETA:.*").Value;
+                            var leftTimeVal = Regex.Match(nakedLine, @"(?<=ETA:).*").Value;
+
+                            DownloadStatusLabel.Text = Regex.Replace(nakedLine, leftTimeRaw, "");
+                            TimeLeftLabel.Text = leftTimeVal + " : Time left.";
+                            SetStatus(DegPercent, -1, null, null);
                         }
                         else
                         {
-                            var mat = Regex.Match(vs.Remove(0, 1), @"(?<=(\[)).*?(?=\])").Value;
-                            var exc = Regex.Match(mat, @"#(.*?)( )").Value;
-                            if (mat.Contains(exc) && (exc.Length != 0))
-                            {
-                                DownloadStatusLabel.Text = mat.Replace(exc, " ");
-                                TimeLeftLabel.Text = "in preparation : TimeLeft.";
-                            }
-                                
-                            else if (!match.Contains("SEED"))
-                            {
-                                DownloadStatusLabel.Text = "Please wait for a while until you can connect to the tracker.";
-                                TimeLeftLabel.Text = "Not connected to tracker.";
-                            }
-                                    
+                            DownloadStatusLabel.Text = nakedLine;
+                            TimeLeftLabel.Text = "in preparation : Time Left.";
                         }
                     }
                 }));
