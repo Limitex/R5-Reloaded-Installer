@@ -364,11 +364,6 @@ namespace R5_Reloaded_Installer_GUI
             this.DhtListenPortNumericUpDown.Name = "DhtListenPortNumericUpDown";
             this.DhtListenPortNumericUpDown.Size = new System.Drawing.Size(105, 23);
             this.DhtListenPortNumericUpDown.TabIndex = 3;
-            this.DhtListenPortNumericUpDown.Value = new decimal(new int[] {
-            6900,
-            0,
-            0,
-            0});
             // 
             // ListenPortNumericUpDown
             // 
@@ -382,11 +377,6 @@ namespace R5_Reloaded_Installer_GUI
             this.ListenPortNumericUpDown.Name = "ListenPortNumericUpDown";
             this.ListenPortNumericUpDown.Size = new System.Drawing.Size(105, 23);
             this.ListenPortNumericUpDown.TabIndex = 3;
-            this.ListenPortNumericUpDown.Value = new decimal(new int[] {
-            6900,
-            0,
-            0,
-            0});
             // 
             // label16
             // 

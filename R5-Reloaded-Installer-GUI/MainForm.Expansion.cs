@@ -20,6 +20,7 @@ namespace R5_Reloaded_Installer_GUI
         public static string InstallPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), DirName);
         private static string ExecutableFileName = "r5reloaded.exe";
         private static string ScriptsDirectoryPath = Path.Combine("platform", "scripts");
+        private static int FirstPort = 6900;
 
         private static bool ExitFlug = false;
         private static bool ButtonSelectFlug = false;
@@ -156,7 +157,8 @@ namespace R5_Reloaded_Installer_GUI
             if (Directory.Exists(InstallPath))
             {
                 MessageBox.Show("The specified directory already exists.\n" +
-                    "Please move or delete the file and try again.",
+                    "Please move or delete the file and try again.\n" +
+                    "Explorer opens.",
                     "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Process.Start("EXPLORER.EXE", InstallPath);
                 return false;

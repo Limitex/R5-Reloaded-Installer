@@ -71,13 +71,9 @@ namespace R5_Reloaded_Installer_GUI
         }
         private void InstallButton_Click(object sender, EventArgs e)
         {
-            if (!AgreeCheckBox.Checked)
-            {
-                MessageBox.Show("Check the checkbox on the Information tab to continue.", "Error",
-                MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            var dr = MessageBox.Show("Do you want to start the installation?", "Installer",
+            var dr = MessageBox.Show("Do you want to start the installation?\n\n" +
+                "Since it is downloaded from Torrent, it may take several hours depending on the time of day. " +
+                "However, if it does not progress by 1% after a few hours, please retry.", "Installer",
                 MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
             if (dr == DialogResult.OK && CheckValue())
             {
@@ -134,11 +130,18 @@ namespace R5_Reloaded_Installer_GUI
         private void ListenPortCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             ListenPortNumericUpDown.Enabled = ListenPortCheckBox.Checked;
+            if (ListenPortNumericUpDown.Enabled)
+                ListenPortNumericUpDown.Value = FirstPort;
+            else ListenPortNumericUpDown.Value = 0;
+            
         }
 
         private void DhtListenPortCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             DhtListenPortNumericUpDown.Enabled = DhtListenPortCheckBox.Checked;
+            if (DhtListenPortNumericUpDown.Enabled)
+                DhtListenPortNumericUpDown.Value = FirstPort;
+            else DhtListenPortNumericUpDown.Value = 0;
         }
 
 
