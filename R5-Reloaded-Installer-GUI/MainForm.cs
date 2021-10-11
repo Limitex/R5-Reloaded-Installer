@@ -73,7 +73,8 @@ namespace R5_Reloaded_Installer_GUI
         {
             var dr = MessageBox.Show("Do you want to start the installation?\n\n" +
                 "Since it is downloaded from Torrent, it may take several hours depending on the time of day. " +
-                "However, if it does not progress by 1% after a few hours, please retry.", "Installer",
+                "The download does not start for a few seconds after File Alloc finishes, but it is normal. " +
+                "However, if it does not progress by 1% after a few minutes, try again after a few minutes.", "Installer",
                 MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
             if (dr == DialogResult.OK && CheckValue())
             {
