@@ -280,6 +280,7 @@ namespace R5_Reloaded_Installer_GUI
             // 
             // ReloadDriveSizeLinkLabel
             // 
+            this.ReloadDriveSizeLinkLabel.ActiveLinkColor = System.Drawing.SystemColors.ControlDark;
             this.ReloadDriveSizeLinkLabel.AutoSize = true;
             this.ReloadDriveSizeLinkLabel.LinkColor = System.Drawing.Color.Black;
             this.ReloadDriveSizeLinkLabel.Location = new System.Drawing.Point(36, 243);
@@ -288,6 +289,7 @@ namespace R5_Reloaded_Installer_GUI
             this.ReloadDriveSizeLinkLabel.TabIndex = 4;
             this.ReloadDriveSizeLinkLabel.TabStop = true;
             this.ReloadDriveSizeLinkLabel.Text = "Reload Drive Size";
+            this.ReloadDriveSizeLinkLabel.VisitedLinkColor = System.Drawing.Color.Black;
             this.ReloadDriveSizeLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.ReloadDriveSizeLinkLabel_LinkClicked);
             // 
             // SizeLabel
@@ -465,6 +467,7 @@ namespace R5_Reloaded_Installer_GUI
             // 
             // DetailedInfoLinkLabe
             // 
+            this.DetailedInfoLinkLabe.ActiveLinkColor = System.Drawing.SystemColors.ControlDark;
             this.DetailedInfoLinkLabe.AutoSize = true;
             this.DetailedInfoLinkLabe.LinkColor = System.Drawing.Color.Black;
             this.DetailedInfoLinkLabe.Location = new System.Drawing.Point(306, 251);
@@ -473,6 +476,7 @@ namespace R5_Reloaded_Installer_GUI
             this.DetailedInfoLinkLabe.TabIndex = 7;
             this.DetailedInfoLinkLabe.TabStop = true;
             this.DetailedInfoLinkLabe.Text = "Detailed information";
+            this.DetailedInfoLinkLabe.VisitedLinkColor = System.Drawing.Color.Black;
             this.DetailedInfoLinkLabe.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.DetailedInfoLinkLabe_LinkClicked);
             // 
             // label10
