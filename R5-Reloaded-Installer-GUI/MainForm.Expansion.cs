@@ -54,7 +54,7 @@ namespace R5_Reloaded_Installer_GUI
             DriveSize = GetFileSize.DriveFreeSpace(InstallPath);
             new Thread(() =>
             {
-                Invoke(new Delegate(() => SetSizesText(0, DriveSize)));
+                Invoke(new Delegate(() => SetSizesText(-1, DriveSize)));
                 long size = 0;
                 if (!ExitFlug) size = GetFileSize.Torrent(WebGetLink.GetApexClientLink());
                 if (!ExitFlug) size += GetFileSize.Zip(WebGetLink.GetDetoursR5Link());
@@ -135,9 +135,9 @@ namespace R5_Reloaded_Installer_GUI
         private void SetSizesText(long fileSize, long driveSize)
         {
             SizeLabel.Text = "File size : " +
-                GetFileSize.ByteToGByte(fileSize).ToString("0.00") + " GB" +
+                (fileSize != -1 ? GetFileSize.ByteToGByte(fileSize).ToString("0.00") + " GB" : "Loading...") +
                 "\n\nDrive size : " +
-                GetFileSize.ByteToGByte(driveSize).ToString("0.00") + " GB";
+                (driveSize != -1 ? GetFileSize.ByteToGByte(driveSize).ToString("0.00") + " GB" : "Loading...");
         }
 
         private bool CheckValue()
