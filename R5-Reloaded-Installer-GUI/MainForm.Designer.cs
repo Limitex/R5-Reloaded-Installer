@@ -46,6 +46,7 @@ namespace R5_Reloaded_Installer_GUI
             this.label3 = new System.Windows.Forms.Label();
             this.AgreeCheckBox = new System.Windows.Forms.CheckBox();
             this.PlaceOfInstallationTabPage = new System.Windows.Forms.TabPage();
+            this.ReloadDriveSizeLinkLabel = new System.Windows.Forms.LinkLabel();
             this.SizeLabel = new System.Windows.Forms.Label();
             this.BrowseButton = new System.Windows.Forms.Button();
             this.InstallLinkTextBox = new System.Windows.Forms.TextBox();
@@ -265,6 +266,7 @@ namespace R5_Reloaded_Installer_GUI
             // 
             // PlaceOfInstallationTabPage
             // 
+            this.PlaceOfInstallationTabPage.Controls.Add(this.ReloadDriveSizeLinkLabel);
             this.PlaceOfInstallationTabPage.Controls.Add(this.SizeLabel);
             this.PlaceOfInstallationTabPage.Controls.Add(this.BrowseButton);
             this.PlaceOfInstallationTabPage.Controls.Add(this.InstallLinkTextBox);
@@ -276,10 +278,22 @@ namespace R5_Reloaded_Installer_GUI
             this.PlaceOfInstallationTabPage.Text = "Place of installation";
             this.PlaceOfInstallationTabPage.UseVisualStyleBackColor = true;
             // 
+            // ReloadDriveSizeLinkLabel
+            // 
+            this.ReloadDriveSizeLinkLabel.AutoSize = true;
+            this.ReloadDriveSizeLinkLabel.LinkColor = System.Drawing.Color.Black;
+            this.ReloadDriveSizeLinkLabel.Location = new System.Drawing.Point(36, 243);
+            this.ReloadDriveSizeLinkLabel.Name = "ReloadDriveSizeLinkLabel";
+            this.ReloadDriveSizeLinkLabel.Size = new System.Drawing.Size(96, 15);
+            this.ReloadDriveSizeLinkLabel.TabIndex = 4;
+            this.ReloadDriveSizeLinkLabel.TabStop = true;
+            this.ReloadDriveSizeLinkLabel.Text = "Reload Drive Size";
+            this.ReloadDriveSizeLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.ReloadDriveSizeLinkLabel_LinkClicked);
+            // 
             // SizeLabel
             // 
             this.SizeLabel.AutoSize = true;
-            this.SizeLabel.Location = new System.Drawing.Point(36, 194);
+            this.SizeLabel.Location = new System.Drawing.Point(36, 181);
             this.SizeLabel.Name = "SizeLabel";
             this.SizeLabel.Size = new System.Drawing.Size(101, 45);
             this.SizeLabel.TabIndex = 3;
@@ -678,6 +692,7 @@ namespace R5_Reloaded_Installer_GUI
         private System.Windows.Forms.NumericUpDown ListenPortNumericUpDown;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.LinkLabel DetailedInfoLinkLabe;
+        private System.Windows.Forms.LinkLabel ReloadDriveSizeLinkLabel;
     }
 }
 

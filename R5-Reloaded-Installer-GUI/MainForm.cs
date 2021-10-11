@@ -121,9 +121,7 @@ namespace R5_Reloaded_Installer_GUI
             {
                 InstallPath = Path.Combine(fbd.SelectedPath, DirName);
                 InstallLinkTextBox.Text = InstallPath;
-                DriveSize = GetFileSize.DriveFreeSpace(InstallPath);
-                SetSizesText(FileSize, DriveSize);
-                NextButton.Enabled = CheckSize();
+                SetDriveSize();
             }
         }
 
@@ -144,8 +142,6 @@ namespace R5_Reloaded_Installer_GUI
             else DhtListenPortNumericUpDown.Value = 0;
         }
 
-
-
         private void DetailedInfoLinkLabe_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             if (!LogForm.Visible)
@@ -153,6 +149,11 @@ namespace R5_Reloaded_Installer_GUI
                 LogFormInitialize();
                 LogForm.Show();
             }
+        }
+
+        private void ReloadDriveSizeLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            SetDriveSize();
         }
     }
 }

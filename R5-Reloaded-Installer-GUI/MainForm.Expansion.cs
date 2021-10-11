@@ -51,9 +51,9 @@ namespace R5_Reloaded_Installer_GUI
 
         private void SetDriveAndFileSize()
         {
-            DriveSize = GetFileSize.DriveFreeSpace(InstallPath);
             new Thread(() =>
             {
+                DriveSize = GetFileSize.DriveFreeSpace(InstallPath);
                 Invoke(new Delegate(() => SetSizesText(-1, DriveSize)));
                 long size = 0;
                 if (!ExitFlug) size = GetFileSize.Torrent(WebGetLink.GetApexClientLink());
@@ -61,11 +61,15 @@ namespace R5_Reloaded_Installer_GUI
                 if (!ExitFlug) size += GetFileSize.Zip(WebGetLink.GetScriptsR5Link());
                 if (!ExitFlug) size += GetFileSize.Zip(WebGetLink.GetAria2Link());
                 if (!ExitFlug) FileSize = size;
-                if (!ExitFlug) Invoke(new Delegate(() => {
-                    SetSizesText(FileSize, DriveSize);
-                    NextButton.Enabled = CheckSize();
-                }));
+                if (!ExitFlug) Invoke(new Delegate(() => SetDriveSize()));
             }).Start();
+        }
+
+        private void SetDriveSize()
+        {
+            DriveSize = GetFileSize.DriveFreeSpace(InstallPath);
+            SetSizesText(FileSize, DriveSize);
+            NextButton.Enabled = CheckSize();
         }
 
         private void ButtonToTabNext(int i)
