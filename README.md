@@ -13,6 +13,7 @@ Also, the game client is torrent, but this software has stopped seeding.
 So seed using different torrent software as much as possible. 
 This is because others may not be able to download it.
 
+# 
 
 Make sure that the specified ports are open for incoming TCP traffic.
 
