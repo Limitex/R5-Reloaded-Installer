@@ -68,7 +68,7 @@ namespace R5_Reloaded_Installer_Library.Get
 
         public string RunZip(string address, string name = null, string SavePath = null)
         {
-            if (!IsUrl(address) || GetExtension(address) != "zip")
+            if (!IsUrl(address) || FileExpansion.GetExtension(address) != "zip")
                 throw new Exception("The specified string does not download the ZIP file.");
             if (name == null) name = Path.GetFileName(address);
             else name += Path.GetExtension(address);
@@ -94,7 +94,7 @@ namespace R5_Reloaded_Installer_Library.Get
 
         public string RunTorrent(string address, string name = null, string SavePath = null)
         {
-            if (!IsUrl(address) || GetExtension(address) != "torrent")
+            if (!IsUrl(address) || FileExpansion.GetExtension(address) != "torrent")
                 throw new Exception("The specified string does not download the Torrent file.");
 
             if (SavePath == null) SavePath = SaveingDirectoryPath;
@@ -186,8 +186,6 @@ namespace R5_Reloaded_Installer_Library.Get
                 CallBack("log", "Aria2Process Download", nakedLine);
             }
         }
-
-        private static string GetExtension(string address) => Path.GetExtension(address).Replace(".", "").ToLower();
 
         private static bool IsUrl(string address) => Regex.IsMatch(address, @"^s?https?://[-_.!~*'()a-zA-Z0-9;/?:@&=+$,%#]+$");
         

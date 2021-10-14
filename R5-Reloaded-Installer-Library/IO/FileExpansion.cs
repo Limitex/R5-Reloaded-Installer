@@ -15,6 +15,8 @@ namespace R5_Reloaded_Installer_Library.IO
     {
         public static float ByteToGByte(long value) => value / 1024f / 1024f / 1024f;
 
+        public static string GetExtension(string address) => Path.GetExtension(address).Replace(".", "").ToLower();
+
         public static long GetDriveFreeSpace(string path)
         {
             return new DriveInfo(Path.GetPathRoot(path)).AvailableFreeSpace;
