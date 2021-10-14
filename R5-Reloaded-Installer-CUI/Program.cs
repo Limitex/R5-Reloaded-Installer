@@ -41,6 +41,29 @@ namespace R5_Reloaded_Installer_CUI
                     ConsoleExpansion.Exit();
                 }
             }
+
+            ConsoleExpansion.LogWrite("Get the download location...");
+            var detoursR5_path = WebGetLink.DetoursR5();
+            var scriptsR5_path = WebGetLink.ScriptsR5();
+            var apexClient_path = WebGetLink.ApexClient();
+
+            ConsoleExpansion.LogWrite("Get the file size...");
+            var DriveRoot = Path.GetPathRoot(DirectoryExpansion.RunningDirectoryPath);
+            var DriveSize = FileExpansion.ByteToGByte(FileExpansion.GetDriveFreeSpace(DriveRoot));
+            var FileSize = FileExpansion.ByteToGByte(
+                FileExpansion.GetZipFileSize(detoursR5_path) + 
+                FileExpansion.GetZipFileSize(scriptsR5_path) +
+                FileExpansion.GetTorrentFileSize(apexClient_path));
+
+            ConsoleExpansion.LogWrite("["+DriveRoot + "] Drive Size   >> " + DriveSize + " GB");
+            ConsoleExpansion.LogWrite("Download File Size >> " + FileSize + " GB");
+            if (FileSize > DriveSize)
+            {
+                ConsoleExpansion.LogError("There is not enough space on the destination drive to install the software.");
+                ConsoleExpansion.Exit();
+            }
+            ConsoleExpansion.LogWrite("(OK)");
+
             ConsoleExpansion.LogWrite("Do you want to continue the installation ?");
             ConsoleExpansion.LogWrite("Installation takes about an hour.");
             if (ConsoleExpansion.ConsentInput())
@@ -51,10 +74,10 @@ namespace R5_Reloaded_Installer_CUI
                 {
                     download.WebClientReceives += new WebClientProcessEventHandler(WebClient_EventHandler);
                     download.Aria2ProcessReceives += new Aria2ProcessEventHandler(Aria2Process_EventHandler);
-                    detoursR5FilePath = download.RunZip(WebGetLink.DetoursR5(), "detours_r5");
-                    scriptsR5FilePath = download.RunZip(WebGetLink.ScriptsR5(), "scripts_r5");
+                    detoursR5FilePath = download.RunZip(detoursR5_path, "detours_r5");
+                    scriptsR5FilePath = download.RunZip(scriptsR5_path, "scripts_r5");
                     ConsoleExpansion.WriteWidth('=', "Download with aria2");
-                    apexClientFilePath = download.RunTorrent(WebGetLink.ApexClient(), FinalDirectoryName);
+                    apexClientFilePath = download.RunTorrent(apexClient_path, FinalDirectoryName);
                     ConsoleExpansion.WriteWidth('=');
                 }
                 ConsoleExpansion.LogWrite("The detours_r5 file is being moved.");
@@ -85,8 +108,8 @@ namespace R5_Reloaded_Installer_CUI
                 ConsoleExpansion.LogWrite(
                     "Download " + fileName + " (" + fileExt + ") >> " +
                     string.Format("{0,8}", received.ToString("0.000")) +
-                    " / " + string.Format("{0,8}", total.ToString("0.000")) + 
-                    " [KB] (" + string.Format("{0,3}", parcentage) + "%)");
+                    "KB/" + string.Format("{0,8}", total.ToString("0.000")) + 
+                    "KB (" + string.Format("{0,3}", parcentage) + "%)");
                 if (parcentage == 100) ConsoleExpansion.LogWrite("(OK)"); ;
             }
         }
