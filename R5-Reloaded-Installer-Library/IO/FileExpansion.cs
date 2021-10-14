@@ -14,6 +14,8 @@ namespace R5_Reloaded_Installer_Library.IO
     public static class FileExpansion
     {
         public static float ByteToGByte(long value) => value / 1024f / 1024f / 1024f;
+        public static float ByteToMByte(long value) => value / 1024f / 1024f;
+        public static float ByteToKByte(long value) => value / 1024f;
 
         public static string GetExtension(string address) => Path.GetExtension(address).Replace(".", "").ToLower();
 
