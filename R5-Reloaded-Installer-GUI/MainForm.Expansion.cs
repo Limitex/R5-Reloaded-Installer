@@ -69,7 +69,6 @@ namespace R5_Reloaded_Installer_GUI
         {
             DriveSize = GetFileSize.DriveFreeSpace(InstallPath);
             SetSizesText(FileSize, DriveSize);
-            NextButton.Enabled = CheckSize();
         }
 
         private void ButtonToTabNext(int i)
@@ -101,7 +100,7 @@ namespace R5_Reloaded_Installer_GUI
             if (nowTab == PlaceOfInstallationTabPage.Name)
             {
                 BackButton.Enabled = true;
-                NextButton.Enabled = CheckSize();
+                NextButton.Enabled = true;
                 InstallButton.Enabled = false;
             }
             if (nowTab == OptionTabPage.Name)
