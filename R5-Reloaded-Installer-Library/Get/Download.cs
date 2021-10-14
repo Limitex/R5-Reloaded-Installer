@@ -10,26 +10,25 @@ using System.Text.RegularExpressions;
 
 namespace R5_Reloaded_Installer_Library.Get
 {
+    public delegate void WebClientProcessEventHandler(object sender, DownloadProgressChangedEventArgs e);
+    public delegate void Aria2ProcessEventHandler(object sender, DataReceivedEventArgs outLine);
+
     public class Download : IDisposable
     {
-        public delegate void ProgressEventHandler(string outline);
-
         public string WorkingDirectoryPath { get; private set; }
         public string SaveingDirectoryPath { get; private set; }
-        public static float WebClientLogUpdateInterval { get; set; } = 1f;
+
+        public event WebClientProcessEventHandler WebClientReceives = null;
+        public event Aria2ProcessEventHandler Aria2ProcessReceives = null;
 
         private static readonly string Aria2Argument = "--seed-time=0 --allow-overwrite=true";
         private static readonly string Aria2ExecutableFileName = "aria2c.exe";
         private static readonly string WorkingDirectoryName = "R5-Reloaded-Installer";
 
-        private static ProgressEventHandler progressEventHandler = null;
         private static string Aria2Path;
-        private static float LogTimer = 0;
 
-        public Download(ProgressEventHandler peh, string saveingDirectoryPath = null)
+        public Download(string saveingDirectoryPath = null)
         {
-            progressEventHandler = peh;
-            
             WorkingDirectoryPath = Path.Combine(DirectoryExpansion.AppDataDirectoryPath, WorkingDirectoryName);
             if (saveingDirectoryPath != null) SaveingDirectoryPath = saveingDirectoryPath;
             else SaveingDirectoryPath = DirectoryExpansion.RunningDirectoryPath;
@@ -54,13 +53,14 @@ namespace R5_Reloaded_Installer_Library.Get
             return null;
         }
 
+        private static bool IsUrl(string address) => Regex.IsMatch(address, @"^s?https?://[-_.!~*'()a-zA-Z0-9;/?:@&=+$,%#]+$");
+
         public string Run(string address, string filePath)
         {
             using (var wc = new WebClient())
             {
-                CallBack("info", "Start WebClient", "Address:" + address + "|To:" + filePath);
-                wc.DownloadProgressChanged += new DownloadProgressChangedEventHandler(WebClient_EventHandler);
-                wc.DownloadFileCompleted += new AsyncCompletedEventHandler((sender, e) => CallBack("info", "Completed WebClient"));
+                if(WebClientReceives != null)
+                    wc.DownloadProgressChanged += new DownloadProgressChangedEventHandler(WebClientReceives);
                 wc.DownloadFileTaskAsync(new Uri(address), filePath).Wait();
             }
             return filePath;
@@ -119,11 +119,12 @@ namespace R5_Reloaded_Installer_Library.Get
                     RedirectStandardOutput = true,
                     RedirectStandardError = true
                 };
-                aria2c.EnableRaisingEvents = true;
-                aria2c.Exited += new EventHandler((EHsender, EHe) => CallBack("info", "Completed Aria2Process"));
-                aria2c.ErrorDataReceived += new DataReceivedEventHandler(Aria2Process_EventHandler);
-                aria2c.OutputDataReceived += new DataReceivedEventHandler(Aria2Process_EventHandler);
-                CallBack("info", "Start Aria2Process", "Address:" + address + "|To:" + directoryPath + "|from:" + rawDirectoryPath);
+                if (Aria2ProcessReceives != null)
+                {
+                    aria2c.EnableRaisingEvents = true;
+                    aria2c.ErrorDataReceived += new DataReceivedEventHandler(Aria2ProcessReceives);
+                    aria2c.OutputDataReceived += new DataReceivedEventHandler(Aria2ProcessReceives);
+                }
                 aria2c.Start();
                 aria2c.BeginOutputReadLine();
                 aria2c.BeginErrorReadLine();
@@ -139,68 +140,18 @@ namespace R5_Reloaded_Installer_Library.Get
             }
             else return rawDirectoryPath;
         }
-
-        private static void CallBack(string info, string status, string data = "")
+    }
+    public static class Time
+    {
+        private static Stopwatch stopWatch = Stopwatch.StartNew();
+        private static float timeBuffer = nowTime;
+        private static float nowTime => stopWatch.ElapsedTicks * 0.0001f * 0.001f;
+        private static float getDelta()
         {
-            if (progressEventHandler != null) progressEventHandler("[" + info + "](" + status + ")<" + data + ">");
+            var oldTime = timeBuffer;
+            timeBuffer = nowTime;
+            return timeBuffer - oldTime;
         }
-
-        private static void WebClient_EventHandler(object sender, DownloadProgressChangedEventArgs e)
-        {
-            LogTimer += Time.deltaTime;
-            if (LogTimer > WebClientLogUpdateInterval || e.ProgressPercentage == 100)
-            {
-                LogTimer = 0;
-                CallBack("log", "WebClient Download",
-                    "ProgressPercentage:" + e.ProgressPercentage.ToString() +
-                    "|BytesReceived:" + e.BytesReceived +
-                    "|TotalBytesToReceive:" + e.TotalBytesToReceive);
-            }
-        }
-
-        private static void Aria2Process_EventHandler(object sendingProcess, DataReceivedEventArgs outLine)
-        {
-            if (string.IsNullOrEmpty(outLine.Data)) return;
-
-            var rawLine = Regex.Replace(outLine.Data, @"(\r|\n|(  )|\t)", string.Empty);
-
-            if (rawLine[0] == '[')
-            {
-                var nakedLine = Regex.Replace(rawLine, @"((#.{6}( ))|\[|\])", "");
-                if (rawLine.Contains("FileAlloc"))
-                {
-                    CallBack("log", "Aria2Process Download", nakedLine.Substring(nakedLine.IndexOf("FileAlloc")));
-                }
-                else
-                {
-                    CallBack("log", "Aria2Process Download", nakedLine);
-                }
-            }
-            else if (rawLine[0] == '(')
-            {
-                CallBack("log", "Aria2Process Download", rawLine);
-            }
-            else if (rawLine.Contains("NOTICE"))
-            {
-                var nakedLine = Regex.Replace(rawLine, @"([0-9]{2}/[0-9]{2})( )([0-9]{2}:[0-9]{2}:[0-9]{2})( )", string.Empty);
-                CallBack("log", "Aria2Process Download", nakedLine);
-            }
-        }
-
-        private static bool IsUrl(string address) => Regex.IsMatch(address, @"^s?https?://[-_.!~*'()a-zA-Z0-9;/?:@&=+$,%#]+$");
-        
-        private static class Time
-        {
-            private static Stopwatch stopWatch = Stopwatch.StartNew();
-            private static float timeBuffer = nowTime;
-            private static float nowTime => stopWatch.ElapsedTicks * 0.0001f * 0.001f;
-            private static float getDelta()
-            {
-                var oldTime = timeBuffer;
-                timeBuffer = nowTime;
-                return timeBuffer - oldTime;
-            }
-            public static float deltaTime => getDelta();
-        }
+        public static float deltaTime => getDelta();
     }
 }
