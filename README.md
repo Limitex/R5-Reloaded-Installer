@@ -16,6 +16,7 @@ This is because others may not be able to download it.
 Make sure that the specified ports are open for incoming TCP traffic.
 default : 6881-6999
 by aria2.github.io
+
 # How to use
 
 1. Download and unzip the Zip file from the [release](https://github.com/Limitex/R5-Reloaded-Installer/releases).
