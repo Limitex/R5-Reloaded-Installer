@@ -60,8 +60,8 @@ namespace R5_Reloaded_Installer_Library.Get
             using (var wc = new WebClient())
             {
                 if (WebClientReceives != null)
-                    wc.DownloadProgressChanged += 
-                        new DownloadProgressChangedEventHandler((sender, e) => WebClientReceives(address, e));
+                    wc.DownloadProgressChanged +=
+                        new DownloadProgressChangedEventHandler((sender, e) => WebClientReceives(new string[] { address, filePath }, e));
                 wc.DownloadFileTaskAsync(new Uri(address), filePath).Wait();
             }
             return filePath;
