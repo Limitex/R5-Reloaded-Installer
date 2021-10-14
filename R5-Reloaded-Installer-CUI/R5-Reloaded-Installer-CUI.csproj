@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>R5_Reloaded_Installer_CUI</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\R5-Reloaded-Installer-Library\R5-Reloaded-Installer-Library.csproj" />
+  </ItemGroup>
+
+</Project>
