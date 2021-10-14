@@ -87,7 +87,7 @@ namespace R5_Reloaded_Installer_CUI
                     string.Format("{0,8}", received.ToString("0.000")) +
                     " / " + string.Format("{0,8}", total.ToString("0.000")) + 
                     " [KB] (" + string.Format("{0,3}", parcentage) + "%)");
-                if (parcentage == 100) ConsoleExpansion.LogWrite("Complete."); ;
+                if (parcentage == 100) ConsoleExpansion.LogWrite("(OK)"); ;
             }
         }
 

@@ -40,7 +40,7 @@ namespace R5_Reloaded_Installer_Library.IO
             {
                 for (int i = 0; i < Console.WindowWidth; i++) Console.Write(c);
             }
-            Console.WriteLine();
+            Console.WriteLine("\n");
         }
 
         public static void LogWrite(string value)
