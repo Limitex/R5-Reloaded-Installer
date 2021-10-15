@@ -120,6 +120,7 @@ namespace R5_Reloaded_Installer_GUI
             {
                 SetButtonEnabled(false, false, false);
                 mainForm.CancelButton.Text = "Exit";
+                MainForm.IsRunning = false;
             }
         }
 

@@ -14,6 +14,8 @@ namespace R5_Reloaded_Installer_GUI
     {
         public static string LatestDirectoryName = "R5-Reloaded";
 
+        public static bool IsRunning = true;
+
         public MainForm()
         {
             InitializeComponent();
@@ -23,14 +25,18 @@ namespace R5_Reloaded_Installer_GUI
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            var dr = MessageBox.Show("Do you want to quit?", "Warning",
-                 MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
-            if (dr != DialogResult.OK) e.Cancel = true;
+            if (IsRunning)
+            {
+                var dr = MessageBox.Show("Do you want to quit?", "Warning",
+                    MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+                if (dr != DialogResult.OK) e.Cancel = true;
+            }
         }
 
         private void MainTask_StartInstall(object sender, StartInstallEventArgs e)
         {
-
+            MessageBox.Show("MainTask");
+            NextButton.Enabled = true;
         }
     }
 }
