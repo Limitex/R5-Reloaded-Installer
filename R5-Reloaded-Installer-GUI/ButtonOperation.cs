@@ -137,6 +137,19 @@ namespace R5_Reloaded_Installer_GUI
                 return false;
             }
 
+            if ((GetSizeAndPath.TargetDirectoryRoot == -1) || (GetSizeAndPath.TargetAllFiles == -1))
+            {
+                MessageBox.Show("The file size or drive size cannot be obtained. \nPlease wait for a while.",
+                    "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+            if (GetSizeAndPath.TargetDirectoryRoot < GetSizeAndPath.TargetAllFiles)
+            {
+                MessageBox.Show("There is no free space on the optical disc.",
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
             return true;
         }
     }
