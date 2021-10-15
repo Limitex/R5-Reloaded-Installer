@@ -22,5 +22,12 @@ namespace R5_Reloaded_Installer_GUI
         {
 
         }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            var dr = MessageBox.Show("Do you want to quit?", "Warning",
+                 MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+            if (dr != DialogResult.OK) e.Cancel = true;
+        }
     }
 }
