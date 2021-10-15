@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
@@ -150,6 +151,15 @@ namespace R5_Reloaded_Installer_GUI
                 return false;
             }
 
+            if (Directory.Exists(mainForm.InstallLinkTextBox.Text))
+            {
+                MessageBox.Show("The specified directory already exists.\n" +
+                    "Please move or delete the file and try again.\n" +
+                    "Explorer opens.",
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Process.Start("EXPLORER.EXE", mainForm.InstallLinkTextBox.Text);
+                return false;
+            }
             return true;
         }
     }
