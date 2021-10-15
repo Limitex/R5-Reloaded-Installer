@@ -26,7 +26,11 @@ namespace R5_Reloaded_Installer_GUI
             mainForm.WebsiteLinkLabel.LinkClicked += new LinkLabelLinkClickedEventHandler(WebsiteLinkLabel_LinkClicked);
             mainForm.ReloadDriveSizeLinkLabel.LinkClicked += new LinkLabelLinkClickedEventHandler(ReloadDriveSizeLinkLabel_LinkClicked);
             mainForm.BrowseButton.Click += new EventHandler(this.BrowseButton_Click);
+            mainForm.Load += new EventHandler(MainForm_Load);
+        }
 
+        private void MainForm_Load(object sender, EventArgs e)
+        {
             GetDirectoryRootSize();
             GetAllFilesSize();
         }
