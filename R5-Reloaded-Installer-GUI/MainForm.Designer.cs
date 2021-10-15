@@ -301,6 +301,8 @@ namespace R5_Reloaded_Installer_GUI
             // AddToStartMenuCheckBox
             // 
             this.AddToStartMenuCheckBox.AutoSize = true;
+            this.AddToStartMenuCheckBox.Checked = true;
+            this.AddToStartMenuCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.AddToStartMenuCheckBox.Location = new System.Drawing.Point(50, 113);
             this.AddToStartMenuCheckBox.Name = "AddToStartMenuCheckBox";
             this.AddToStartMenuCheckBox.Size = new System.Drawing.Size(121, 19);
@@ -311,6 +313,8 @@ namespace R5_Reloaded_Installer_GUI
             // CreateDesktopShortcutCheckBox
             // 
             this.CreateDesktopShortcutCheckBox.AutoSize = true;
+            this.CreateDesktopShortcutCheckBox.Checked = true;
+            this.CreateDesktopShortcutCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.CreateDesktopShortcutCheckBox.Location = new System.Drawing.Point(50, 88);
             this.CreateDesktopShortcutCheckBox.Name = "CreateDesktopShortcutCheckBox";
             this.CreateDesktopShortcutCheckBox.Size = new System.Drawing.Size(160, 19);
@@ -455,6 +459,8 @@ namespace R5_Reloaded_Installer_GUI
             // LaunchCheckBox
             // 
             this.LaunchCheckBox.AutoSize = true;
+            this.LaunchCheckBox.Checked = true;
+            this.LaunchCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.LaunchCheckBox.Location = new System.Drawing.Point(45, 180);
             this.LaunchCheckBox.Name = "LaunchCheckBox";
             this.LaunchCheckBox.Size = new System.Drawing.Size(155, 19);
