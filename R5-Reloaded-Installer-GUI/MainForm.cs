@@ -15,6 +15,7 @@ namespace R5_Reloaded_Installer_GUI
         public MainForm()
         {
             InitializeComponent();
+            new ButtonOperation(this, (sender, e) => { });
         }
 
         private void MainForm_Load(object sender, EventArgs e)

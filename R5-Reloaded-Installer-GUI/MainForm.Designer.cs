@@ -566,21 +566,21 @@ namespace R5_Reloaded_Installer_GUI
 
         #endregion
 
-        private System.Windows.Forms.TabControl MainTabControl;
-        private System.Windows.Forms.TabPage IntroductionTabPage;
-        private System.Windows.Forms.TabPage InformationTabPage;
-        private System.Windows.Forms.Button CancelButton;
-        private System.Windows.Forms.Button InstallButton;
-        private System.Windows.Forms.Button NextButton;
-        private System.Windows.Forms.Button BackButton;
-        private System.Windows.Forms.TabPage PlaceOfInstallationTabPage;
-        private System.Windows.Forms.TabPage OptionTabPage;
-        private System.Windows.Forms.TabPage ProcessTabPage;
-        private System.Windows.Forms.TabPage CompletionTabPage;
+        public System.Windows.Forms.TabControl MainTabControl;
+        public System.Windows.Forms.TabPage IntroductionTabPage;
+        public System.Windows.Forms.TabPage InformationTabPage;
+        public System.Windows.Forms.Button CancelButton;
+        public System.Windows.Forms.Button InstallButton;
+        public System.Windows.Forms.Button NextButton;
+        public System.Windows.Forms.Button BackButton;
+        public System.Windows.Forms.TabPage PlaceOfInstallationTabPage;
+        public System.Windows.Forms.TabPage OptionTabPage;
+        public System.Windows.Forms.TabPage ProcessTabPage;
+        public System.Windows.Forms.TabPage CompletionTabPage;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.CheckBox AgreeCheckBox;
+        public System.Windows.Forms.CheckBox AgreeCheckBox;
         private System.Windows.Forms.LinkLabel WebsiteLinkLabel;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.LinkLabel DiscordLinkLabel;
@@ -590,10 +590,10 @@ namespace R5_Reloaded_Installer_GUI
         private System.Windows.Forms.Label FileSizeLabel;
         private System.Windows.Forms.Label DriveSizeLabel;
         private System.Windows.Forms.Button BrowseButton;
-        private System.Windows.Forms.TextBox InstallLinkTextBox;
+        public System.Windows.Forms.TextBox InstallLinkTextBox;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.CheckBox AddToStartMenuCheckBox;
-        private System.Windows.Forms.CheckBox CreateDesktopShortcutCheckBox;
+        public System.Windows.Forms.CheckBox AddToStartMenuCheckBox;
+        public System.Windows.Forms.CheckBox CreateDesktopShortcutCheckBox;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.LinkLabel DetailedInfoLinkLabe;
         private System.Windows.Forms.Label TimeLeftLabel;
