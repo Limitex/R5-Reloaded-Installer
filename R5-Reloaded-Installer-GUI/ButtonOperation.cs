@@ -10,6 +10,9 @@ namespace R5_Reloaded_Installer_GUI
     public class StartInstallEventArgs
     {
         public string InstallationPath;
+        public string ApexClientURL;
+        public string Detours_R5URL;
+        public string Scripts_R5URL;
         public bool CreateDesktopShortcut;
         public bool AddShortcutToStartMenu;
     }
@@ -21,6 +24,7 @@ namespace R5_Reloaded_Installer_GUI
         private MainForm mainForm;
         private bool ButtonSelectFlug = false;
         private StartInstallEventHandler startInstallEventHandler;
+
         public ButtonOperation(MainForm form, StartInstallEventHandler installEventHandler)
         {
             mainForm = form;
@@ -82,6 +86,9 @@ namespace R5_Reloaded_Installer_GUI
                 InstallationPath = mainForm.InstallLinkTextBox.Text,
                 CreateDesktopShortcut = mainForm.CreateDesktopShortcutCheckBox.Checked,
                 AddShortcutToStartMenu = mainForm.AddToStartMenuCheckBox.Checked,
+                ApexClientURL = GetSizeAndPath.ApexClientURL,
+                Detours_R5URL = GetSizeAndPath.Detours_R5URL,
+                Scripts_R5URL = GetSizeAndPath.Scripts_R5URL
             });
         }
 

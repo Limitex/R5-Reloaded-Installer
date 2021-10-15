@@ -17,6 +17,10 @@ namespace R5_Reloaded_Installer_GUI
         public static long TargetDirectoryRoot = -1;
         public static long TargetAllFiles = -1;
 
+        public static string ApexClientURL;
+        public static string Detours_R5URL;
+        public static string Scripts_R5URL;
+
         private MainForm mainForm;
         
         public GetSizeAndPath(MainForm form)
@@ -71,9 +75,12 @@ namespace R5_Reloaded_Installer_GUI
             new Thread(() =>
             {
                 long size = 0;
-                if (mainForm.Visible) size += FileExpansion.GetTorrentFileSize(WebGetLink.ApexClient());
-                if (mainForm.Visible) size += FileExpansion.GetZipFileSize(WebGetLink.DetoursR5());
-                if (mainForm.Visible) size += FileExpansion.GetZipFileSize(WebGetLink.ScriptsR5());
+                if (mainForm.Visible) ApexClientURL = WebGetLink.ApexClient();
+                if (mainForm.Visible) Detours_R5URL = WebGetLink.DetoursR5();
+                if (mainForm.Visible) Scripts_R5URL = WebGetLink.ScriptsR5();
+                if (mainForm.Visible) size += FileExpansion.GetTorrentFileSize(ApexClientURL);
+                if (mainForm.Visible) size += FileExpansion.GetZipFileSize(Detours_R5URL);
+                if (mainForm.Visible) size += FileExpansion.GetZipFileSize(Scripts_R5URL);
                 if (mainForm.Visible) mainForm.Invoke(new Delegate(() => {
                     TargetAllFiles = size;
                     mainForm.FileSizeLabel.Text = "File size: " + FileExpansion.ByteToGByte(TargetAllFiles).ToString("0.00") + "GB";

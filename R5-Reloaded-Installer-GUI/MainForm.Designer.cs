@@ -368,6 +368,7 @@ namespace R5_Reloaded_Installer_GUI
             this.DetailedInfoLinkLabe.TabStop = true;
             this.DetailedInfoLinkLabe.Text = "Detailed information";
             this.DetailedInfoLinkLabe.VisitedLinkColor = System.Drawing.Color.Black;
+            this.DetailedInfoLinkLabe.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.DetailedInfoLinkLabe_LinkClicked);
             // 
             // TimeLeftLabel
             // 
