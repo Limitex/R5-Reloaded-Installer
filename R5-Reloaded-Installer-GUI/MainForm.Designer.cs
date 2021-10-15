@@ -1,4 +1,7 @@
 ﻿
+using System;
+using System.IO;
+
 namespace R5_Reloaded_Installer_GUI
 {
     partial class MainForm
@@ -275,6 +278,7 @@ namespace R5_Reloaded_Installer_GUI
             this.InstallLinkTextBox.Name = "InstallLinkTextBox";
             this.InstallLinkTextBox.Size = new System.Drawing.Size(315, 23);
             this.InstallLinkTextBox.TabIndex = 1;
+            this.InstallLinkTextBox.Text = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), LatestDirectoryName);
             // 
             // label6
             // 
@@ -582,21 +586,21 @@ namespace R5_Reloaded_Installer_GUI
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         public System.Windows.Forms.CheckBox AgreeCheckBox;
-        private System.Windows.Forms.LinkLabel WebsiteLinkLabel;
+        public System.Windows.Forms.LinkLabel WebsiteLinkLabel;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.LinkLabel DiscordLinkLabel;
+        public System.Windows.Forms.LinkLabel DiscordLinkLabel;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.LinkLabel ReloadDriveSizeLinkLabel;
-        private System.Windows.Forms.Label FileSizeLabel;
-        private System.Windows.Forms.Label DriveSizeLabel;
-        private System.Windows.Forms.Button BrowseButton;
+        public System.Windows.Forms.LinkLabel ReloadDriveSizeLinkLabel;
+        public System.Windows.Forms.Label FileSizeLabel;
+        public System.Windows.Forms.Label DriveSizeLabel;
+        public System.Windows.Forms.Button BrowseButton;
         public System.Windows.Forms.TextBox InstallLinkTextBox;
         private System.Windows.Forms.Label label6;
         public System.Windows.Forms.CheckBox AddToStartMenuCheckBox;
         public System.Windows.Forms.CheckBox CreateDesktopShortcutCheckBox;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.LinkLabel DetailedInfoLinkLabe;
+        public System.Windows.Forms.LinkLabel DetailedInfoLinkLabe;
         private System.Windows.Forms.Label TimeLeftLabel;
         private System.Windows.Forms.Label OverallLogLabel;
         private System.Windows.Forms.Label DownloadLogLabel;

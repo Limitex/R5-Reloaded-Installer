@@ -12,10 +12,13 @@ namespace R5_Reloaded_Installer_GUI
 {
     public partial class MainForm : Form
     {
+        public static string LatestDirectoryName = "R5-Reloaded";
+
         public MainForm()
         {
             InitializeComponent();
             new ButtonOperation(this, (sender, e) => { });
+            new GetSizeAndPath(this);
         }
 
         private void MainForm_Load(object sender, EventArgs e)
