@@ -274,11 +274,12 @@ namespace R5_Reloaded_Installer_GUI
             // 
             // InstallLinkTextBox
             // 
+            this.InstallLinkTextBox.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.InstallLinkTextBox.Location = new System.Drawing.Point(28, 105);
             this.InstallLinkTextBox.Name = "InstallLinkTextBox";
+            this.InstallLinkTextBox.ReadOnly = true;
             this.InstallLinkTextBox.Size = new System.Drawing.Size(315, 23);
             this.InstallLinkTextBox.TabIndex = 1;
-            this.InstallLinkTextBox.Text = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), LatestDirectoryName);
             // 
             // label6
             // 
@@ -550,7 +551,6 @@ namespace R5_Reloaded_Installer_GUI
             this.Name = "MainForm";
             this.Text = "R5 Reloaded Installer";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
-            this.Load += new System.EventHandler(this.MainForm_Load);
             this.MainTabControl.ResumeLayout(false);
             this.IntroductionTabPage.ResumeLayout(false);
             this.IntroductionTabPage.PerformLayout();

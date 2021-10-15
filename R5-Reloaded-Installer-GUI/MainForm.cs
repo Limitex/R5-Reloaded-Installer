@@ -17,13 +17,8 @@ namespace R5_Reloaded_Installer_GUI
         public MainForm()
         {
             InitializeComponent();
-            new ButtonOperation(this, (sender, e) => { });
+            new ButtonOperation(this, MainTask_StartInstall);
             new GetSizeAndPath(this);
-        }
-
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -31,6 +26,11 @@ namespace R5_Reloaded_Installer_GUI
             var dr = MessageBox.Show("Do you want to quit?", "Warning",
                  MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
             if (dr != DialogResult.OK) e.Cancel = true;
+        }
+
+        private void MainTask_StartInstall(object sender, StartInstallEventArgs e)
+        {
+
         }
     }
 }

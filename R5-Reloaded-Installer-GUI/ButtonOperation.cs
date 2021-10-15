@@ -25,6 +25,7 @@ namespace R5_Reloaded_Installer_GUI
         {
             mainForm = form;
             startInstallEventHandler = installEventHandler;
+            mainForm.InstallLinkTextBox.Text = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), MainForm.LatestDirectoryName);
             mainForm.MainTabControl.Selecting += new TabControlCancelEventHandler(MainTabControl_Selecting);
             mainForm.MainTabControl.Selected += new TabControlEventHandler(MainTabControl_Selected);
             mainForm.AgreeCheckBox.CheckedChanged += new EventHandler(AgreeCheckBox_CheckedChanged);
