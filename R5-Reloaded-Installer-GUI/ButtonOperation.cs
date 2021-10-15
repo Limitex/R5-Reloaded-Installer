@@ -30,7 +30,7 @@ namespace R5_Reloaded_Installer_GUI
             mainForm.NextButton.Click += new EventHandler((sender, e) => { Button_Click(sender, e); NextButton_Click(sender, e); });
             mainForm.BackButton.Click += new EventHandler((sender, e) => { Button_Click(sender, e); BackButton_Click(sender, e); });
             mainForm.InstallButton.Click += new EventHandler((sender, e) => { Button_Click(sender, e); InstallButton_Click(sender, e); });
-
+            mainForm.CancelButton.Click += new EventHandler(CancelButton_Click);
             MainTabControl_Selected(new object(), new TabControlEventArgs(
                     mainForm.MainTabControl.SelectedTab,
                     mainForm.MainTabControl.SelectedIndex,
@@ -82,7 +82,12 @@ namespace R5_Reloaded_Installer_GUI
                 AddShortcutToStartMenu = mainForm.AddToStartMenuCheckBox.Checked,
             });
         }
-        
+
+        private void CancelButton_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
         private void AgreeCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             mainForm.NextButton.Enabled = mainForm.AgreeCheckBox.Checked;
