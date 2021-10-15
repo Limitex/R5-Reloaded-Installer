@@ -66,10 +66,11 @@ namespace R5_Reloaded_Installer_GUI
         {
             new Thread(() =>
             {
-                long size = FileExpansion.GetTorrentFileSize(WebGetLink.ApexClient()) +
-                FileExpansion.GetZipFileSize(WebGetLink.DetoursR5()) +
-                FileExpansion.GetZipFileSize(WebGetLink.ScriptsR5());
-                mainForm.Invoke(new Delegate(() => {
+                long size = 0;
+                if (mainForm.Visible) size += FileExpansion.GetTorrentFileSize(WebGetLink.ApexClient());
+                if (mainForm.Visible) size += FileExpansion.GetZipFileSize(WebGetLink.DetoursR5());
+                if (mainForm.Visible) size += FileExpansion.GetZipFileSize(WebGetLink.ScriptsR5());
+                if (mainForm.Visible) mainForm.Invoke(new Delegate(() => {
                     TargetAllFiles = size;
                     mainForm.FileSizeLabel.Text = "File size: " + FileExpansion.ByteToGByte(TargetAllFiles).ToString("0.00") + "GB";
                 }));
