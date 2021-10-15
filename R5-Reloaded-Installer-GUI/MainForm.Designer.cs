@@ -61,7 +61,7 @@ namespace R5_Reloaded_Installer_GUI
             // 
             this.IntroductionTabPage.Location = new System.Drawing.Point(4, 24);
             this.IntroductionTabPage.Name = "IntroductionTabPage";
-            this.IntroductionTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.IntroductionTabPage.Padding = new System.Windows.Forms.Padding(25);
             this.IntroductionTabPage.Size = new System.Drawing.Size(452, 280);
             this.IntroductionTabPage.TabIndex = 0;
             this.IntroductionTabPage.Text = "Introduction";
@@ -71,7 +71,7 @@ namespace R5_Reloaded_Installer_GUI
             // 
             this.InformationTabPage.Location = new System.Drawing.Point(4, 24);
             this.InformationTabPage.Name = "InformationTabPage";
-            this.InformationTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.InformationTabPage.Padding = new System.Windows.Forms.Padding(25);
             this.InformationTabPage.Size = new System.Drawing.Size(452, 280);
             this.InformationTabPage.TabIndex = 1;
             this.InformationTabPage.Text = "Information";
@@ -81,6 +81,7 @@ namespace R5_Reloaded_Installer_GUI
             // 
             this.PlaceOfInstallationTabPage.Location = new System.Drawing.Point(4, 24);
             this.PlaceOfInstallationTabPage.Name = "PlaceOfInstallationTabPage";
+            this.PlaceOfInstallationTabPage.Padding = new System.Windows.Forms.Padding(25);
             this.PlaceOfInstallationTabPage.Size = new System.Drawing.Size(452, 280);
             this.PlaceOfInstallationTabPage.TabIndex = 2;
             this.PlaceOfInstallationTabPage.Text = "Place of installation";
@@ -90,6 +91,7 @@ namespace R5_Reloaded_Installer_GUI
             // 
             this.OptionTabPage.Location = new System.Drawing.Point(4, 24);
             this.OptionTabPage.Name = "OptionTabPage";
+            this.OptionTabPage.Padding = new System.Windows.Forms.Padding(25);
             this.OptionTabPage.Size = new System.Drawing.Size(452, 280);
             this.OptionTabPage.TabIndex = 3;
             this.OptionTabPage.Text = "Option";
@@ -99,6 +101,7 @@ namespace R5_Reloaded_Installer_GUI
             // 
             this.ProcessTabPage.Location = new System.Drawing.Point(4, 24);
             this.ProcessTabPage.Name = "ProcessTabPage";
+            this.ProcessTabPage.Padding = new System.Windows.Forms.Padding(25);
             this.ProcessTabPage.Size = new System.Drawing.Size(452, 280);
             this.ProcessTabPage.TabIndex = 4;
             this.ProcessTabPage.Text = "Process";
@@ -108,6 +111,7 @@ namespace R5_Reloaded_Installer_GUI
             // 
             this.CompletionTabPage.Location = new System.Drawing.Point(4, 24);
             this.CompletionTabPage.Name = "CompletionTabPage";
+            this.CompletionTabPage.Padding = new System.Windows.Forms.Padding(25);
             this.CompletionTabPage.Size = new System.Drawing.Size(452, 280);
             this.CompletionTabPage.TabIndex = 5;
             this.CompletionTabPage.Text = "Completion";
