@@ -17,6 +17,16 @@ namespace R5_Reloaded_Installer_GUI
             form.DetailedInfoLinkLabe.LinkClicked += new LinkLabelLinkClickedEventHandler(DetailedInfoLinkLabe_LinkClicked);
         }
 
+        public static void WriteLine(string str)
+        {
+            if (LogForm.Visible) LogRichTexBox.AppendText(str + "\n");
+        }
+
+        public static void Write(string str)
+        {
+            if (LogForm.Visible) LogRichTexBox.AppendText(str);
+        }
+
         private void DetailedInfoLinkLabe_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             if (!LogForm.Visible)
@@ -40,11 +50,6 @@ namespace R5_Reloaded_Installer_GUI
                 HideSelection = false
             };
             LogForm.Controls.Add(LogRichTexBox);
-        }
-
-        public static void WriteLine(string str)
-        {
-            if (LogForm.Visible) LogRichTexBox.AppendText(str + "\n");
         }
     }
 }
