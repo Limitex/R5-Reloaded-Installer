@@ -26,6 +26,8 @@ namespace R5_Reloaded_Installer_Library.Get
         private static readonly string WorkingDirectoryName = "R5-Reloaded-Installer";
 
         private static string Aria2Path;
+        private bool IsRunning = true;
+        private Process Aria2c = null;
 
         public Download(string saveingDirectoryPath = null)
         {
@@ -69,6 +71,7 @@ namespace R5_Reloaded_Installer_Library.Get
 
         public string RunZip(string address, string name = null, string SavePath = null)
         {
+            if (!IsRunning) return null;
             if (!IsUrl(address) || FileExpansion.GetExtension(address) != "zip")
                 throw new Exception("The specified string does not download the ZIP file.");
             if (name == null) name = Path.GetFileName(address);
@@ -95,6 +98,7 @@ namespace R5_Reloaded_Installer_Library.Get
 
         public string RunTorrent(string address, string name = null, string SavePath = null)
         {
+            if (!IsRunning) return null;
             if (!IsUrl(address) || FileExpansion.GetExtension(address) != "torrent")
                 throw new Exception("The specified string does not download the Torrent file.");
 
@@ -108,8 +112,8 @@ namespace R5_Reloaded_Installer_Library.Get
 
             using (var job = JobObject.CreateAsKillOnJobClose())
             {
-                var aria2c = new Process();
-                aria2c.StartInfo = new ProcessStartInfo()
+                Aria2c = new Process();
+                Aria2c.StartInfo = new ProcessStartInfo()
                 {
                     FileName = Aria2Path,
                     Arguments = filePath + " " + Aria2Argument,
@@ -122,16 +126,16 @@ namespace R5_Reloaded_Installer_Library.Get
                 };
                 if (Aria2ProcessReceives != null)
                 {
-                    aria2c.EnableRaisingEvents = true;
-                    aria2c.ErrorDataReceived += new DataReceivedEventHandler(Aria2ProcessReceives);
-                    aria2c.OutputDataReceived += new DataReceivedEventHandler(Aria2ProcessReceives);
+                    Aria2c.EnableRaisingEvents = true;
+                    Aria2c.ErrorDataReceived += new DataReceivedEventHandler(Aria2ProcessReceives);
+                    Aria2c.OutputDataReceived += new DataReceivedEventHandler(Aria2ProcessReceives);
                 }
-                aria2c.Start();
-                aria2c.BeginOutputReadLine();
-                aria2c.BeginErrorReadLine();
-                job.AssignProcess(aria2c);
-                aria2c.WaitForExit();
-                aria2c.Close();
+                Aria2c.Start();
+                Aria2c.BeginOutputReadLine();
+                Aria2c.BeginErrorReadLine();
+                job.AssignProcess(Aria2c);
+                Aria2c.WaitForExit();
+                Aria2c.Close();
             }
 
             if (name != null)
@@ -140,6 +144,16 @@ namespace R5_Reloaded_Installer_Library.Get
                 return directoryPath;
             }
             else return rawDirectoryPath;
+        }
+
+        public void ProcessKill()
+        {
+            IsRunning = false;
+            if (Aria2c != null && !Aria2c.HasExited)
+            {
+                Aria2c.Kill();
+                Aria2c.Close();
+            }
         }
     }
 }
