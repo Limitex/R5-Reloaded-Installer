@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Text;
 using System.Windows.Forms;
 
 namespace R5_Reloaded_Installer_GUI
@@ -112,7 +110,7 @@ namespace R5_Reloaded_Installer_GUI
 
         private void CancelButton_Click(object sender, EventArgs e)
         {
-            if (!MainForm.IsRunning && mainForm.LaunchCheckBox.Checked) 
+            if (!MainForm.IsRunning && mainForm.LaunchCheckBox.Checked)
                 Process.Start(Path.Combine(mainForm.InstallLinkTextBox.Text, MainForm.ExecutableFileName));
             Application.Exit();
         }

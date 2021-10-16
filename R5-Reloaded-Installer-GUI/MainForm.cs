@@ -1,18 +1,11 @@
 ﻿using R5_Reloaded_Installer_Library.Get;
 using R5_Reloaded_Installer_Library.IO;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Net;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace R5_Reloaded_Installer_GUI
@@ -54,7 +47,8 @@ namespace R5_Reloaded_Installer_GUI
 
         private void MainTask_StartInstall(object sender, StartInstallEventArgs e)
         {
-            new Thread(() => {
+            new Thread(() =>
+            {
                 string detoursR5FilePath, scriptsR5FilePath, apexClientFilePath;
                 DownloadLogWrite("Preparing to download.", 0);
                 using (download = new Download(e.InstallationPath))
@@ -139,7 +133,7 @@ namespace R5_Reloaded_Installer_GUI
 
                     if (fileExt != "TORRENT")
                         DownloadLogLabel.Text = logText;
-                    
+
 
                     if (parcentage == 100) Thread.Sleep(1);
                     LogWindow.WriteLine(logText);
@@ -157,7 +151,7 @@ namespace R5_Reloaded_Installer_GUI
                 LogWindow.WriteLine(rawLine);
 
                 if (rawLine[0] != '[') return;
-                
+
                 var nakedLine = Regex.Replace(rawLine, @"((#.{6}( ))|\[|\])", "");
                 if (!nakedLine.Contains("FileAlloc"))
                 {
@@ -182,7 +176,7 @@ namespace R5_Reloaded_Installer_GUI
                 {
                     DownloadLogLabel.Text = nakedLine.Substring(nakedLine.IndexOf("FileAlloc"));
                 }
-                
+
             }));
         }
 

@@ -1,12 +1,9 @@
 ﻿using R5_Reloaded_Installer_Library.Exclusive;
 using R5_Reloaded_Installer_Library.IO;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace R5_Reloaded_Installer_GUI
@@ -21,7 +18,7 @@ namespace R5_Reloaded_Installer_GUI
         public static string Scripts_R5URL;
 
         private MainForm mainForm;
-        
+
         public GetSizeAndPath(MainForm form)
         {
             mainForm = form;
@@ -80,7 +77,8 @@ namespace R5_Reloaded_Installer_GUI
                 if (mainForm.Visible) size += FileExpansion.GetTorrentFileSize(ApexClientURL);
                 if (mainForm.Visible) size += FileExpansion.GetZipFileSize(Detours_R5URL);
                 if (mainForm.Visible) size += FileExpansion.GetZipFileSize(Scripts_R5URL);
-                if (mainForm.Visible) mainForm.Invoke(new Delegate(() => {
+                if (mainForm.Visible) mainForm.Invoke(new Delegate(() =>
+                {
                     TargetAllFiles = size;
                     mainForm.FileSizeLabel.Text = "File size: " + FileExpansion.ByteToGByte(TargetAllFiles).ToString("0.00") + "GB";
                 }));

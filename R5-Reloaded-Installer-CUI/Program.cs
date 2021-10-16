@@ -51,11 +51,11 @@ namespace R5_Reloaded_Installer_CUI
             var DriveRoot = Path.GetPathRoot(DirectoryExpansion.RunningDirectoryPath);
             var DriveSize = FileExpansion.ByteToGByte(FileExpansion.GetDriveFreeSpace(DriveRoot));
             var FileSize = FileExpansion.ByteToGByte(
-                FileExpansion.GetZipFileSize(detoursR5_path) + 
+                FileExpansion.GetZipFileSize(detoursR5_path) +
                 FileExpansion.GetZipFileSize(scriptsR5_path) +
                 FileExpansion.GetTorrentFileSize(apexClient_path));
 
-            ConsoleExpansion.LogWrite("["+DriveRoot + "] Drive Size   >> " + DriveSize + " GB");
+            ConsoleExpansion.LogWrite("[" + DriveRoot + "] Drive Size   >> " + DriveSize + " GB");
             ConsoleExpansion.LogWrite("Download File Size >> " + FileSize + " GB");
             if (FileSize > DriveSize)
             {
@@ -108,7 +108,7 @@ namespace R5_Reloaded_Installer_CUI
                 ConsoleExpansion.LogWrite(
                     "Download " + fileName + " (" + fileExt + ") >> " +
                     string.Format("{0,8}", received.ToString("0.000")) +
-                    "KB/" + string.Format("{0,8}", total.ToString("0.000")) + 
+                    "KB/" + string.Format("{0,8}", total.ToString("0.000")) +
                     "KB (" + string.Format("{0,3}", parcentage) + "%)");
                 if (parcentage == 100) ConsoleExpansion.LogWrite("(OK)"); ;
             }

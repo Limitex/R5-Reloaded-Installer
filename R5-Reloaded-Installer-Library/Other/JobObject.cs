@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Microsoft.Win32.SafeHandles;
+using System;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
-using Microsoft.Win32.SafeHandles;
 
 /// <summary>
 /// Source of "https://qiita.com/kenichiuda/items/3079ab93dae564dd5d17"
