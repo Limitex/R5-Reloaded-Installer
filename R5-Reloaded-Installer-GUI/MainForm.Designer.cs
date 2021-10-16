@@ -383,9 +383,9 @@ namespace R5_Reloaded_Installer_GUI
             this.OverallLogLabel.AutoSize = true;
             this.OverallLogLabel.Location = new System.Drawing.Point(28, 205);
             this.OverallLogLabel.Name = "OverallLogLabel";
-            this.OverallLogLabel.Size = new System.Drawing.Size(67, 15);
+            this.OverallLogLabel.Size = new System.Drawing.Size(191, 15);
             this.OverallLogLabel.TabIndex = 5;
-            this.OverallLogLabel.Text = "Overall Log";
+            this.OverallLogLabel.Text = "Waiting for download to complete.";
             // 
             // DownloadLogLabel
             // 
@@ -394,7 +394,7 @@ namespace R5_Reloaded_Installer_GUI
             this.DownloadLogLabel.Name = "DownloadLogLabel";
             this.DownloadLogLabel.Size = new System.Drawing.Size(84, 15);
             this.DownloadLogLabel.TabIndex = 5;
-            this.DownloadLogLabel.Text = "Download Log";
+            this.DownloadLogLabel.Text = "in preparation.";
             // 
             // OverallProgressBar
             // 

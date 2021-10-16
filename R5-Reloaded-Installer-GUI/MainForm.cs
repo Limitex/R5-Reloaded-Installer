@@ -56,22 +56,34 @@ namespace R5_Reloaded_Installer_GUI
         {
             new Thread(() => {
                 string detoursR5FilePath, scriptsR5FilePath, apexClientFilePath;
+                DownloadLogWrite("Preparing to download.", 0);
                 using (download = new Download(e.InstallationPath))
                 {
                     download.WebClientReceives += new WebClientProcessEventHandler(WebClient_EventHandler);
                     download.Aria2ProcessReceives += new Aria2ProcessEventHandler(Aria2Process_EventHandler);
                     detoursR5FilePath = download.RunZip(e.Detours_R5URL, "detours_r5");
                     scriptsR5FilePath = download.RunZip(e.Scripts_R5URL, "scripts_r5");
+                    DownloadLogWrite("Preparing to start torrent.", 0);
                     apexClientFilePath = download.RunTorrent(e.ApexClientURL, "apex_client");
                 }
+                DownloadLogWrite("Complete.", 100);
                 if (IsRunning)
                 {
+                    OverallLogWrite("Moving the APEX Client.", 0);
                     var TorrentFile = Path.GetFileName(e.ApexClientURL);
                     var BufferPath = Path.Combine(new DirectoryInfo(e.InstallationPath).Parent.FullName, FinalDirectoryName + "_Buffer");
                     Directory.Move(apexClientFilePath, BufferPath);
+
+                    OverallLogWrite("Moving the detours_r5.", 20);
                     DirectoryExpansion.MoveOverwrite(detoursR5FilePath, BufferPath);
+
+                    OverallLogWrite("Moving the detours_r5.", 40);
                     Directory.Move(scriptsR5FilePath, Path.Combine(BufferPath, ScriptsDirectoryPath));
+
+                    OverallLogWrite("Moving the torrent file.", 60);
                     File.Move(Path.Combine(e.InstallationPath, TorrentFile), Path.Combine(BufferPath, TorrentFile));
+
+                    OverallLogWrite("Returning from the buffer Directory.", 80);
                     DirectoryExpansion.DeleteAll(e.InstallationPath);
                     Directory.Move(BufferPath, e.InstallationPath);
 
@@ -81,6 +93,8 @@ namespace R5_Reloaded_Installer_GUI
                     var startmenuShortcutPath = Path.Combine(startMenuPath, "R5-Reloaded");
                     var scriptsPath = Path.Combine(e.InstallationPath, ScriptsDirectoryPath);
 
+                    if (e.CreateDesktopShortcut || e.AddShortcutToStartMenu)
+                        OverallLogWrite("Creating a shortcut.", 90);
                     if (e.CreateDesktopShortcut)
                     {
                         CreateR5Shortcut(desktopPath, AppPath, scriptsPath);
@@ -91,7 +105,14 @@ namespace R5_Reloaded_Installer_GUI
                         CreateR5Shortcut(startmenuShortcutPath, AppPath, scriptsPath);
                     }
                 }
-                if (IsRunning) Invoke(new Delegate(() => NextButton.Enabled = true));
+                if (IsRunning) Invoke(new Delegate(() =>
+                {
+                    DownloadProgressBar.Value = 100;
+                    OverallProgressBar.Value = 100;
+                    DownloadLogLabel.Text = "Complete.";
+                    OverallLogLabel.Text = "Complete.";
+                    NextButton.Enabled = true;
+                }));
             }).Start();
         }
 
@@ -111,12 +132,17 @@ namespace R5_Reloaded_Installer_GUI
                     var received = Math.Round(FileExpansion.ByteToKByte(e.BytesReceived) * 1000f) / 1000f;
                     var total = Math.Round(FileExpansion.ByteToKByte(e.TotalBytesToReceive) * 1000f) / 1000f;
 
-                    if (parcentage == 100) Thread.Sleep(1);
-                    LogWindow.WriteLine(
-                        "Download " + fileName + " (" + fileExt + ") >> " +
+                    var logText = "Download " + fileName + " (" + fileExt + ") >> " +
                         string.Format("{0,8}", received.ToString("0.000")) +
                         "KB/" + string.Format("{0,8}", total.ToString("0.000")) +
-                        "KB (" + string.Format("{0,3}", parcentage) + "%)");
+                        "KB (" + string.Format("{0,3}", parcentage) + "%)";
+
+                    if (fileExt != "TORRENT")
+                        DownloadLogLabel.Text = logText;
+                    
+
+                    if (parcentage == 100) Thread.Sleep(1);
+                    LogWindow.WriteLine(logText);
                     if (parcentage == 100) LogWindow.WriteLine("(OK)"); ;
                 }
             }));
@@ -127,30 +153,54 @@ namespace R5_Reloaded_Installer_GUI
             if (IsRunning) Invoke(new Delegate(() =>
             {
                 if (string.IsNullOrEmpty(outLine.Data)) return;
-
+                LogWindow.WriteLine(outLine.Data);
                 var rawLine = Regex.Replace(outLine.Data, @"(\r|\n|(  )|\t)", string.Empty);
 
-                if (rawLine[0] == '[')
+                if (rawLine[0] != '[') return;
+                
+                var nakedLine = Regex.Replace(rawLine, @"((#.{6}( ))|\[|\])", "");
+                if (!nakedLine.Contains("FileAlloc"))
                 {
-                    var nakedLine = Regex.Replace(rawLine, @"((#.{6}( ))|\[|\])", "");
-                    if (rawLine.Contains("FileAlloc"))
+                    if (nakedLine.Contains("ETA:"))
                     {
-                        LogWindow.WriteLine(nakedLine.Substring(nakedLine.IndexOf("FileAlloc")));
+                        var DegPercent = int.Parse(Regex.Match(nakedLine, @"(?<=\().*?(?=%\))").Value);
+
+                        var leftTimeRaw = Regex.Match(nakedLine, @"ETA:.*").Value;
+                        var leftTimeVal = Regex.Match(nakedLine, @"(?<=ETA:).*").Value;
+
+                        DownloadLogLabel.Text = Regex.Replace(nakedLine, leftTimeRaw, "");
+                        TimeLeftLabel.Text = leftTimeVal + " : Time left.";
+                        DownloadProgressBar.Value = DegPercent;
                     }
                     else
                     {
-                        LogWindow.WriteLine(nakedLine);
+                        DownloadLogLabel.Text = nakedLine + " >> Looking for a seeder...";
+                        TimeLeftLabel.Text = "in preparation : Time Left.";
                     }
                 }
-                else if (rawLine[0] == '(')
+                else
                 {
-                    LogWindow.WriteLine(rawLine);
+                    DownloadLogLabel.Text = nakedLine.Substring(nakedLine.IndexOf("FileAlloc"));
                 }
-                else if (rawLine.Contains("NOTICE"))
-                {
-                    var nakedLine = Regex.Replace(rawLine, @"([0-9]{2}/[0-9]{2})( )([0-9]{2}:[0-9]{2}:[0-9]{2})( )", string.Empty);
-                    LogWindow.WriteLine(nakedLine);
-                }
+                
+            }));
+        }
+
+        private void DownloadLogWrite(string text, int progressValue)
+        {
+            if (IsRunning) Invoke(new Delegate(() =>
+            {
+                DownloadLogLabel.Text = text;
+                DownloadProgressBar.Value = progressValue;
+            }));
+        }
+
+        private void OverallLogWrite(string text, int progressValue)
+        {
+            if (IsRunning) Invoke(new Delegate(() =>
+            {
+                OverallLogLabel.Text = text;
+                OverallProgressBar.Value = progressValue;
             }));
         }
 
