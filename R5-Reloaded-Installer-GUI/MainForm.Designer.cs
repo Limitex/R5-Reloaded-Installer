@@ -610,7 +610,7 @@ namespace R5_Reloaded_Installer_GUI
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.CheckBox LaunchCheckBox;
+        public System.Windows.Forms.CheckBox LaunchCheckBox;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label14;

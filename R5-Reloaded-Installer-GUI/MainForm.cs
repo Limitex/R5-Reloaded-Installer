@@ -23,7 +23,7 @@ namespace R5_Reloaded_Installer_GUI
     {
         public static string FinalDirectoryName = "R5-Reloaded";
         public static string ScriptsDirectoryPath = Path.Combine("platform", "scripts");
-        private static string ExecutableFileName = "r5reloaded.exe";
+        public static string ExecutableFileName = "r5reloaded.exe";
 
         public static bool IsRunning = true;
 
