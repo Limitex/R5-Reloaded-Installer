@@ -11,7 +11,6 @@ using System.Windows.Forms;
 
 namespace R5_Reloaded_Installer_GUI
 {
-    public delegate void Delegate();
     public class GetSizeAndPath
     {
         public static long TargetDirectoryRoot = -1;
@@ -59,7 +58,7 @@ namespace R5_Reloaded_Installer_GUI
             var fbd = new FolderBrowserDialog();
             if (fbd.ShowDialog(mainForm) == DialogResult.OK)
             {
-                mainForm.InstallLinkTextBox.Text = Path.Combine(fbd.SelectedPath, MainForm.LatestDirectoryName);
+                mainForm.InstallLinkTextBox.Text = Path.Combine(fbd.SelectedPath, MainForm.FinalDirectoryName);
                 GetDirectoryRootSize();
             }
         }
