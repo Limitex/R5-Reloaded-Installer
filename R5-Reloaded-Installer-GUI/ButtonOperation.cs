@@ -192,6 +192,7 @@ namespace R5_Reloaded_Installer_GUI
 
         private bool ContinueCheck()
         {
+            if (!Directory.Exists(mainForm.InstallLinkTextBox.Text)) return false;
             var files = Directory.GetFiles(mainForm.InstallLinkTextBox.Text, "*.aria2", SearchOption.TopDirectoryOnly);
             return files.Length != 0;
         }
