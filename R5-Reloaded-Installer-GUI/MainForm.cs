@@ -153,8 +153,8 @@ namespace R5_Reloaded_Installer_GUI
             if (IsRunning) Invoke(new Delegate(() =>
             {
                 if (string.IsNullOrEmpty(outLine.Data)) return;
-                LogWindow.WriteLine(outLine.Data);
                 var rawLine = Regex.Replace(outLine.Data, @"(\r|\n|(  )|\t|\x1b\[.*?m)", string.Empty);
+                LogWindow.WriteLine(rawLine);
 
                 if (rawLine[0] != '[') return;
                 
