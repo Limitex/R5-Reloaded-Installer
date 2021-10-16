@@ -118,7 +118,7 @@ namespace R5_Reloaded_Installer_CUI
         {
             if (string.IsNullOrEmpty(outLine.Data)) return;
 
-            var rawLine = Regex.Replace(outLine.Data, @"(\r|\n|(  )|\t)", string.Empty);
+            var rawLine = Regex.Replace(outLine.Data, @"(\r|\n|(  )|\t|\x1b\[.*?m)", string.Empty);
 
             if (rawLine[0] == '[')
             {
