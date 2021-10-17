@@ -3,6 +3,7 @@ using R5_Reloaded_Installer_Library.IO;
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -28,6 +29,23 @@ namespace R5_Reloaded_Installer_GUI
             new ButtonOperation(this, MainTask_StartInstall);
             new GetSizeAndPath(this);
             new LogWindow(this);
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            var applicationList = InstalledApps.DisplayNameList();
+            if (!(applicationList.Contains("Origin") && applicationList.Contains("Apex Legends")))
+            {
+                var dr = MessageBox.Show("\'Origin\' or \'Apex Legends\' is not installed.\n" +
+                    "Do you want to continue?\n" +
+                    "R5 Reloaded cannot be run without \'Origin\' and \'Apex Legends\' installed.",
+                    "Warning", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+                if (dr == DialogResult.Cancel)
+                {
+                    IsRunning = false;
+                    Application.Exit();
+                }
+            }
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)

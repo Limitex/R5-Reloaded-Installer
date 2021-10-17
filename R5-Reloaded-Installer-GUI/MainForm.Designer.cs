@@ -551,6 +551,7 @@ namespace R5_Reloaded_Installer_GUI
             this.Name = "MainForm";
             this.Text = "R5 Reloaded Installer";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.MainTabControl.ResumeLayout(false);
             this.IntroductionTabPage.ResumeLayout(false);
             this.IntroductionTabPage.PerformLayout();
