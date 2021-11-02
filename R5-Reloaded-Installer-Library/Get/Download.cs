@@ -95,7 +95,7 @@ namespace R5_Reloaded_Installer_Library.Get
             return directoryPath;
         }
 
-        public string RunTorrent(string address, string name = null, string SavePath = null)
+        public string RunTorrentOfAria2(string address, string name = null, string SavePath = null)
         {
             if (!IsRunning) return null;
             if (!IsUrl(address) || FileExpansion.GetExtension(address) != "torrent")

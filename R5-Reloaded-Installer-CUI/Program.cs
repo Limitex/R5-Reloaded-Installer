@@ -77,7 +77,7 @@ namespace R5_Reloaded_Installer_CUI
                     detoursR5FilePath = download.RunZip(detoursR5_path, "detours_r5");
                     scriptsR5FilePath = download.RunZip(scriptsR5_path, "scripts_r5");
                     ConsoleExpansion.WriteWidth('=', "Download with aria2");
-                    apexClientFilePath = download.RunTorrent(apexClient_path, FinalDirectoryName);
+                    apexClientFilePath = download.RunTorrentOfAria2(apexClient_path, FinalDirectoryName);
                     ConsoleExpansion.WriteWidth('=');
                 }
                 ConsoleExpansion.LogWrite("The detours_r5 file is being moved.");

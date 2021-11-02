@@ -76,7 +76,7 @@ namespace R5_Reloaded_Installer_GUI
                     detoursR5FilePath = download.RunZip(e.Detours_R5URL, "detours_r5");
                     scriptsR5FilePath = download.RunZip(e.Scripts_R5URL, "scripts_r5");
                     DownloadLogWrite("Preparing to start torrent.", 0);
-                    apexClientFilePath = download.RunTorrent(e.ApexClientURL, "apex_client");
+                    apexClientFilePath = download.RunTorrentOfAria2(e.ApexClientURL, "apex_client");
                 }
                 DownloadLogWrite("Complete.", 100);
                 if (IsRunning)
