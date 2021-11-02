@@ -70,14 +70,15 @@ namespace R5_Reloaded_Installer_CUI
             {
                 ConsoleExpansion.LogWrite("Preparing...");
                 string detoursR5FilePath, scriptsR5FilePath, apexClientFilePath;
-                using (var download = new Download(DownloadProgramType.Aria2))
+                using (var download = new Download(DownloadProgramType.Transmission))
                 {
                     download.WebClientReceives += new WebClientProcessEventHandler(WebClient_EventHandler);
                     download.Aria2ProcessReceives += new Aria2ProcessEventHandler(Aria2Process_EventHandler);
+                    download.TransmissionProcessReceives += new TransmissionProcessEventHandler(TransmissionProcess_EventHandler);
                     detoursR5FilePath = download.RunZip(detoursR5_path, "detours_r5");
                     scriptsR5FilePath = download.RunZip(scriptsR5_path, "scripts_r5");
-                    ConsoleExpansion.WriteWidth('=', "Download with aria2");
-                    apexClientFilePath = download.RunTorrentOfAria2(apexClient_path, FinalDirectoryName);
+                    ConsoleExpansion.WriteWidth('=', "Download with Torrent Client");
+                    apexClientFilePath = download.RunTorrentOfTransmission(apexClient_path, FinalDirectoryName);
                     ConsoleExpansion.WriteWidth('=');
                 }
                 ConsoleExpansion.LogWrite("The detours_r5 file is being moved.");
@@ -140,6 +141,19 @@ namespace R5_Reloaded_Installer_CUI
             {
                 var nakedLine = Regex.Replace(rawLine, @"([0-9]{2}/[0-9]{2})( )([0-9]{2}:[0-9]{2}:[0-9]{2})( )", string.Empty);
                 ConsoleExpansion.LogWrite(nakedLine);
+            }
+        }
+
+        private static void TransmissionProcess_EventHandler(object sender, DataReceivedEventArgs outLine)
+        {
+            if (string.IsNullOrEmpty(outLine.Data)) return;
+            var TorrentFileName = ((string[])sender)[2];
+            var rawLine = Regex.Replace(outLine.Data, @"(\r|\n|(  )|\t|\x1b\[.*?m)", string.Empty);
+            var nakedLine = Regex.Replace(rawLine, @"(\[([0-9]{4})-([0-9]{2})-([0-9]{2})( )([0-9]{2}):([0-9]{2}):([0-9]{2})\.(.*?)\])( )", string.Empty);
+            if (!Regex.Match(nakedLine, TorrentFileName + @":").Success)
+            {
+                ConsoleExpansion.LogWrite(Regex.Replace(nakedLine, @", ul to 0 \(0 kB/s\) \[(0\.00|None)\]", string.Empty));
+                Thread.Sleep(200);
             }
         }
     }
