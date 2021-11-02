@@ -34,11 +34,11 @@ namespace R5_Reloaded_Installer_GUI
         private void MainForm_Load(object sender, EventArgs e)
         {
             var applicationList = InstalledApps.DisplayNameList();
-            if (!(applicationList.Contains("Origin") && applicationList.Contains("Apex Legends")))
+            if (!applicationList.Contains("Origin"))
             {
-                var dr = MessageBox.Show("\'Origin\' or \'Apex Legends\' is not installed.\n" +
+                var dr = MessageBox.Show("\'Origin\' is not installed.\n" +
                     "Do you want to continue?\n" +
-                    "R5 Reloaded cannot be run without \'Origin\' and \'Apex Legends\' installed.",
+                    "R5 Reloaded cannot be run without \'Origin\' installed.",
                     "Warning", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
                 if (dr == DialogResult.Cancel)
                 {

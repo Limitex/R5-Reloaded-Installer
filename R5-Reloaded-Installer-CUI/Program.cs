@@ -31,11 +31,11 @@ namespace R5_Reloaded_Installer_CUI
                 "Welcome!\n");
 
             var applicationList = InstalledApps.DisplayNameList();
-            if (!(applicationList.Contains("Origin") && applicationList.Contains("Apex Legends")))
+            if (!applicationList.Contains("Origin"))
             {
-                ConsoleExpansion.LogError("\'Origin\' or \'Apex Legends\' is not installed.");
+                ConsoleExpansion.LogError("\'Origin\' is not installed.");
                 ConsoleExpansion.LogError("Do you want to continue?");
-                ConsoleExpansion.LogError("R5 Reloaded cannot be run without \'Origin\' and \'Apex Legends\' installed.");
+                ConsoleExpansion.LogError("R5 Reloaded cannot be run without \'Origin\' installed.");
                 if (!ConsoleExpansion.ConsentInput())
                 {
                     ConsoleExpansion.Exit();
