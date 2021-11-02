@@ -198,17 +198,19 @@ namespace R5_Reloaded_Installer_Library.Get
 
             using (var job = JobObject.CreateAsKillOnJobClose())
             {
-                Transmission = new Process();
-                Transmission.StartInfo = new ProcessStartInfo()
+                Transmission = new Process
                 {
-                    FileName = TransmissionPath,
-                    Arguments = address + " -w \"" + SaveingDirectoryPath + "\" -g \"" + WorkingDirectoryPath + "\" " + TransmissionArgument,
-                    WorkingDirectory = SaveingDirectoryPath,
-                    CreateNoWindow = true,
-                    UseShellExecute = false,
-                    RedirectStandardInput = true,
-                    RedirectStandardOutput = true,
-                    RedirectStandardError = true
+                    StartInfo = new ProcessStartInfo()
+                    {
+                        FileName = TransmissionPath,
+                        Arguments = address + " -w \"" + SaveingDirectoryPath + "\" -g \"" + WorkingDirectoryPath + "\" " + TransmissionArgument,
+                        WorkingDirectory = SaveingDirectoryPath,
+                        CreateNoWindow = true,
+                        UseShellExecute = false,
+                        RedirectStandardInput = true,
+                        RedirectStandardOutput = true,
+                        RedirectStandardError = true
+                    }
                 };
                 if (TransmissionProcessReceives != null)
                 {
@@ -234,7 +236,11 @@ namespace R5_Reloaded_Installer_Library.Get
 
         private void TransmissionProcess_EventHandler(object sendingProcess, DataReceivedEventArgs outLine)
         {
-            if (!string.IsNullOrEmpty(outLine.Data) && outLine.Data.Contains("Seeding")) ProcessKill();
+            if (!string.IsNullOrEmpty(outLine.Data) && outLine.Data.Contains("Seeding"))
+            {
+                ProcessKill();
+                return;
+            }
             TransmissionProcessReceives(sendingProcess, outLine);
         }
 
