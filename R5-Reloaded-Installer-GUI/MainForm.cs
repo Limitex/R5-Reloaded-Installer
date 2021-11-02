@@ -69,7 +69,7 @@ namespace R5_Reloaded_Installer_GUI
             {
                 string detoursR5FilePath, scriptsR5FilePath, apexClientFilePath;
                 DownloadLogWrite("Preparing to download.", 0);
-                using (download = new Download(e.InstallationPath))
+                using (download = new Download(DownloadProgramType.Aria2, e.InstallationPath))
                 {
                     download.WebClientReceives += new WebClientProcessEventHandler(WebClient_EventHandler);
                     download.Aria2ProcessReceives += new Aria2ProcessEventHandler(Aria2Process_EventHandler);

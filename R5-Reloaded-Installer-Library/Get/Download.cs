@@ -13,6 +13,12 @@ namespace R5_Reloaded_Installer_Library.Get
     public delegate void Aria2ProcessEventHandler(object sender, DataReceivedEventArgs outLine);
     public delegate void TransmissionProcessEventHandler(object sender, DataReceivedEventArgs outLine);
 
+    public class DownloadProgramType
+    {
+        public static int Aria2 = 0;
+        public static int Transmission = 1;
+    }
+
     public class Download : IDisposable
     {
         public string WorkingDirectoryPath { get; private set; }
@@ -31,6 +37,8 @@ namespace R5_Reloaded_Installer_Library.Get
 
         private static readonly string WorkingDirectoryName = "R5-Reloaded-Installer";
 
+        private static int ProgramType;
+
         private static string Aria2Path;
         private static string TransmissionPath;
 
@@ -39,8 +47,9 @@ namespace R5_Reloaded_Installer_Library.Get
 
         private bool IsRunning = true;
 
-        public Download(string saveingDirectoryPath = null)
+        public Download(int downloadProgramType, string saveingDirectoryPath = null)
         {
+            ProgramType = downloadProgramType;
             WorkingDirectoryPath = Path.Combine(DirectoryExpansion.AppDataDirectoryPath, WorkingDirectoryName);
             if (saveingDirectoryPath != null) SaveingDirectoryPath = saveingDirectoryPath;
             else SaveingDirectoryPath = DirectoryExpansion.RunningDirectoryPath;
@@ -49,19 +58,20 @@ namespace R5_Reloaded_Installer_Library.Get
             if (Directory.Exists(WorkingDirectoryPath)) DirectoryExpansion.DeleteAll(WorkingDirectoryPath);
             Directory.CreateDirectory(WorkingDirectoryPath);
 
-            Aria2Path = Path.Combine(RunZip(GetAria2Link(), "aria2", WorkingDirectoryPath), Aria2ExecutableFileName);
-
-            if (Directory.Exists(TransmisssionSavesDirectory)) 
-                DirectoryExpansion.DeleteAll(TransmisssionSavesDirectory);
-            TransmissionPath = Path.Combine(RunZip(GetTransmissionLink(), "transmission", WorkingDirectoryPath),
-                TransmissionExecutableFileName);
+            if (ProgramType == DownloadProgramType.Aria2)
+            {
+                Aria2Path = Path.Combine(RunZip(GetAria2Link(), "aria2", WorkingDirectoryPath), Aria2ExecutableFileName);
+            }
+            if (ProgramType == DownloadProgramType.Transmission)
+            {
+                TransmissionPath = Path.Combine(RunZip(GetTransmissionLink(), "transmission", WorkingDirectoryPath),
+                    TransmissionExecutableFileName);
+            }
         }
 
         public void Dispose()
         {
             DirectoryExpansion.DeleteAll(WorkingDirectoryPath);
-            if (Directory.Exists(TransmisssionSavesDirectory))
-                DirectoryExpansion.DeleteAll(TransmisssionSavesDirectory);
         }
 
         private static string GetAria2Link()
@@ -124,6 +134,8 @@ namespace R5_Reloaded_Installer_Library.Get
         public string RunTorrentOfAria2(string address, string name = null, string SavePath = null)
         {
             if (!IsRunning) return null;
+            if (ProgramType != DownloadProgramType.Aria2) 
+                throw new Exception("The Aria2 program has not been downloaded.");
             if (!IsUrl(address) || FileExpansion.GetExtension(address) != "torrent")
                 throw new Exception("The specified string does not download the Torrent file.");
 
@@ -174,6 +186,8 @@ namespace R5_Reloaded_Installer_Library.Get
         public string RunTorrentOfTransmission(string address, string name = null)
         {
             if (!IsRunning) return null;
+            if (ProgramType != DownloadProgramType.Transmission)
+                throw new Exception("The Transmission program has not been downloaded.");
             if (!IsUrl(address) || FileExpansion.GetExtension(address) != "torrent")
                 throw new Exception("The specified string does not download the Torrent file.");
 
@@ -221,12 +235,12 @@ namespace R5_Reloaded_Installer_Library.Get
         public void ProcessKill()
         {
             IsRunning = false;
-            if (Aria2c != null && !Aria2c.HasExited)
+            if ((ProgramType == DownloadProgramType.Aria2) && (Aria2c != null && !Aria2c.HasExited))
             {
                 Aria2c.Kill();
                 Aria2c.Close();
             }
-            if (Transmission != null && !Transmission.HasExited)
+            if ((ProgramType == DownloadProgramType.Aria2) && (Transmission != null && !Transmission.HasExited))
             {
                 Transmission.Kill();
                 Transmission.Close();
