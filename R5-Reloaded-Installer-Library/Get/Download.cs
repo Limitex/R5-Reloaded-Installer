@@ -193,7 +193,9 @@ namespace R5_Reloaded_Installer_Library.Get
 
             var filePath = Run(address, Path.Combine(SaveingDirectoryPath, Path.GetFileName(address)));
             var rawDirectoryPath = filePath.Replace(Path.GetExtension(filePath), string.Empty);
+            var directoryName = Path.GetFileName(rawDirectoryPath);
             var directoryPath = rawDirectoryPath;
+            
             if (name != null) directoryPath = Path.Combine(Path.GetDirectoryName(filePath), name);
 
             using (var job = JobObject.CreateAsKillOnJobClose())
@@ -215,8 +217,8 @@ namespace R5_Reloaded_Installer_Library.Get
                 if (TransmissionProcessReceives != null)
                 {
                     Transmission.EnableRaisingEvents = true;
-                    Transmission.ErrorDataReceived += new DataReceivedEventHandler(TransmissionProcess_EventHandler);
-                    Transmission.OutputDataReceived += new DataReceivedEventHandler(TransmissionProcess_EventHandler);
+                    Transmission.ErrorDataReceived += new DataReceivedEventHandler((sender, outLine) => TransmissionProcess_EventHandler(new string[] { address, filePath, directoryName }, outLine));
+                    Transmission.OutputDataReceived += new DataReceivedEventHandler((sender, outLine) => TransmissionProcess_EventHandler(new string[] { address, filePath, directoryName }, outLine));
                 }
                 Transmission.Start();
                 Transmission.BeginOutputReadLine();
@@ -234,14 +236,14 @@ namespace R5_Reloaded_Installer_Library.Get
             else return rawDirectoryPath;
         }
 
-        private void TransmissionProcess_EventHandler(object sendingProcess, DataReceivedEventArgs outLine)
+        private void TransmissionProcess_EventHandler(object sender, DataReceivedEventArgs outLine)
         {
             if (!string.IsNullOrEmpty(outLine.Data) && outLine.Data.Contains("Seeding"))
             {
                 ProcessKill();
                 return;
             }
-            TransmissionProcessReceives(sendingProcess, outLine);
+            TransmissionProcessReceives(sender, outLine);
         }
 
         public void ProcessKill()
