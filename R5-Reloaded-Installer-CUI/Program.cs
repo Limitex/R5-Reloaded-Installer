@@ -74,10 +74,10 @@ namespace R5_Reloaded_Installer_CUI
             {
                 ConsoleExpansion.LogWrite("Preparing...");
                 string detoursR5FilePath, scriptsR5FilePath, apexClientFilePath;
-                using (var download = new Download(DownloadProgramType.Transmission))
+                using (var download = new Download())
                 {
                     download.WebClientReceives += new WebClientProcessEventHandler(WebClient_EventHandler);
-                    download.Aria2ProcessReceives += new Aria2ProcessEventHandler(Aria2Process_EventHandler);
+                    //download.Aria2ProcessReceives += new Aria2ProcessEventHandler(Aria2Process_EventHandler);
                     download.TransmissionProcessReceives += new TransmissionProcessEventHandler(TransmissionProcess_EventHandler);
                     detoursR5FilePath = download.RunZip(detoursR5_path, "detours_r5");
                     scriptsR5FilePath = download.RunZip(scriptsR5_path, "scripts_r5");
@@ -119,34 +119,34 @@ namespace R5_Reloaded_Installer_CUI
             }
         }
 
-        private static void Aria2Process_EventHandler(object sendingProcess, DataReceivedEventArgs outLine)
-        {
-            if (string.IsNullOrEmpty(outLine.Data)) return;
+        //private static void Aria2Process_EventHandler(object sendingProcess, DataReceivedEventArgs outLine)
+        //{
+        //    if (string.IsNullOrEmpty(outLine.Data)) return;
 
-            var rawLine = Regex.Replace(outLine.Data, @"(\r|\n|(  )|\t|\x1b\[.*?m)", string.Empty);
+        //    var rawLine = Regex.Replace(outLine.Data, @"(\r|\n|(  )|\t|\x1b\[.*?m)", string.Empty);
 
-            if (rawLine[0] == '[')
-            {
-                var nakedLine = Regex.Replace(rawLine, @"((#.{6}( ))|\[|\])", "");
-                if (rawLine.Contains("FileAlloc"))
-                {
-                    ConsoleExpansion.LogWrite(nakedLine.Substring(nakedLine.IndexOf("FileAlloc")));
-                }
-                else
-                {
-                    ConsoleExpansion.LogWrite(nakedLine);
-                }
-            }
-            else if (rawLine[0] == '(')
-            {
-                ConsoleExpansion.LogWrite(rawLine);
-            }
-            else if (rawLine.Contains("NOTICE"))
-            {
-                var nakedLine = Regex.Replace(rawLine, @"([0-9]{2}/[0-9]{2})( )([0-9]{2}:[0-9]{2}:[0-9]{2})( )", string.Empty);
-                ConsoleExpansion.LogWrite(nakedLine);
-            }
-        }
+        //    if (rawLine[0] == '[')
+        //    {
+        //        var nakedLine = Regex.Replace(rawLine, @"((#.{6}( ))|\[|\])", "");
+        //        if (rawLine.Contains("FileAlloc"))
+        //        {
+        //            ConsoleExpansion.LogWrite(nakedLine.Substring(nakedLine.IndexOf("FileAlloc")));
+        //        }
+        //        else
+        //        {
+        //            ConsoleExpansion.LogWrite(nakedLine);
+        //        }
+        //    }
+        //    else if (rawLine[0] == '(')
+        //    {
+        //        ConsoleExpansion.LogWrite(rawLine);
+        //    }
+        //    else if (rawLine.Contains("NOTICE"))
+        //    {
+        //        var nakedLine = Regex.Replace(rawLine, @"([0-9]{2}/[0-9]{2})( )([0-9]{2}:[0-9]{2}:[0-9]{2})( )", string.Empty);
+        //        ConsoleExpansion.LogWrite(nakedLine);
+        //    }
+        //}
 
         private static void TransmissionProcess_EventHandler(object sender, DataReceivedEventArgs outLine)
         {

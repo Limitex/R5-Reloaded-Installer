@@ -69,10 +69,10 @@ namespace R5_Reloaded_Installer_GUI
             {
                 string detoursR5FilePath, scriptsR5FilePath, apexClientFilePath;
                 DownloadLogWrite("Preparing to download.", 0);
-                using (download = new Download(DownloadProgramType.Transmission, e.InstallationPath))
+                using (download = new Download(e.InstallationPath))
                 {
                     download.WebClientReceives += new WebClientProcessEventHandler(WebClient_EventHandler);
-                    download.Aria2ProcessReceives += new Aria2ProcessEventHandler(Aria2Process_EventHandler);
+                    //download.Aria2ProcessReceives += new Aria2ProcessEventHandler(Aria2Process_EventHandler);
                     download.TransmissionProcessReceives += new TransmissionProcessEventHandler(TransmissionProcess_EventHandler);
                     detoursR5FilePath = download.RunZip(e.Detours_R5URL, "detours_r5");
                     scriptsR5FilePath = download.RunZip(e.Scripts_R5URL, "scripts_r5");
@@ -161,43 +161,43 @@ namespace R5_Reloaded_Installer_GUI
             }));
         }
 
-        private void Aria2Process_EventHandler(object sendingProcess, DataReceivedEventArgs outLine)
-        {
-            if (IsRunning) Invoke(new Delegate(() =>
-            {
-                if (string.IsNullOrEmpty(outLine.Data)) return;
-                var rawLine = Regex.Replace(outLine.Data, @"(\r|\n|(  )|\t|\x1b\[.*?m)", string.Empty);
-                LogWindow.WriteLine(rawLine);
+        //private void Aria2Process_EventHandler(object sendingProcess, DataReceivedEventArgs outLine)
+        //{
+        //    if (IsRunning) Invoke(new Delegate(() =>
+        //    {
+        //        if (string.IsNullOrEmpty(outLine.Data)) return;
+        //        var rawLine = Regex.Replace(outLine.Data, @"(\r|\n|(  )|\t|\x1b\[.*?m)", string.Empty);
+        //        LogWindow.WriteLine(rawLine);
 
-                if (rawLine[0] != '[') return;
+        //        if (rawLine[0] != '[') return;
 
-                var nakedLine = Regex.Replace(rawLine, @"((#.{6}( ))|\[|\])", "");
-                if (!nakedLine.Contains("FileAlloc"))
-                {
-                    if (nakedLine.Contains("ETA:"))
-                    {
-                        var DegPercent = int.Parse(Regex.Match(nakedLine, @"(?<=\().*?(?=%\))").Value);
+        //        var nakedLine = Regex.Replace(rawLine, @"((#.{6}( ))|\[|\])", "");
+        //        if (!nakedLine.Contains("FileAlloc"))
+        //        {
+        //            if (nakedLine.Contains("ETA:"))
+        //            {
+        //                var DegPercent = int.Parse(Regex.Match(nakedLine, @"(?<=\().*?(?=%\))").Value);
 
-                        var leftTimeRaw = Regex.Match(nakedLine, @"ETA:.*").Value;
-                        var leftTimeVal = Regex.Match(nakedLine, @"(?<=ETA:).*").Value;
+        //                var leftTimeRaw = Regex.Match(nakedLine, @"ETA:.*").Value;
+        //                var leftTimeVal = Regex.Match(nakedLine, @"(?<=ETA:).*").Value;
 
-                        DownloadLogLabel.Text = Regex.Replace(nakedLine, leftTimeRaw, "");
-                        TimeLeftLabel.Text = leftTimeVal + " : Time left.";
-                        DownloadProgressBar.Value = DegPercent;
-                    }
-                    else
-                    {
-                        DownloadLogLabel.Text = nakedLine + " >> Looking for a seeder...";
-                        TimeLeftLabel.Text = "in preparation : Time Left.";
-                    }
-                }
-                else
-                {
-                    DownloadLogLabel.Text = nakedLine.Substring(nakedLine.IndexOf("FileAlloc"));
-                }
+        //                DownloadLogLabel.Text = Regex.Replace(nakedLine, leftTimeRaw, "");
+        //                TimeLeftLabel.Text = leftTimeVal + " : Time left.";
+        //                DownloadProgressBar.Value = DegPercent;
+        //            }
+        //            else
+        //            {
+        //                DownloadLogLabel.Text = nakedLine + " >> Looking for a seeder...";
+        //                TimeLeftLabel.Text = "in preparation : Time Left.";
+        //            }
+        //        }
+        //        else
+        //        {
+        //            DownloadLogLabel.Text = nakedLine.Substring(nakedLine.IndexOf("FileAlloc"));
+        //        }
 
-            }));
-        }
+        //    }));
+        //}
 
         private void TransmissionProcess_EventHandler(object sender, DataReceivedEventArgs outLine)
         {
