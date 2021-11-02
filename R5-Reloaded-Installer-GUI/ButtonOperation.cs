@@ -161,9 +161,11 @@ namespace R5_Reloaded_Installer_GUI
             }
             if (GetSizeAndPath.TargetDirectoryRoot < GetSizeAndPath.TargetAllFiles)
             {
-                MessageBox.Show("There is no free space on the optical disc.",
-                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
+                var dr = MessageBox.Show("There is not enough space on the destination drive to install the software.\n" +
+                    "If you want to restart from the before, there is no problem, but otherwise you may not be able to install.\n\n" +
+                    "Do you want to continue?",
+                    "Warning", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+                return dr == DialogResult.OK;
             }
 
             if (Directory.Exists(mainForm.InstallLinkTextBox.Text))
