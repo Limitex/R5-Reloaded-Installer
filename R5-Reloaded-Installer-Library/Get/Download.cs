@@ -229,7 +229,7 @@ namespace R5_Reloaded_Installer_Library.Get
                 Transmission.Close();
             }
 
-            if (name != null)
+            if (IsRunning && name != null)
             {
                 Directory.Move(rawDirectoryPath, directoryPath);
                 return directoryPath;

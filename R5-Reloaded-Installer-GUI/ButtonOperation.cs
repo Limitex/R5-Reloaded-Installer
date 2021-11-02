@@ -78,22 +78,10 @@ namespace R5_Reloaded_Installer_GUI
         {
             if (!IsValueCorrect()) return;
 
-            if (!ContinueCheck())
-            {
-                var dr = MessageBox.Show("Do you want to start the installation?\n\n" +
-                    "Since it is downloaded from Torrent, it may take several hours depending on the time of day. " +
-                    "The download does not start for a few seconds after File Alloc finishes, but it is normal. " +
-                    "However, if it does not progress by 1% after a few minutes, try again after a few minutes.", "Installer",
-                    MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
-                if (dr != DialogResult.OK) return;
-            }
-            else
-            {
-                var dr = MessageBox.Show("Found a file that is in the process of being executed.\n" +
-                    "Would you like to continue?", "Installer",
-                    MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
-                if (dr != DialogResult.OK) return;
-            }
+            var dr = MessageBox.Show("Do you want to start the installation ?\n\n" +
+                "Since it is downloaded from Torrent, it may take several hours depending on the time of day.",
+                "Installer", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+                        if (dr != DialogResult.OK) return;
 
             ButtonToTabNext(1);
 
@@ -178,23 +166,24 @@ namespace R5_Reloaded_Installer_GUI
                 return false;
             }
 
-            if (Directory.Exists(mainForm.InstallLinkTextBox.Text) & !ContinueCheck())
+            if (Directory.Exists(mainForm.InstallLinkTextBox.Text))
             {
-                MessageBox.Show("The specified directory already exists.\n" +
-                    "Please move or delete the file and try again.\n" +
-                    "Explorer opens.",
-                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Process.Start("EXPLORER.EXE", mainForm.InstallLinkTextBox.Text);
-                return false;
+                var dr = MessageBox.Show("If you want to restart from before, " +
+                    "that's fine, but if you don't, you may lose your files.\n" +
+                    "Do you want to continue?",
+                    "Warning", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+                if (dr == DialogResult.Cancel)
+                {
+                    MessageBox.Show("Explorer opens.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Process.Start("EXPLORER.EXE", mainForm.InstallLinkTextBox.Text);
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
             }
             return true;
-        }
-
-        private bool ContinueCheck()
-        {
-            if (!Directory.Exists(mainForm.InstallLinkTextBox.Text)) return false;
-            var files = Directory.GetFiles(mainForm.InstallLinkTextBox.Text, "*.aria2", SearchOption.TopDirectoryOnly);
-            return files.Length != 0;
         }
     }
 }
