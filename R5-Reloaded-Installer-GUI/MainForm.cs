@@ -69,14 +69,15 @@ namespace R5_Reloaded_Installer_GUI
             {
                 string detoursR5FilePath, scriptsR5FilePath, apexClientFilePath;
                 DownloadLogWrite("Preparing to download.", 0);
-                using (download = new Download(DownloadProgramType.Aria2, e.InstallationPath))
+                using (download = new Download(DownloadProgramType.Transmission, e.InstallationPath))
                 {
                     download.WebClientReceives += new WebClientProcessEventHandler(WebClient_EventHandler);
                     download.Aria2ProcessReceives += new Aria2ProcessEventHandler(Aria2Process_EventHandler);
+                    download.TransmissionProcessReceives += new TransmissionProcessEventHandler(TransmissionProcess_EventHandler);
                     detoursR5FilePath = download.RunZip(e.Detours_R5URL, "detours_r5");
                     scriptsR5FilePath = download.RunZip(e.Scripts_R5URL, "scripts_r5");
                     DownloadLogWrite("Preparing to start torrent.", 0);
-                    apexClientFilePath = download.RunTorrentOfAria2(e.ApexClientURL, "apex_client");
+                    apexClientFilePath = download.RunTorrentOfTransmission(e.ApexClientURL, "apex_client");
                 }
                 DownloadLogWrite("Complete.", 100);
                 if (IsRunning)
@@ -196,6 +197,56 @@ namespace R5_Reloaded_Installer_GUI
                 }
 
             }));
+        }
+
+        private void TransmissionProcess_EventHandler(object sender, DataReceivedEventArgs outLine)
+        {
+            if (string.IsNullOrEmpty(outLine.Data)) return;
+                var TorrentFileName = ((string[])sender)[2];
+            var rawLine = Regex.Replace(outLine.Data, @"(\r|\n|(  )|\t|\x1b\[.*?m)", string.Empty);
+            var nakedLine = Regex.Replace(rawLine, @"(\[([0-9]{4})-([0-9]{2})-([0-9]{2})( )([0-9]{2}):([0-9]{2}):([0-9]{2})\.(.*?)\])( )", string.Empty);
+                
+            if (!Regex.Match(nakedLine, TorrentFileName + @":").Success)
+            {
+                if (IsRunning) Invoke(new Delegate(() =>
+                {
+                    nakedLine = Regex.Replace(nakedLine, @", ul to 0 \(0 kB/s\) \[(0\.00|None)\]", string.Empty);
+                    LogWindow.WriteLine(nakedLine);
+                    if (nakedLine.Contains("Progress:"))
+                    {
+                        float speed = 0;
+                        switch (Regex.Match(nakedLine, @".(?=(B/s\)))").Value)
+                        {
+                            case "k":
+                                speed = float.Parse(Regex.Match(nakedLine, @"(?<=( )\().*?(?=(kB/s\)))").Value) / 1000f;
+                                break;
+                            case "M":
+                                speed = float.Parse(Regex.Match(nakedLine, @"(?<=( )\().*?(?=(MB/s\)))").Value);
+                                break;
+                            case "G":
+                                speed = float.Parse(Regex.Match(nakedLine, @"(?<=( )\().*?(?=(GB/s\)))").Value) * 1000f;
+                                break;
+                            default:
+                                speed = 0;
+                                break;
+                        }
+                        var DegPercent = float.Parse(Regex.Match(nakedLine, @"(?<=Progress:).*?(?=%)").Value);
+
+                        var filesize = float.Parse(((string[])sender)[3]);
+                        var leftTime = new TimeSpan(0, 0, (int)(filesize / speed)).ToString(@"hh\:mm\:ss");
+                        if (speed == 0) leftTime = "infinity";
+
+                        DownloadLogLabel.Text = nakedLine;
+                        TimeLeftLabel.Text = leftTime + " : Time left.";
+                        DownloadProgressBar.Value = (int)DegPercent;
+                    }
+                    else
+                    {
+                        DownloadLogLabel.Text = nakedLine;
+                    }
+                }));
+                if (IsRunning) Thread.Sleep(200);
+            }
         }
 
         private void DownloadLogWrite(string text, int progressValue)

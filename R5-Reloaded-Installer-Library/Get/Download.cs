@@ -195,7 +195,8 @@ namespace R5_Reloaded_Installer_Library.Get
             var rawDirectoryPath = filePath.Replace(Path.GetExtension(filePath), string.Empty);
             var directoryName = Path.GetFileName(rawDirectoryPath);
             var directoryPath = rawDirectoryPath;
-            
+            var TorrentFileSize = FileExpansion.ByteToMByte(FileExpansion.GetTorrentFileSize(address));
+
             if (name != null) directoryPath = Path.Combine(Path.GetDirectoryName(filePath), name);
 
             using (var job = JobObject.CreateAsKillOnJobClose())
@@ -217,8 +218,8 @@ namespace R5_Reloaded_Installer_Library.Get
                 if (TransmissionProcessReceives != null)
                 {
                     Transmission.EnableRaisingEvents = true;
-                    Transmission.ErrorDataReceived += new DataReceivedEventHandler((sender, outLine) => TransmissionProcess_EventHandler(new string[] { address, filePath, directoryName }, outLine));
-                    Transmission.OutputDataReceived += new DataReceivedEventHandler((sender, outLine) => TransmissionProcess_EventHandler(new string[] { address, filePath, directoryName }, outLine));
+                    Transmission.ErrorDataReceived += new DataReceivedEventHandler((sender, outLine) => TransmissionProcess_EventHandler(new string[] { address, filePath, directoryName, TorrentFileSize.ToString() }, outLine));
+                    Transmission.OutputDataReceived += new DataReceivedEventHandler((sender, outLine) => TransmissionProcess_EventHandler(new string[] { address, filePath, directoryName, TorrentFileSize.ToString() }, outLine));
                 }
                 Transmission.Start();
                 Transmission.BeginOutputReadLine();
