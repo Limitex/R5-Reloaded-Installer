@@ -159,14 +159,6 @@ namespace R5_Reloaded_Installer_GUI
                     "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
-            if (GetSizeAndPath.TargetDirectoryRoot < GetSizeAndPath.TargetAllFiles)
-            {
-                var dr = MessageBox.Show("There is not enough space on the destination drive to install the software.\n" +
-                    "If you want to restart from the before, there is no problem, but otherwise you may not be able to install.\n\n" +
-                    "Do you want to continue?",
-                    "Warning", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
-                return dr == DialogResult.OK;
-            }
 
             if (Directory.Exists(mainForm.InstallLinkTextBox.Text))
             {
@@ -176,7 +168,6 @@ namespace R5_Reloaded_Installer_GUI
                     "Warning", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
                 if (dr == DialogResult.Cancel)
                 {
-                    MessageBox.Show("Explorer opens.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     Process.Start("EXPLORER.EXE", mainForm.InstallLinkTextBox.Text);
                     return false;
                 }
@@ -185,6 +176,16 @@ namespace R5_Reloaded_Installer_GUI
                     return true;
                 }
             }
+
+            if (GetSizeAndPath.TargetDirectoryRoot < GetSizeAndPath.TargetAllFiles)
+            {
+                var dr = MessageBox.Show("There is not enough space on the destination drive to install the software.\n" +
+                    "If you want to restart from the before, there is no problem, but otherwise you may not be able to install.\n\n" +
+                    "Do you want to continue?",
+                    "Warning", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+                return dr == DialogResult.OK;
+            }
+
             return true;
         }
     }
