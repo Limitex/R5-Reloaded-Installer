@@ -202,7 +202,7 @@ namespace R5_Reloaded_Installer_Library.Get
                 Transmission.StartInfo = new ProcessStartInfo()
                 {
                     FileName = TransmissionPath,
-                    Arguments = address + " -w \"" + SaveingDirectoryPath + "\" " + TransmissionArgument,
+                    Arguments = address + " -w \"" + SaveingDirectoryPath + "\" -g \"" + WorkingDirectoryPath + "\" " + TransmissionArgument,
                     WorkingDirectory = SaveingDirectoryPath,
                     CreateNoWindow = true,
                     UseShellExecute = false,
@@ -213,8 +213,8 @@ namespace R5_Reloaded_Installer_Library.Get
                 if (TransmissionProcessReceives != null)
                 {
                     Transmission.EnableRaisingEvents = true;
-                    Transmission.ErrorDataReceived += new DataReceivedEventHandler(TransmissionProcessReceives);
-                    Transmission.OutputDataReceived += new DataReceivedEventHandler(TransmissionProcessReceives);
+                    Transmission.ErrorDataReceived += new DataReceivedEventHandler(TransmissionProcess_EventHandler);
+                    Transmission.OutputDataReceived += new DataReceivedEventHandler(TransmissionProcess_EventHandler);
                 }
                 Transmission.Start();
                 Transmission.BeginOutputReadLine();
@@ -230,6 +230,12 @@ namespace R5_Reloaded_Installer_Library.Get
                 return directoryPath;
             }
             else return rawDirectoryPath;
+        }
+
+        private void TransmissionProcess_EventHandler(object sendingProcess, DataReceivedEventArgs outLine)
+        {
+            if (!string.IsNullOrEmpty(outLine.Data) && outLine.Data.Contains("Seeding")) ProcessKill();
+            TransmissionProcessReceives(sendingProcess, outLine);
         }
 
         public void ProcessKill()
