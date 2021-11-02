@@ -246,7 +246,7 @@ namespace R5_Reloaded_Installer_Library.Get
                 Aria2c.Kill();
                 Aria2c.Close();
             }
-            if ((ProgramType == DownloadProgramType.Aria2) && (Transmission != null && !Transmission.HasExited))
+            if ((ProgramType == DownloadProgramType.Transmission) && (Transmission != null && !Transmission.HasExited))
             {
                 Transmission.Kill();
                 Transmission.Close();
