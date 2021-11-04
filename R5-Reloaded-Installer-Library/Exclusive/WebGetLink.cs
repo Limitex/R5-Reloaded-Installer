@@ -24,5 +24,10 @@ namespace R5_Reloaded_Installer_Library.Exclusive
         {
             return "https://cdn.discordapp.com/attachments/876546839304888362/877972293844893786/R5pc_r5launch_N1094_CL456479_2019_10_30_05_20_PM.torrent";
         }
+
+        public static string WorldsEdgeAfterDark()
+        {
+            return "https://eax.re/r5/mp_rr_desertlands_64k_x_64k_nx.7z";
+        }
     }
 }
