@@ -78,26 +78,29 @@ namespace R5_Reloaded_Installer_GUI
                     download.SevenZipProcessReceives += new SevenZipProcessEventHandler(SevenZipProcessProcess_EventHandler);
 
                     detoursR5FilePath = download.RunZip(e.Detours_R5URL, "detours_r5");
+                    OverallLogWrite(null, 10);
                     scriptsR5FilePath = download.RunZip(e.Scripts_R5URL, "scripts_r5");
+                    OverallLogWrite(null, 20);
                     afterDarkFilePath = download.RunSevenZip(e.AfterDark_URL, "WorldsEdge");
+                    OverallLogWrite(null, 30);
                     DownloadLogWrite("Preparing to start torrent.", 0);
                     apexClientFilePath = download.RunTorrentOfTransmission(e.ApexClientURL, "apex_client");
                 }
                 DownloadLogWrite("Complete.", 100);
                 if (IsRunning)
                 {
-                    OverallLogWrite("Moving the APEX Client.", 0);
+                    OverallLogWrite("Moving the APEX Client.", 40);
                     var TorrentFile = Path.GetFileName(e.ApexClientURL);
                     var BufferPath = Path.Combine(new DirectoryInfo(e.InstallationPath).Parent.FullName, FinalDirectoryName + "_Buffer");
                     Directory.Move(apexClientFilePath, BufferPath);
 
-                    OverallLogWrite("Moving the detours_r5.", 20);
+                    OverallLogWrite("Moving the detours_r5.", 50);
                     DirectoryExpansion.MoveOverwrite(detoursR5FilePath, BufferPath);
 
-                    OverallLogWrite("Moving the scripts_r5.", 40);
+                    OverallLogWrite("Moving the scripts_r5.", 60);
                     Directory.Move(scriptsR5FilePath, Path.Combine(BufferPath, ScriptsDirectoryPath));
 
-                    OverallLogWrite("Moving the World's Edge AfterDark.", 60);
+                    OverallLogWrite("Moving the World's Edge AfterDark.", 70);
                     DirectoryExpansion.MoveOverwrite(Path.Combine(afterDarkFilePath, WorldsEdgeAfterDarkPath), BufferPath);
                     DirectoryExpansion.DeleteAll(afterDarkFilePath);
 
@@ -273,7 +276,7 @@ namespace R5_Reloaded_Installer_GUI
         {
             if (IsRunning) Invoke(new Delegate(() =>
             {
-                OverallLogLabel.Text = text;
+                if (text != null) OverallLogLabel.Text = text;
                 OverallProgressBar.Value = progressValue;
             }));
         }
