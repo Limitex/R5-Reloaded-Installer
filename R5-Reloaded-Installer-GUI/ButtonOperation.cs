@@ -11,6 +11,7 @@ namespace R5_Reloaded_Installer_GUI
         public string ApexClientURL;
         public string Detours_R5URL;
         public string Scripts_R5URL;
+        public string AfterDark_URL;
         public bool CreateDesktopShortcut;
         public bool AddShortcutToStartMenu;
     }
@@ -92,7 +93,8 @@ namespace R5_Reloaded_Installer_GUI
                 AddShortcutToStartMenu = mainForm.AddToStartMenuCheckBox.Checked,
                 ApexClientURL = GetSizeAndPath.ApexClientURL,
                 Detours_R5URL = GetSizeAndPath.Detours_R5URL,
-                Scripts_R5URL = GetSizeAndPath.Scripts_R5URL
+                Scripts_R5URL = GetSizeAndPath.Scripts_R5URL,
+                AfterDark_URL = GetSizeAndPath.AfterDark_URL
             });
         }
 

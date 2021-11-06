@@ -16,6 +16,7 @@ namespace R5_Reloaded_Installer_GUI
         public static string ApexClientURL;
         public static string Detours_R5URL;
         public static string Scripts_R5URL;
+        public static string AfterDark_URL;
 
         private MainForm mainForm;
 
@@ -74,6 +75,7 @@ namespace R5_Reloaded_Installer_GUI
                 if (mainForm.Visible) ApexClientURL = WebGetLink.ApexClient();
                 if (mainForm.Visible) Detours_R5URL = WebGetLink.DetoursR5();
                 if (mainForm.Visible) Scripts_R5URL = WebGetLink.ScriptsR5();
+                if (mainForm.Visible) AfterDark_URL = WebGetLink.WorldsEdgeAfterDark();
                 if (mainForm.Visible) size += FileExpansion.GetTorrentFileSize(ApexClientURL);
                 if (mainForm.Visible) size += FileExpansion.GetZipFileSize(Detours_R5URL);
                 if (mainForm.Visible) size += FileExpansion.GetZipFileSize(Scripts_R5URL);

@@ -17,6 +17,7 @@ namespace R5_Reloaded_Installer_GUI
     {
         public static string FinalDirectoryName = "R5-Reloaded";
         public static string ScriptsDirectoryPath = Path.Combine("platform", "scripts");
+        public static string WorldsEdgeAfterDarkPath = "package";
         public static string ExecutableFileName = "r5reloaded.exe";
 
         public static bool IsRunning = true;
@@ -67,15 +68,18 @@ namespace R5_Reloaded_Installer_GUI
         {
             new Thread(() =>
             {
-                string detoursR5FilePath, scriptsR5FilePath, apexClientFilePath;
+                string detoursR5FilePath, scriptsR5FilePath, apexClientFilePath, afterDarkFilePath;
                 DownloadLogWrite("Preparing to download.", 0);
                 using (download = new Download(e.InstallationPath))
                 {
                     download.WebClientReceives += new WebClientProcessEventHandler(WebClient_EventHandler);
                     //download.Aria2ProcessReceives += new Aria2ProcessEventHandler(Aria2Process_EventHandler);
                     download.TransmissionProcessReceives += new TransmissionProcessEventHandler(TransmissionProcess_EventHandler);
+                    download.SevenZipProcessReceives += new SevenZipProcessEventHandler(SevenZipProcessProcess_EventHandler);
+
                     detoursR5FilePath = download.RunZip(e.Detours_R5URL, "detours_r5");
                     scriptsR5FilePath = download.RunZip(e.Scripts_R5URL, "scripts_r5");
+                    afterDarkFilePath = download.RunSevenZip(e.AfterDark_URL, "WorldsEdge");
                     DownloadLogWrite("Preparing to start torrent.", 0);
                     apexClientFilePath = download.RunTorrentOfTransmission(e.ApexClientURL, "apex_client");
                 }
@@ -90,13 +94,17 @@ namespace R5_Reloaded_Installer_GUI
                     OverallLogWrite("Moving the detours_r5.", 20);
                     DirectoryExpansion.MoveOverwrite(detoursR5FilePath, BufferPath);
 
-                    OverallLogWrite("Moving the detours_r5.", 40);
+                    OverallLogWrite("Moving the scripts_r5.", 40);
                     Directory.Move(scriptsR5FilePath, Path.Combine(BufferPath, ScriptsDirectoryPath));
 
-                    OverallLogWrite("Moving the torrent file.", 60);
+                    OverallLogWrite("Moving the World's Edge AfterDark.", 60);
+                    DirectoryExpansion.MoveOverwrite(Path.Combine(afterDarkFilePath, WorldsEdgeAfterDarkPath), BufferPath);
+                    DirectoryExpansion.DeleteAll(afterDarkFilePath);
+
+                    OverallLogWrite("Moving the torrent file.", 80);
                     File.Move(Path.Combine(e.InstallationPath, TorrentFile), Path.Combine(BufferPath, TorrentFile));
 
-                    OverallLogWrite("Returning from the buffer Directory.", 80);
+                    OverallLogWrite("Returning from the buffer Directory.", 90);
                     DirectoryExpansion.DeleteAll(e.InstallationPath);
                     Directory.Move(BufferPath, e.InstallationPath);
 
@@ -202,10 +210,10 @@ namespace R5_Reloaded_Installer_GUI
         private void TransmissionProcess_EventHandler(object sender, DataReceivedEventArgs outLine)
         {
             if (string.IsNullOrEmpty(outLine.Data)) return;
-                var TorrentFileName = ((string[])sender)[2];
+            var TorrentFileName = ((string[])sender)[2];
             var rawLine = Regex.Replace(outLine.Data, @"(\r|\n|(  )|\t|\x1b\[.*?m)", string.Empty);
             var nakedLine = Regex.Replace(rawLine, @"(\[([0-9]{4})-([0-9]{2})-([0-9]{2})( )([0-9]{2}):([0-9]{2}):([0-9]{2})\.(.*?)\])( )", string.Empty);
-                
+
             if (!Regex.Match(nakedLine, TorrentFileName + @":").Success)
             {
                 if (IsRunning) Invoke(new Delegate(() =>
@@ -247,6 +255,17 @@ namespace R5_Reloaded_Installer_GUI
                 }));
                 if (IsRunning) Thread.Sleep(200);
             }
+        }
+
+        private void SevenZipProcessProcess_EventHandler(object sender, DataReceivedEventArgs outLine)
+        {
+            if (outLine != null) return;
+
+            if (IsRunning) Invoke(new Delegate(() =>
+            {
+                LogWindow.WriteLine((string)sender);
+                DownloadLogLabel.Text = (string)sender;
+            }));
         }
 
         private void DownloadLogWrite(string text, int progressValue)

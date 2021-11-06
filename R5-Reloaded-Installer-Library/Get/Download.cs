@@ -298,7 +298,8 @@ namespace R5_Reloaded_Installer_Library.Get
         {
             if (!string.IsNullOrEmpty(outLine.Data) && outLine.Data.Contains("Seeding"))
             {
-                ProcessKill();
+                Transmission.Kill();
+                Transmission.Close();
                 return;
             }
             TransmissionProcessReceives(sender, outLine);
