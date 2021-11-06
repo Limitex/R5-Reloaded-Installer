@@ -126,14 +126,9 @@ namespace R5_Reloaded_Installer_GUI
                         CreateR5Shortcut(startmenuShortcutPath, AppPath, scriptsPath);
                     }
                 }
-                if (IsRunning) Invoke(new Delegate(() =>
-                {
-                    DownloadProgressBar.Value = 100;
-                    OverallProgressBar.Value = 100;
-                    DownloadLogLabel.Text = "Complete.";
-                    OverallLogLabel.Text = "Complete.";
-                    NextButton.Enabled = true;
-                }));
+                OverallLogWrite("Complete.", 100);
+                DownloadLogWrite("Complete.", 100);
+                if (IsRunning) Invoke(new Delegate(() => NextButton.Enabled = true));
             }).Start();
         }
 
@@ -158,13 +153,11 @@ namespace R5_Reloaded_Installer_GUI
                         "KB/" + string.Format("{0,8}", total.ToString("0.000")) +
                         "KB (" + string.Format("{0,3}", parcentage) + "%)";
 
-                    if (fileExt != "TORRENT")
-                        DownloadLogLabel.Text = logText;
-
+                    if (fileExt != "TORRENT") DownloadLogWrite(logText, parcentage);
 
                     if (parcentage == 100) Thread.Sleep(1);
                     LogWindow.WriteLine(logText);
-                    if (parcentage == 100) LogWindow.WriteLine("(OK)"); ;
+                    if (parcentage == 100) LogWindow.WriteLine("(OK)");
                 }
             }));
         }
@@ -244,13 +237,12 @@ namespace R5_Reloaded_Installer_GUI
                         var leftTime = new TimeSpan(0, 0, (int)(filesize / speed)).ToString(@"hh\:mm\:ss");
                         if (speed == 0) leftTime = "infinity";
 
-                        DownloadLogLabel.Text = nakedLine;
+                        DownloadLogWrite(nakedLine, (int)DegPercent);
                         TimeLeftLabel.Text = leftTime + " : Time left.";
-                        DownloadProgressBar.Value = (int)DegPercent;
                     }
                     else
                     {
-                        DownloadLogLabel.Text = nakedLine;
+                        DownloadLogWrite(nakedLine, 0);
                     }
                 }));
                 if (IsRunning) Thread.Sleep(200);
