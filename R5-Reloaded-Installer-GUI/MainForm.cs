@@ -1,5 +1,6 @@
 ﻿using R5_Reloaded_Installer_Library.Get;
 using R5_Reloaded_Installer_Library.IO;
+using R5_Reloaded_Installer_Library.Text;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -148,13 +149,11 @@ namespace R5_Reloaded_Installer_GUI
                     var data = (string[])sender;
                     var fileName = Path.GetFileNameWithoutExtension(data[1]);
                     var fileExt = Path.GetExtension(data[1]).Replace(".", string.Empty).ToUpper();
-                    var received = Math.Round(FileExpansion.ByteToKByte(e.BytesReceived) * 1000f) / 1000f;
-                    var total = Math.Round(FileExpansion.ByteToKByte(e.TotalBytesToReceive) * 1000f) / 1000f;
 
                     var logText = "Download " + fileName + " (" + fileExt + ") >> " +
-                        string.Format("{0,8}", received.ToString("0.000")) +
-                        "KB/" + string.Format("{0,8}", total.ToString("0.000")) +
-                        "KB (" + string.Format("{0,3}", parcentage) + "%)";
+                        StringProcessing.ByteToStringWithUnits(e.BytesReceived) + "/" +
+                        StringProcessing.ByteToStringWithUnits(e.TotalBytesToReceive) +
+                        " (" + string.Format("{0,3}", parcentage) + "%)";
 
                     if (fileExt != "TORRENT") DownloadLogWrite(logText, parcentage);
 
