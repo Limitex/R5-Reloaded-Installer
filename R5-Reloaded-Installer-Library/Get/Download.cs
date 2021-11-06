@@ -141,6 +141,9 @@ namespace R5_Reloaded_Installer_Library.Get
             if (SavePath == null) SavePath = SaveingDirectoryPath;
 
             var filePath = Run(address, Path.Combine(SavePath, Path.GetFileName(address)));
+            var directoryPath = filePath.Remove(filePath.IndexOf(Path.GetExtension(filePath)));
+
+            if (Directory.Exists(directoryPath)) DirectoryExpansion.DeleteAll(directoryPath);
 
             using (var job = JobObject.CreateAsKillOnJobClose())
             {
@@ -172,18 +175,16 @@ namespace R5_Reloaded_Installer_Library.Get
 
             File.Delete(filePath);
 
-            var rawdirectoryPath = filePath.Remove(filePath.IndexOf(Path.GetExtension(filePath)));
-            var directoryPath = Path.Combine(SavePath, name);
-
             if (name != null)
             {
-                if (Directory.Exists(directoryPath)) DirectoryExpansion.DeleteAll(directoryPath);
-                Directory.Move(rawdirectoryPath, directoryPath);
-                return directoryPath;
+                var destinationPath = Path.Combine(SavePath, name);
+                if (Directory.Exists(destinationPath)) DirectoryExpansion.DeleteAll(destinationPath);
+                Directory.Move(directoryPath, destinationPath);
+                return destinationPath;
             }
             else
             {
-                return rawdirectoryPath;
+                return directoryPath;
             }
         }
 
