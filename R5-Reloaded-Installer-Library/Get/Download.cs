@@ -174,6 +174,7 @@ namespace R5_Reloaded_Installer_Library.Get
                 job.AssignProcess(SevenZip);
                 SevenZip.WaitForExit();
                 SevenZip.Close();
+                SevenZip = null;
             }
 
             SevenZipProcessReceives("Complete", null);
@@ -284,6 +285,7 @@ namespace R5_Reloaded_Installer_Library.Get
                 job.AssignProcess(Transmission);
                 Transmission.WaitForExit();
                 Transmission.Close();
+                Transmission = null;
             }
 
             if (IsRunning && name != null)
@@ -318,6 +320,12 @@ namespace R5_Reloaded_Installer_Library.Get
                 Transmission.Kill();
                 Transmission.Close();
             }
+            if (SevenZip != null && !SevenZip.HasExited)
+            {
+                SevenZip.Kill();
+                SevenZip.Close();
+            }
+            Environment.Exit(0x8020);
         }
     }
 }
