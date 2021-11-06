@@ -138,15 +138,9 @@ namespace R5_Reloaded_Installer_Library.Get
             if (!IsRunning) return null;
             if (!IsUrl(address) || FileExpansion.GetExtension(address) != "7z")
                 throw new Exception("The specified string does not download the 7Z file.");
-            if (name == null) name = Path.GetFileName(address);
-            else name += Path.GetExtension(address);
             if (SavePath == null) SavePath = SaveingDirectoryPath;
 
-            var filePath = Run(address, Path.Combine(SavePath, name));
-
-            var directoryPath = filePath.Remove(filePath.IndexOf(Path.GetExtension(filePath)));
-            if (Directory.Exists(directoryPath)) DirectoryExpansion.DeleteAll(directoryPath);
-            Directory.CreateDirectory(directoryPath);
+            var filePath = Run(address, Path.Combine(SavePath, Path.GetFileName(address)));
 
             using (var job = JobObject.CreateAsKillOnJobClose())
             {
@@ -177,7 +171,20 @@ namespace R5_Reloaded_Installer_Library.Get
             }
 
             File.Delete(filePath);
-            return directoryPath;
+
+            var rawdirectoryPath = filePath.Remove(filePath.IndexOf(Path.GetExtension(filePath)));
+            var directoryPath = Path.Combine(SavePath, name);
+
+            if (name != null)
+            {
+                if (Directory.Exists(directoryPath)) DirectoryExpansion.DeleteAll(directoryPath);
+                Directory.Move(rawdirectoryPath, directoryPath);
+                return directoryPath;
+            }
+            else
+            {
+                return rawdirectoryPath;
+            }
         }
 
         //public string RunTorrentOfAria2(string address, string name = null, string SavePath = null)
