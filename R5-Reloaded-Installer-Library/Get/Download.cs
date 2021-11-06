@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Net;
+using System.Reflection;
 using System.Text.RegularExpressions;
 
 namespace R5_Reloaded_Installer_Library.Get
@@ -52,11 +53,21 @@ namespace R5_Reloaded_Installer_Library.Get
 
             TransmissionPath = Path.Combine(RunZip(GetTransmissionLink(), "transmission", WorkingDirectoryPath),
                     TransmissionExecutableFileName);
+
+            using var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("R5_Reloaded_Installer_Library.Resources.7za.exe");
+            File.WriteAllBytes(Path.Combine(WorkingDirectoryPath, "7za.exe"), GetByteArrayFromStream(stream));
         }
 
         public void Dispose()
         {
             DirectoryExpansion.DeleteAll(WorkingDirectoryPath);
+        }
+
+        public static byte[] GetByteArrayFromStream(Stream stream)
+        {
+            using var ms = new MemoryStream();
+            stream.CopyTo(ms);
+            return ms.ToArray();
         }
 
         //private static string GetAria2Link()
