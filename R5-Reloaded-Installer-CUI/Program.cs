@@ -15,6 +15,7 @@ namespace R5_Reloaded_Installer_CUI
     {
         private static string FinalDirectoryName = "R5-Reloaded";
         private static string ScriptsDirectoryPath = Path.Combine("platform", "scripts");
+        private static string WorldsEdgeAfterDarkPath = "package";
 
         static void Main(string[] args)
         {
@@ -46,6 +47,7 @@ namespace R5_Reloaded_Installer_CUI
             var detoursR5_path = WebGetLink.DetoursR5();
             var scriptsR5_path = WebGetLink.ScriptsR5();
             var apexClient_path = WebGetLink.ApexClient();
+            var worldsEdgeAfterDark_path = WebGetLink.WorldsEdgeAfterDark();
 
             ConsoleExpansion.LogWrite("Get the file size...");
             var DriveRoot = Path.GetPathRoot(DirectoryExpansion.RunningDirectoryPath);
@@ -73,14 +75,18 @@ namespace R5_Reloaded_Installer_CUI
             if (ConsoleExpansion.ConsentInput())
             {
                 ConsoleExpansion.LogWrite("Preparing...");
-                string detoursR5FilePath, scriptsR5FilePath, apexClientFilePath;
+                string detoursR5FilePath, scriptsR5FilePath, apexClientFilePath, worldsEdgeAfterDarkFilePath;
                 using (var download = new Download())
                 {
                     download.WebClientReceives += new WebClientProcessEventHandler(WebClient_EventHandler);
                     //download.Aria2ProcessReceives += new Aria2ProcessEventHandler(Aria2Process_EventHandler);
                     download.TransmissionProcessReceives += new TransmissionProcessEventHandler(TransmissionProcess_EventHandler);
+                    download.SevenZipProcessReceives += new SevenZipProcessEventHandler(SevenZipProcess_EventHandler);
+
                     detoursR5FilePath = download.RunZip(detoursR5_path, "detours_r5");
                     scriptsR5FilePath = download.RunZip(scriptsR5_path, "scripts_r5");
+                    worldsEdgeAfterDarkFilePath = download.RunSevenZip(worldsEdgeAfterDark_path, "WorldsEdgeAfterDark");
+
                     ConsoleExpansion.WriteWidth('=', "Download with Torrent Client");
                     apexClientFilePath = download.RunTorrentOfTransmission(apexClient_path, FinalDirectoryName);
                     ConsoleExpansion.WriteWidth('=');
@@ -89,6 +95,9 @@ namespace R5_Reloaded_Installer_CUI
                 DirectoryExpansion.MoveOverwrite(detoursR5FilePath, apexClientFilePath);
                 ConsoleExpansion.LogWrite("The scripts_r5 file is being moved.");
                 Directory.Move(scriptsR5FilePath, Path.Combine(apexClientFilePath, ScriptsDirectoryPath));
+                ConsoleExpansion.LogWrite("The WorldsEdgeAfterDark file is being moved.");
+                DirectoryExpansion.MoveOverwrite(Path.Combine(worldsEdgeAfterDarkFilePath, WorldsEdgeAfterDarkPath), apexClientFilePath);
+                DirectoryExpansion.DeleteAll(worldsEdgeAfterDarkFilePath);
                 ConsoleExpansion.LogWrite("The entire process has been completed!");
                 ConsoleExpansion.LogWrite("Done.");
             }
@@ -159,6 +168,11 @@ namespace R5_Reloaded_Installer_CUI
                 ConsoleExpansion.LogWrite(Regex.Replace(nakedLine, @", ul to 0 \(0 kB/s\) \[(0\.00|None)\]", string.Empty));
                 Thread.Sleep(200);
             }
+        }
+
+        private static void SevenZipProcess_EventHandler(object sender, DataReceivedEventArgs outLine)
+        {
+            if (outLine == null) ConsoleExpansion.LogWrite((string)sender);
         }
     }
 }

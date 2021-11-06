@@ -7,6 +7,7 @@ using System.IO.Compression;
 using System.Net;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using System.Threading;
 
 namespace R5_Reloaded_Installer_Library.Get
 {
@@ -103,6 +104,7 @@ namespace R5_Reloaded_Installer_Library.Get
                         new DownloadProgressChangedEventHandler((sender, e) => WebClientReceives(new string[] { address, filePath }, e));
                 wc.DownloadFileTaskAsync(new Uri(address), filePath).Wait();
             }
+            Thread.Sleep(100);
             return filePath;
         }
 
@@ -145,7 +147,6 @@ namespace R5_Reloaded_Installer_Library.Get
 
             if (Directory.Exists(directoryPath)) DirectoryExpansion.DeleteAll(directoryPath);
 
-            SevenZipProcessReceives("Extracting Seven zip", null);
             using (var job = JobObject.CreateAsKillOnJobClose())
             {
                 SevenZip = new Process();
@@ -166,6 +167,7 @@ namespace R5_Reloaded_Installer_Library.Get
                     SevenZip.ErrorDataReceived += new DataReceivedEventHandler(SevenZipProcessReceives);
                     SevenZip.OutputDataReceived += new DataReceivedEventHandler(SevenZipProcessReceives);
                 }
+                SevenZipProcessReceives("Extracting Seven zip", null);
                 SevenZip.Start();
                 SevenZip.BeginOutputReadLine();
                 SevenZip.BeginErrorReadLine();
