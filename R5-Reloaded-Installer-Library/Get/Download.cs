@@ -145,6 +145,7 @@ namespace R5_Reloaded_Installer_Library.Get
 
             if (Directory.Exists(directoryPath)) DirectoryExpansion.DeleteAll(directoryPath);
 
+            SevenZipProcessReceives("Extracting Seven zip", null);
             using (var job = JobObject.CreateAsKillOnJobClose())
             {
                 SevenZip = new Process();
@@ -173,6 +174,7 @@ namespace R5_Reloaded_Installer_Library.Get
                 SevenZip.Close();
             }
 
+            SevenZipProcessReceives("Complete", null);
             File.Delete(filePath);
 
             if (name != null)
