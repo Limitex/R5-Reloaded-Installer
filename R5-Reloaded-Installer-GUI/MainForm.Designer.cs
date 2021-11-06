@@ -389,10 +389,9 @@ namespace R5_Reloaded_Installer_GUI
             // 
             // DownloadLogLabel
             // 
-            this.DownloadLogLabel.AutoSize = true;
             this.DownloadLogLabel.Location = new System.Drawing.Point(28, 128);
             this.DownloadLogLabel.Name = "DownloadLogLabel";
-            this.DownloadLogLabel.Size = new System.Drawing.Size(84, 15);
+            this.DownloadLogLabel.Size = new System.Drawing.Size(396, 33);
             this.DownloadLogLabel.TabIndex = 5;
             this.DownloadLogLabel.Text = "in preparation.";
             // 
