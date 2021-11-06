@@ -12,6 +12,7 @@ namespace R5_Reloaded_Installer_Library.Get
 {
     public delegate void WebClientProcessEventHandler(object sender, DownloadProgressChangedEventArgs e);
     public delegate void TransmissionProcessEventHandler(object sender, DataReceivedEventArgs outLine);
+    public delegate void SevenZipProcessEventHandler(object sender, DataReceivedEventArgs outLine);
     //public delegate void Aria2ProcessEventHandler(object sender, DataReceivedEventArgs outLine);
 
     public class Download : IDisposable
@@ -21,6 +22,7 @@ namespace R5_Reloaded_Installer_Library.Get
 
         public event WebClientProcessEventHandler WebClientReceives = null;
         public event TransmissionProcessEventHandler TransmissionProcessReceives = null;
+        public event SevenZipProcessEventHandler SevenZipProcessReceives = null;
         //public event Aria2ProcessEventHandler Aria2ProcessReceives = null;
 
         //private static readonly string Aria2Argument = "--seed-time=0 --allow-overwrite=true";
@@ -33,6 +35,9 @@ namespace R5_Reloaded_Installer_Library.Get
 
         //private static string Aria2Path;
         private static string TransmissionPath;
+
+        private static string SevenZipPath;
+        private Process SevenZip = null;
 
         private Process Transmission = null;
         //private Process Aria2c = null;
@@ -54,8 +59,9 @@ namespace R5_Reloaded_Installer_Library.Get
             TransmissionPath = Path.Combine(RunZip(GetTransmissionLink(), "transmission", WorkingDirectoryPath),
                     TransmissionExecutableFileName);
 
+            SevenZipPath = Path.Combine(WorkingDirectoryPath, "7za.exe");
             using var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("R5_Reloaded_Installer_Library.Resources.7za.exe");
-            File.WriteAllBytes(Path.Combine(WorkingDirectoryPath, "7za.exe"), GetByteArrayFromStream(stream));
+            File.WriteAllBytes(SevenZipPath, GetByteArrayFromStream(stream));
         }
 
         public void Dispose()
@@ -124,6 +130,53 @@ namespace R5_Reloaded_Installer_Library.Get
                 Directory.Delete(directoryPath);
                 Directory.Move(directoryPath + "_buffer", directoryPath);
             }
+            return directoryPath;
+        }
+
+        public string RunSevenZip(string address, string name = null, string SavePath = null)
+        {
+            if (!IsRunning) return null;
+            if (!IsUrl(address) || FileExpansion.GetExtension(address) != "7z")
+                throw new Exception("The specified string does not download the 7Z file.");
+            if (name == null) name = Path.GetFileName(address);
+            else name += Path.GetExtension(address);
+            if (SavePath == null) SavePath = SaveingDirectoryPath;
+
+            var filePath = Run(address, Path.Combine(SavePath, name));
+
+            var directoryPath = filePath.Remove(filePath.IndexOf(Path.GetExtension(filePath)));
+            if (Directory.Exists(directoryPath)) DirectoryExpansion.DeleteAll(directoryPath);
+            Directory.CreateDirectory(directoryPath);
+
+            using (var job = JobObject.CreateAsKillOnJobClose())
+            {
+                SevenZip = new Process();
+                SevenZip.StartInfo = new ProcessStartInfo()
+                {
+                    FileName = SevenZipPath,
+                    Arguments = "x " + filePath,
+                    WorkingDirectory = SavePath,
+                    CreateNoWindow = true,
+                    UseShellExecute = false,
+                    RedirectStandardInput = true,
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true
+                };
+                if (SevenZipProcessReceives != null)
+                {
+                    SevenZip.EnableRaisingEvents = true;
+                    SevenZip.ErrorDataReceived += new DataReceivedEventHandler(SevenZipProcessReceives);
+                    SevenZip.OutputDataReceived += new DataReceivedEventHandler(SevenZipProcessReceives);
+                }
+                SevenZip.Start();
+                SevenZip.BeginOutputReadLine();
+                SevenZip.BeginErrorReadLine();
+                job.AssignProcess(SevenZip);
+                SevenZip.WaitForExit();
+                SevenZip.Close();
+            }
+
+            File.Delete(filePath);
             return directoryPath;
         }
 
