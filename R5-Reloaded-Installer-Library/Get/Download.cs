@@ -52,6 +52,7 @@ namespace R5_Reloaded_Installer_Library.Get
             else SaveingDirectoryPath = DirectoryExpansion.RunningDirectoryPath;
 
             if (!Directory.Exists(SaveingDirectoryPath)) Directory.CreateDirectory(SaveingDirectoryPath);
+
             if (Directory.Exists(WorkingDirectoryPath)) DirectoryExpansion.DeleteAll(WorkingDirectoryPath);
             Directory.CreateDirectory(WorkingDirectoryPath);
 
@@ -97,6 +98,7 @@ namespace R5_Reloaded_Installer_Library.Get
 
         public string Run(string address, string filePath)
         {
+            if (File.Exists(filePath)) File.Delete(filePath);
             using (var wc = new WebClient())
             {
                 if (WebClientReceives != null)

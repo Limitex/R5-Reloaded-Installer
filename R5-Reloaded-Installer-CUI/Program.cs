@@ -63,7 +63,6 @@ namespace R5_Reloaded_Installer_CUI
             if (FileSize > DriveSize)
             {
                 ConsoleExpansion.LogError("There is not enough space on the destination drive to install the software.");
-                ConsoleExpansion.LogNotes("If you want to restart from the before, there is no problem, but otherwise you may not be able to install.");
                 ConsoleExpansion.LogWrite("Do you want to continue?");
                 if (!ConsoleExpansion.ConsentInput()) ConsoleExpansion.Exit();
             }
