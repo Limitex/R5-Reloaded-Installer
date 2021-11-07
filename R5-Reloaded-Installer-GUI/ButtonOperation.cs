@@ -164,9 +164,9 @@ namespace R5_Reloaded_Installer_GUI
 
             if (Directory.Exists(mainForm.InstallLinkTextBox.Text))
             {
-                var dr = MessageBox.Show("If you want to restart from before, " +
-                    "that's fine, but if you don't, you may lose your files.\n" +
-                    "Do you want to continue?",
+                var dr = MessageBox.Show("The file already exists\n" +
+                    "Do you want to continue?\n" +
+                    "Cancel will open Explorer.",
                     "Warning", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
                 if (dr == DialogResult.Cancel)
                 {
@@ -182,7 +182,6 @@ namespace R5_Reloaded_Installer_GUI
             if (GetSizeAndPath.TargetDirectoryRoot < GetSizeAndPath.TargetAllFiles)
             {
                 var dr = MessageBox.Show("There is not enough space on the destination drive to install the software.\n" +
-                    "If you want to restart from the before, there is no problem, but otherwise you may not be able to install.\n\n" +
                     "Do you want to continue?",
                     "Warning", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
                 return dr == DialogResult.OK;
