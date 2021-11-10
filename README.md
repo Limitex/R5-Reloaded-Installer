@@ -24,7 +24,7 @@ There is a GUI and CUI in the release.
 
 The GUI can be installed like a Windows installer.
 
-CUI runs CLI-based and produces only R5.
+CUI runs CLI-based and produces only R5R.
 
 1. Download and unzip the Zip file from the [release](https://github.com/Limitex/R5-Reloaded-Installer/releases).
 2. Click R5-Reloaded-Installer.exe to launch it.
