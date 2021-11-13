@@ -266,7 +266,10 @@ namespace R5_Reloaded_Installer_Library.Get
                     StartInfo = new ProcessStartInfo()
                     {
                         FileName = TransmissionPath,
-                        Arguments = address + " -w \"" + SaveingDirectoryPath + "\" -g \"" + WorkingDirectoryPath + "\" " + TransmissionArgument,
+                        Arguments = address + " " +
+                            "--download-dir \"" + SaveingDirectoryPath + "\" " +
+                            "--config-dir \"" + WorkingDirectoryPath + "\" " + 
+                            TransmissionArgument,
                         WorkingDirectory = SaveingDirectoryPath,
                         CreateNoWindow = true,
                         UseShellExecute = false,
