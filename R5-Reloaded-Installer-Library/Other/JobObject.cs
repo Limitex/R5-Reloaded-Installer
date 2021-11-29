@@ -35,7 +35,7 @@ namespace R5_Reloaded_Installer_Library.Other.JobObjectSharp
 
         private JobObject(SafeJobHandle safeHandle) => SafeHandle = safeHandle;
 
-        private JobObject(string name = null)
+        private JobObject(string? name = null)
         {
             SafeHandle = Native.CreateJobObject(IntPtr.Zero, name);
             if (SafeHandle.IsInvalid)
@@ -219,7 +219,7 @@ namespace R5_Reloaded_Installer_Library.Other.JobObjectSharp
              int processId);
 
         [DllImport("kernel32.dll", SetLastError = true)]
-        public static extern SafeJobHandle CreateJobObject(IntPtr lpJobAttributes, string lpName);
+        public static extern SafeJobHandle CreateJobObject(IntPtr lpJobAttributes, string? lpName);
 
         [DllImport("kernel32.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
