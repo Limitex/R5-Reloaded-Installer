@@ -18,6 +18,8 @@ namespace R5_Reloaded_Installer_Library.Get
             request.Headers.Add("User-Agent", "0");
             var result = new HttpClient().SendAsync(request).Result.Content.ReadAsStringAsync(); result.Wait();
             var json = JObject.Parse(result.Result);
+            if (((string?)json["message"] ?? string.Empty).Contains("API rate limit exceeded"))
+                throw new Exception((string?)json["message"]);
             var links = new List<string>();
             foreach (var link in json["assets"] ?? string.Empty)
                 links.Add((string?)link["browser_download_url"] ?? string.Empty);
