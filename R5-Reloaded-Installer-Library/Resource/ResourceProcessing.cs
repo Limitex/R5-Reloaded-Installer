@@ -17,7 +17,7 @@ namespace R5_Reloaded_Installer_Library.Resource
             File.WriteAllBytes(path, GetByteArrayFromStream(stream));
         }
 
-        public static byte[] GetByteArrayFromStream(Stream stream)
+        private static byte[] GetByteArrayFromStream(Stream stream)
         {
             using var ms = new MemoryStream();
             stream.CopyTo(ms);
