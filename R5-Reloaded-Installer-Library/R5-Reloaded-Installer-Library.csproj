@@ -8,6 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\aria2c.exe" />
+    <None Remove="Resources\seven-za.exe" />
+    <None Remove="Resources\transmission.exe" />
+  </ItemGroup>
+
+  <ItemGroup>
     <COMReference Include="IWshRuntimeLibrary">
       <WrapperTool>tlbimp</WrapperTool>
       <VersionMinor>0</VersionMinor>
@@ -17,6 +23,12 @@
       <Isolated>false</Isolated>
       <EmbedInteropTypes>true</EmbedInteropTypes>
     </COMReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\aria2c.exe" />
+    <EmbeddedResource Include="Resources\seven-za.exe" />
+    <EmbeddedResource Include="Resources\transmission.exe" />
   </ItemGroup>
 
   <ItemGroup>
