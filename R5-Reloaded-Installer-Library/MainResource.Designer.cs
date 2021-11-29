@@ -63,6 +63,16 @@ namespace R5_Reloaded_Installer_Library {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] aria2c {
+            get {
+                object obj = ResourceManager.GetObject("aria2c", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] seven_za {
             get {
                 object obj = ResourceManager.GetObject("seven_za", resourceCulture);
