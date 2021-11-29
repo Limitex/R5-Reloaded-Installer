@@ -69,5 +69,15 @@ namespace R5_Reloaded_Installer_Library {
                 return ((byte[])(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] transmission {
+            get {
+                object obj = ResourceManager.GetObject("transmission", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }
