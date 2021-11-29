@@ -8,7 +8,7 @@ namespace R5_Reloaded_Installer_Library.IO
 {
     public static class PathExpansion
     {
-        private static string Combine(params string[] paths)
+        public static string Combine(params string[] paths)
         {
             string path = string.Empty;
             foreach (var str in paths) path = Path.Combine(path, str);
