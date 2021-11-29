@@ -5,13 +5,13 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using IWshRuntimeLibrary;
-using System.Diagnostics.CodeAnalysis;
+using System.Runtime.Versioning;
 
 namespace R5_Reloaded_Installer_Library
 {
     public static class FileExpansion
     {
-        [SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<Pending>")]
+        [SupportedOSPlatform("windows")]
         public static void CreateShortcut(string path, string name, string LinkDestination, string arguments)
         {
             var shell = new WshShell();
