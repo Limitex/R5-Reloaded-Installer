@@ -8,6 +8,8 @@ namespace R5_Reloaded_Installer_Library.Text
 {
     public class StringProcessing
     {
+        public static string GetExtension(string address) => Path.GetExtension(address).Replace(".", "").ToLower();
+        
         public static string ByteToStringWithUnits(float data)
         {
             var count = 0;
