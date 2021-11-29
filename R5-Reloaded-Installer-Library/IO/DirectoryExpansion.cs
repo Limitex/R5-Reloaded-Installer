@@ -6,6 +6,12 @@ namespace R5_Reloaded_Installer_Library.IO
 {
     public static class DirectoryExpansion
     {
+        public static void CreateOverwrite(string path)
+        {
+            if (Directory.Exists(path)) DirectoryDelete(path);
+            Directory.CreateDirectory(path);
+        }
+
         public static void MoveOverwrite(string sourcePath, string destinationPath)
         {
             DirectoryCopy(sourcePath, destinationPath);
