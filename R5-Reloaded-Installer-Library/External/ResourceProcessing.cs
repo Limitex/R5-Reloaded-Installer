@@ -12,7 +12,7 @@ namespace R5_Reloaded_Installer_Library.External
         public static string ExportingFile(string path, string resource)
         {
             var assembly = Assembly.GetExecutingAssembly();
-            using var stream = assembly.GetManifestResourceStream("R5_Reloaded_Installer_Library.Resources." + resource);
+            using var stream = assembly.GetManifestResourceStream("R5_Reloaded_Installer_Library.External.Resources." + resource);
             if (stream == null) throw new Exception("The assembly does not have the specified file.");
             File.WriteAllBytes(path, GetByteArrayFromStream(stream));
             return path;

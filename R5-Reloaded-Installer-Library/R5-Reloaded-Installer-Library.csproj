@@ -8,9 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Resources\aria2c.exe" />
-    <None Remove="Resources\seven-za.exe" />
-    <None Remove="Resources\transmission.exe" />
+    <None Remove="External\Resources\aria2c.exe" />
+    <None Remove="External\Resources\seven-za.exe" />
+    <None Remove="External\Resources\transmission.exe" />
   </ItemGroup>
 
   <ItemGroup>
@@ -26,9 +26,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Resources\aria2c.exe" />
-    <EmbeddedResource Include="Resources\seven-za.exe" />
-    <EmbeddedResource Include="Resources\transmission.exe" />
+    <EmbeddedResource Include="External\Resources\aria2c.exe" />
+    <EmbeddedResource Include="External\Resources\seven-za.exe" />
+    <EmbeddedResource Include="External\Resources\transmission.exe" />
   </ItemGroup>
 
   <ItemGroup>
@@ -36,7 +36,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="MainResource.Designer.cs">
+    <Compile Update="External\MainResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>MainResource.resx</DependentUpon>
@@ -44,7 +44,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="MainResource.resx">
+    <EmbeddedResource Update="External\MainResource.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>MainResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
