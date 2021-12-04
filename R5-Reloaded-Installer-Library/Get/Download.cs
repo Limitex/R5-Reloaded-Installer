@@ -59,7 +59,7 @@ namespace R5_Reloaded_Installer_Library.Get
             }
         }
 
-        public string Aria2c(string address, string? name = null, string? path = null)
+        private string Aria2c(string address, string? name = null, string? path = null)
         {
             var dirPath = path ?? SaveingDirectoryPath;
             var fileName = name ?? Path.GetFileName(address);
@@ -69,7 +69,7 @@ namespace R5_Reloaded_Installer_Library.Get
             return filePath;
         }
 
-        public string Transmission(string address, string? path = null)
+        private string Transmission(string address, string? path = null)
         {
             var dirPath = path ?? SaveingDirectoryPath;
             var argument = " --download-dir \"" + dirPath + "\" --config-dir \"" + WorkingDirectoryPath + "\" -u 0";
@@ -77,7 +77,7 @@ namespace R5_Reloaded_Installer_Library.Get
             return Path.Combine(dirPath, Path.GetFileNameWithoutExtension(address));
         }
 
-        public string SevenZip(string address, string? path = null)
+        private string SevenZip(string address, string? path = null)
         {
             var dirPath = path ?? SaveingDirectoryPath;
             var argument = "x " + address;
