@@ -18,13 +18,15 @@ namespace R5_Reloaded_Installer_Library.Get
         public event ProcessEventHandler? ProcessReceives = null;
 
         private static string WorkingDirectoryPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "R5-Reloaded-Installer");
-        
+        private string SaveingDirectoryPath;
+
         private ResourceProcess aria2c;
         private ResourceProcess sevenZip;
         private ResourceProcess transmission;
 
-        public Download()
+        public Download(string saveingDirectoryPath)
         {
+            SaveingDirectoryPath = saveingDirectoryPath;
             DirectoryExpansion.CreateOverwrite(WorkingDirectoryPath);
 
             aria2c = new ResourceProcess(WorkingDirectoryPath, "aria2c");
@@ -60,12 +62,27 @@ namespace R5_Reloaded_Installer_Library.Get
             //transmission.Run("", "");
         }
 
-        private void DownloadFile()
+        public string Aria2c(string address, string? name = null, string? path = null)
         {
-            using (var hc = new HttpClient())
-            {
+            var dirPath = path ?? SaveingDirectoryPath;
+            var fileName = name ?? Path.GetFileName(address);
+            var filePath = Path.Combine(dirPath, fileName);
+            var argument = " --dir=\"" + dirPath + "\" --out=\"" + fileName + "\" --seed-time=0 --allow-overwrite=true";
+            aria2c.Run(address + argument, WorkingDirectoryPath);
+            return filePath;
+        }
 
-            }
+        public string Transmission(string address, string? path = null)
+        {
+            var dirPath = path ?? SaveingDirectoryPath;
+            var argument = " --download-dir \"" + dirPath + "\" --config-dir \"" + WorkingDirectoryPath + "\" -u 0";
+            transmission.Run(address + argument, dirPath);
+            return Path.Combine(dirPath, Path.GetFileNameWithoutExtension(address));
+        }
+
+        private void SevenZip(string address, string? name = null, string? SavePath = null)
+        {
+
         }
 
         private string FormattingLine(string str) => Regex.Replace(str, @"(\r|\n|(  )|\t|\x1b\[.*?m)", string.Empty);
@@ -110,9 +127,15 @@ namespace R5_Reloaded_Installer_Library.Get
             if (string.IsNullOrEmpty(outLine.Data)) return;
             var rawLine = FormattingLine(outLine.Data);
 
+            if (rawLine.Contains("Seeding"))
+            {
+                transmission.Kill();
+                return;
+            }
+
             var nakedLine = Regex.Replace(rawLine, @"(\[([0-9]{4})-([0-9]{2})-([0-9]{2})( )([0-9]{2}):([0-9]{2}):([0-9]{2})\.(.*?)\])( )", string.Empty);
             ProcessReceives(Regex.Replace(nakedLine, @", ul to 0 \(0 kB/s\) \[(0\.00|None)\]", string.Empty));
-            if (Regex.Match(nakedLine, "Progress").Success) Thread.Sleep(200);
+            Thread.Sleep(200);
         }
     }
 }
