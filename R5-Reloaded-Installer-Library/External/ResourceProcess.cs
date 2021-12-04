@@ -53,8 +53,8 @@ namespace R5_Reloaded_Installer_Library.External
                 if (ResourceProcessReceives != null)
                 {
                     process.EnableRaisingEvents = true;
-                    process.ErrorDataReceived += new DataReceivedEventHandler(ResourceProcessReceives);
-                    process.OutputDataReceived += new DataReceivedEventHandler(ResourceProcessReceives);
+                    process.ErrorDataReceived += new DataReceivedEventHandler((sender, outLine) => ResourceProcessReceives(new string[] { arguments, workingDirectory }, outLine));
+                    process.OutputDataReceived += new DataReceivedEventHandler((sender, outLine) => ResourceProcessReceives(new string[] { arguments, workingDirectory }, outLine));
                 }
                 process.Start();
                 process.BeginOutputReadLine();
