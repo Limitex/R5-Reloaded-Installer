@@ -134,8 +134,13 @@ namespace R5_Reloaded_Installer_Library.Get
             }
 
             var nakedLine = Regex.Replace(rawLine, @"(\[([0-9]{4})-([0-9]{2})-([0-9]{2})( )([0-9]{2}):([0-9]{2}):([0-9]{2})\.(.*?)\])( )", string.Empty);
-            ProcessReceives(Regex.Replace(nakedLine, @", ul to 0 \(0 kB/s\) \[(0\.00|None)\]", string.Empty));
-            Thread.Sleep(200);
+            
+            var dirName = Path.GetFileNameWithoutExtension(Regex.Match(((string[])sender)[0], "http.*?(?=( ))").ToString());
+            if (!Regex.Match(nakedLine, dirName + ":").Success)
+            {
+                ProcessReceives(Regex.Replace(nakedLine, @", ul to 0 \(0 kB/s\) \[(0\.00|None)\]", string.Empty));
+                Thread.Sleep(200);
+            }
         }
     }
 }
