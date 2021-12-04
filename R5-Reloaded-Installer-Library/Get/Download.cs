@@ -63,10 +63,9 @@ namespace R5_Reloaded_Installer_Library.Get
         {
             var dirPath = path ?? SaveingDirectoryPath;
             var fileName = name ?? Path.GetFileName(address);
-            var filePath = Path.Combine(dirPath, fileName);
             var argument = " --dir=\"" + dirPath + "\" --out=\"" + fileName + "\" --seed-time=0 --allow-overwrite=true";
             aria2c.Run(address + argument, WorkingDirectoryPath);
-            return filePath;
+            return Path.Combine(dirPath, fileName);
         }
 
         private string Transmission(string address, string? path = null)
