@@ -57,9 +57,6 @@ namespace R5_Reloaded_Installer_Library.Get
                 case ".torrent":
                     break;
             }
-            //aria2c.Run("", "");
-            //sevenZip.Run("", "");
-            //transmission.Run("", "");
         }
 
         public string Aria2c(string address, string? name = null, string? path = null)
@@ -80,9 +77,12 @@ namespace R5_Reloaded_Installer_Library.Get
             return Path.Combine(dirPath, Path.GetFileNameWithoutExtension(address));
         }
 
-        private void SevenZip(string address, string? name = null, string? SavePath = null)
+        public string SevenZip(string address, string? path = null)
         {
-
+            var dirPath = path ?? SaveingDirectoryPath;
+            var argument = "x " + address;
+            sevenZip.Run(argument, dirPath);
+            return Path.Combine(dirPath, Path.GetFileNameWithoutExtension(address));
         }
 
         private string FormattingLine(string str) => Regex.Replace(str, @"(\r|\n|(  )|\t|\x1b\[.*?m)", string.Empty);
