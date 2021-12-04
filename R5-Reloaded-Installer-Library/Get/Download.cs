@@ -60,27 +60,30 @@ namespace R5_Reloaded_Installer_Library.Get
 
         private string Aria2c(string address, string? name = null, string? path = null)
         {
-            var dirPath = path ?? SaveingDirectoryPath;
-            var fileName = name ?? Path.GetFileName(address);
-            var argument = " --dir=\"" + dirPath + "\" --out=\"" + fileName + "\" --seed-time=0 --allow-overwrite=true";
-            aria2c.Run(address + argument, WorkingDirectoryPath);
-            return Path.Combine(dirPath, fileName);
+            //var dirPath = path ?? SaveingDirectoryPath;
+            //var fileName = name ?? Path.GetFileName(address);
+            //var argument = " --dir=\"" + dirPath + "\" --out=\"" + fileName + "\" --seed-time=0 --allow-overwrite=true";
+            //aria2c.Run(address + argument, WorkingDirectoryPath);
+            //return Path.Combine(dirPath, fileName);
+            return "";
         }
 
         private string Transmission(string address, string? path = null)
         {
-            var dirPath = path ?? SaveingDirectoryPath;
-            var argument = " --download-dir \"" + dirPath + "\" --config-dir \"" + WorkingDirectoryPath + "\" -u 0";
-            transmission.Run(address + argument, dirPath);
-            return Path.Combine(dirPath, Path.GetFileNameWithoutExtension(address));
+            //var dirPath = path ?? SaveingDirectoryPath;
+            //var argument = " --download-dir \"" + dirPath + "\" --config-dir \"" + WorkingDirectoryPath + "\" -u 0";
+            //transmission.Run(address + argument, dirPath);
+            //return Path.Combine(dirPath, Path.GetFileNameWithoutExtension(address));
+            return "";
         }
 
         private string SevenZip(string address, string? path = null)
         {
-            var dirPath = path ?? SaveingDirectoryPath;
-            var argument = "-y x " + address;
-            sevenZip.Run(argument, dirPath);
-            return Path.Combine(dirPath, Path.GetFileNameWithoutExtension(address));
+            //var dirPath = path ?? SaveingDirectoryPath;
+            //var argument = "-y x " + address;
+            //sevenZip.Run(argument, dirPath);
+            //return Path.Combine(dirPath, Path.GetFileNameWithoutExtension(address));
+            return "";
         }
 
         private void DirectoryFix(string sourceDirName)
