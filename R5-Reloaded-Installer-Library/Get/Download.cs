@@ -46,12 +46,11 @@ namespace R5_Reloaded_Installer_Library.Get
             DirectoryExpansion.DirectoryDelete(WorkingDirectoryPath);
         }
 
-        public void Run(string address, string? name = null, string? SavePath = null)
+        public void Run(string address, string? name = null, string? path = null)
         {
             switch (Path.GetExtension(address).ToLower())
             {
                 case ".zip":
-                    break;
                 case ".7z":
                     break;
                 case ".torrent":
@@ -79,7 +78,7 @@ namespace R5_Reloaded_Installer_Library.Get
         private string SevenZip(string address, string? path = null)
         {
             var dirPath = path ?? SaveingDirectoryPath;
-            var argument = "x " + address;
+            var argument = "-y x " + address;
             sevenZip.Run(argument, dirPath);
             return Path.Combine(dirPath, Path.GetFileNameWithoutExtension(address));
         }
