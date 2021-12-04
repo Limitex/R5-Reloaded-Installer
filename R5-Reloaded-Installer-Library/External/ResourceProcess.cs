@@ -19,7 +19,7 @@ namespace R5_Reloaded_Installer_Library.External
         private string WorkingDirectoryPath;
         private string applicationPath;
 
-        private Process process = new Process();
+        private Process? process = null;
 
         public ResourceProcess(string workingDirectory, string resource)
         {
@@ -38,6 +38,7 @@ namespace R5_Reloaded_Installer_Library.External
         {
             using (var job = JobObject.CreateAsKillOnJobClose())
             {
+                process = new Process();
                 process.StartInfo = new ProcessStartInfo()
                 {
                     FileName = applicationPath,
@@ -60,6 +61,16 @@ namespace R5_Reloaded_Installer_Library.External
                 process.BeginErrorReadLine();
                 job.AssignProcess(process);
                 process.WaitForExit();
+                process.Close();
+                process = null;
+            }
+        }
+
+        public void Kill()
+        {
+            if (process != null)
+            {
+                process.Kill();
                 process.Close();
             }
         }
