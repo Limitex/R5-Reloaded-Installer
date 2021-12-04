@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -41,6 +42,30 @@ namespace R5_Reloaded_Installer_Library.Get
             sevenZip.Dispose();
             transmission.Dispose();
             DirectoryExpansion.DirectoryDelete(WorkingDirectoryPath);
+        }
+
+        public void Run(string address, string? name = null, string? SavePath = null)
+        {
+            switch (Path.GetExtension(address).ToLower())
+            {
+                case ".zip":
+                    break;
+                case ".7z":
+                    break;
+                case ".torrent":
+                    break;
+            }
+            //aria2c.Run("", "");
+            //sevenZip.Run("", "");
+            //transmission.Run("", "");
+        }
+
+        private void DownloadFile()
+        {
+            using (var hc = new HttpClient())
+            {
+
+            }
         }
 
         private string FormattingLine(string str) => Regex.Replace(str, @"(\r|\n|(  )|\t|\x1b\[.*?m)", string.Empty);
