@@ -43,11 +43,13 @@ namespace R5_Reloaded_Installer_Library.Get
             DirectoryExpansion.DirectoryDelete(WorkingDirectoryPath);
         }
 
-        public void Aria2cProcess_EventHandler(object sender, DataReceivedEventArgs outLine)
+        private string FormattingLine(string str) => Regex.Replace(str, @"(\r|\n|(  )|\t|\x1b\[.*?m)", string.Empty);
+
+        private void Aria2cProcess_EventHandler(object sender, DataReceivedEventArgs outLine)
         {
             if (ProcessReceives == null) return;
             if (string.IsNullOrEmpty(outLine.Data)) return;
-            var rawLine = Regex.Replace(outLine.Data, @"(\r|\n|(  )|\t|\x1b\[.*?m)", string.Empty);
+            var rawLine = FormattingLine(outLine.Data);
 
             if (rawLine[0] == '[')
             {
@@ -68,21 +70,21 @@ namespace R5_Reloaded_Installer_Library.Get
             }
         }
 
-        public void SevenZipProcess_EventHandler(object sender, DataReceivedEventArgs outLine)
+        private void SevenZipProcess_EventHandler(object sender, DataReceivedEventArgs outLine)
         {
             if (ProcessReceives == null) return;
             if (string.IsNullOrEmpty(outLine.Data)) return;
-            var rawLine = Regex.Replace(outLine.Data, @"(\r|\n|(  )|\t|\x1b\[.*?m)", string.Empty);
+            var rawLine = FormattingLine(outLine.Data);
 
             ProcessReceives(rawLine);
         }
 
-        public void TransmissionProcess_EventHandler(object sender, DataReceivedEventArgs outLine)
+        private void TransmissionProcess_EventHandler(object sender, DataReceivedEventArgs outLine)
         {
             if (ProcessReceives == null) return;
             if (string.IsNullOrEmpty(outLine.Data)) return;
-            var rawLine = Regex.Replace(outLine.Data, @"(\r|\n|(  )|\t|\x1b\[.*?m)", string.Empty);
-            
+            var rawLine = FormattingLine(outLine.Data);
+
             var nakedLine = Regex.Replace(rawLine, @"(\[([0-9]{4})-([0-9]{2})-([0-9]{2})( )([0-9]{2}):([0-9]{2}):([0-9]{2})\.(.*?)\])( )", string.Empty);
             ProcessReceives(Regex.Replace(nakedLine, @", ul to 0 \(0 kB/s\) \[(0\.00|None)\]", string.Empty));
             if (Regex.Match(nakedLine, "Progress").Success) Thread.Sleep(200);
