@@ -38,8 +38,8 @@ namespace R5_Reloaded_Installer_Library.External
         {
             using (var job = JobObject.CreateAsKillOnJobClose())
             {
-                process = new Process();
-                process.StartInfo = new ProcessStartInfo()
+                process = new();
+                process.StartInfo = new()
                 {
                     FileName = applicationPath,
                     Arguments = arguments,
@@ -53,8 +53,8 @@ namespace R5_Reloaded_Installer_Library.External
                 if (ResourceProcessReceives != null)
                 {
                     process.EnableRaisingEvents = true;
-                    process.ErrorDataReceived += new DataReceivedEventHandler((sender, outLine) => ResourceProcessReceives(new string[] { arguments, workingDirectory }, outLine));
-                    process.OutputDataReceived += new DataReceivedEventHandler((sender, outLine) => ResourceProcessReceives(new string[] { arguments, workingDirectory }, outLine));
+                    process.ErrorDataReceived += new((sender, outLine) => ResourceProcessReceives(new string[] { arguments, workingDirectory }, outLine));
+                    process.OutputDataReceived += new((sender, outLine) => ResourceProcessReceives(new string[] { arguments, workingDirectory }, outLine));
                 }
                 process.Start();
                 process.BeginOutputReadLine();
@@ -79,7 +79,7 @@ namespace R5_Reloaded_Installer_Library.External
         {
             var name = "R5_Reloaded_Installer_Library.External.Resources." + resource;
             using var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(name);
-            if (stream == null) throw new Exception("The assembly does not have the specified file.");
+            if (stream == null) throw new("The assembly does not have the specified file.");
             using var memoryStream = new MemoryStream();
             stream.CopyTo(memoryStream);
             File.WriteAllBytes(path, memoryStream.ToArray());

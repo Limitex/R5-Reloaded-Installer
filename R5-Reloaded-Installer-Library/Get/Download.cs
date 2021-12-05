@@ -40,13 +40,13 @@ namespace R5_Reloaded_Installer_Library.Get
             SaveingDirectoryPath = saveingDirectoryPath;
             DirectoryExpansion.CreateOverwrite(WorkingDirectoryPath);
 
-            aria2c = new ResourceProcess(WorkingDirectoryPath, "aria2c");
-            sevenZip = new ResourceProcess(WorkingDirectoryPath, "seven-za");
-            transmission = new ResourceProcess(WorkingDirectoryPath, "transmission");
+            aria2c = new(WorkingDirectoryPath, "aria2c");
+            sevenZip = new(WorkingDirectoryPath, "seven-za");
+            transmission = new(WorkingDirectoryPath, "transmission");
 
-            aria2c.ResourceProcessReceives += new ResourceProcessEventHandler(Aria2cProcess_EventHandler);
-            sevenZip.ResourceProcessReceives += new ResourceProcessEventHandler(SevenZipProcess_EventHandler);
-            transmission.ResourceProcessReceives += new ResourceProcessEventHandler(TransmissionProcess_EventHandler);
+            aria2c.ResourceProcessReceives += new(Aria2cProcess_EventHandler);
+            sevenZip.ResourceProcessReceives += new(SevenZipProcess_EventHandler);
+            transmission.ResourceProcessReceives += new(TransmissionProcess_EventHandler);
         }
 
         public void Dispose()
@@ -79,7 +79,7 @@ namespace R5_Reloaded_Installer_Library.Get
                 case ".torrent":
                     return TorrentDownload(address, name, path, appType);
                 default:
-                    throw new Exception("The specified address cannot be downloaded with.");
+                    throw new("The specified address cannot be downloaded with.");
             }
         }
 
@@ -108,7 +108,7 @@ namespace R5_Reloaded_Installer_Library.Get
                     filedirPath = HttpClientDownload(address, name, path);
                     break;
                 default:
-                    throw new Exception("Specify \"Aria2c\" or \"HttpClient\" for the app type.");
+                    throw new("Specify \"Aria2c\" or \"HttpClient\" for the app type.");
             }
             var dirPath = SevenZip(filedirPath, name, path);
             DirectoryFix(dirPath);
@@ -128,7 +128,7 @@ namespace R5_Reloaded_Installer_Library.Get
                     torrentdirPath = Transmission(address, name, path);
                     break;
                 default:
-                    throw new Exception("Specify \"Aria2c\" or \"Transmission\" for the app type.");
+                    throw new("Specify \"Aria2c\" or \"Transmission\" for the app type.");
             }
             DirectoryFix(torrentdirPath);
             return torrentdirPath;
@@ -178,8 +178,8 @@ namespace R5_Reloaded_Installer_Library.Get
             var resurtPath = Path.Combine(dirPath, dirName);
             var filePath = Path.Combine(resurtPath, fileName);
             DirectoryExpansion.CreateOverwrite(resurtPath);
-            httpClient = new HttpClientProgress(address, filePath);
-            httpClient.ProgressChanged += new ProgressChangedHandler(HttpClientProcess_EventHandler);
+            httpClient = new(address, filePath);
+            httpClient.ProgressChanged += new(HttpClientProcess_EventHandler);
             httpClient.StartDownload().Wait();
             return filePath;
         }
