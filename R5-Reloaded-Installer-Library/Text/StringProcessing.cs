@@ -15,7 +15,7 @@ namespace R5_Reloaded_Installer_Library.Text
             var count = 0;
             var text = new string[] { "Byte", "KB", "MB", "GB", "TB" };
             while (data >= 1024f) { data /= 1024f; count++; }
-            return data.ToString(".000").PadLeft(8) + " " + text[count];
+            return data.ToString(".000").PadLeft(7) + " " + text[count];
         }
     }
 }
