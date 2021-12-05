@@ -52,6 +52,10 @@ namespace R5_Reloaded_Installer_Library.Get
             {
                 case ".zip":
                 case ".7z":
+                    var filePath = Aria2c(address, name, path);
+                    var dirPath = SevenZip(filePath);
+                    DirectoryFix(dirPath);
+                    Console.WriteLine(dirPath);
                     break;
                 case ".torrent":
                     break;
@@ -60,12 +64,11 @@ namespace R5_Reloaded_Installer_Library.Get
 
         private string Aria2c(string address, string? name = null, string? path = null)
         {
-            //var dirPath = path ?? SaveingDirectoryPath;
-            //var fileName = name ?? Path.GetFileName(address);
-            //var argument = " --dir=\"" + dirPath + "\" --out=\"" + fileName + "\" --seed-time=0 --allow-overwrite=true";
-            //aria2c.Run(address + argument, WorkingDirectoryPath);
-            //return Path.Combine(dirPath, fileName);
-            return "";
+            var dirPath = path ?? SaveingDirectoryPath;
+            var fileName = name ?? Path.GetFileName(address);
+            var argument = " --dir=\"" + dirPath + "\" --out=\"" + fileName + "\" --seed-time=0 --allow-overwrite=true";
+            aria2c.Run(address + argument, dirPath);
+            return Path.Combine(dirPath, fileName);
         }
 
         private string Transmission(string address, string? path = null)
@@ -77,13 +80,16 @@ namespace R5_Reloaded_Installer_Library.Get
             return "";
         }
 
-        private string SevenZip(string address, string? path = null)
+        private string SevenZip(string address, string? name = null, string? path = null)
         {
-            //var dirPath = path ?? SaveingDirectoryPath;
-            //var argument = "-y x " + address;
-            //sevenZip.Run(argument, dirPath);
-            //return Path.Combine(dirPath, Path.GetFileNameWithoutExtension(address));
-            return "";
+            var dirPath = path ?? SaveingDirectoryPath;
+            var dirName = name ?? Path.GetFileName(address).Replace(Path.GetExtension(address), string.Empty);
+            var resurtPath = Path.Combine(dirPath, dirName);
+            var argument = "x -y \"" + address + "\" -o\"" + resurtPath + "\"";
+            DirectoryExpansion.CreateOverwrite(resurtPath);
+            sevenZip.Run(argument, resurtPath);
+            File.Delete(address);
+            return resurtPath;
         }
 
         private void DirectoryFix(string sourceDirName)
