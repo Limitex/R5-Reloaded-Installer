@@ -75,38 +75,9 @@ namespace R5_Reloaded_Installer_Library.Get
             {
                 case ".zip":
                 case ".7z":
-                    string filedirPath;
-                    switch (appType)
-                    {
-                        case ApplicationType.Aria2c:
-                        case null:
-                            filedirPath = Aria2c(address, name, path);
-                            break;
-                        case ApplicationType.HttpClient:
-                            filedirPath = HttpClientDownload(address, name, path);
-                            break;
-                        default:
-                            throw new Exception("Specify \"Aria2c\" or \"HttpClient\" for the app type.");
-                    }
-                    var dirPath = SevenZip(filedirPath, name, path);
-                    DirectoryFix(dirPath);
-                    return dirPath;
+                    return NormalDownload(address, name, path, appType);
                 case ".torrent":
-                    string torrentdirPath;
-                    switch (appType) 
-                    {
-                        case ApplicationType.Aria2c:
-                        case null:
-                            torrentdirPath = Aria2c(address, name, path);
-                            break;
-                        case ApplicationType.Transmission:
-                            torrentdirPath = Transmission(address, name, path);
-                            break;
-                        default:
-                            throw new Exception("Specify \"Aria2c\" or \"Transmission\" for the app type.");
-                    }
-                    DirectoryFix(torrentdirPath);
-                    return torrentdirPath;
+                    return TorrentDownload(address, name, path, appType);
                 default:
                     throw new Exception("The specified address cannot be downloaded with.");
             }
@@ -122,6 +93,45 @@ namespace R5_Reloaded_Installer_Library.Get
                 Directory.Delete(sourceDirName);
                 Directory.Move(sourceDirName + "_buffer", sourceDirName);
             }
+        }
+
+        private string NormalDownload(string address, string? name = null, string? path = null, ApplicationType? appType = null)
+        {
+            string filedirPath;
+            switch (appType)
+            {
+                case ApplicationType.Aria2c:
+                case null:
+                    filedirPath = Aria2c(address, name, path);
+                    break;
+                case ApplicationType.HttpClient:
+                    filedirPath = HttpClientDownload(address, name, path);
+                    break;
+                default:
+                    throw new Exception("Specify \"Aria2c\" or \"HttpClient\" for the app type.");
+            }
+            var dirPath = SevenZip(filedirPath, name, path);
+            DirectoryFix(dirPath);
+            return dirPath;
+        }
+
+        private string TorrentDownload(string address, string? name = null, string? path = null, ApplicationType? appType = null)
+        {
+            string torrentdirPath;
+            switch (appType)
+            {
+                case ApplicationType.Aria2c:
+                case null:
+                    torrentdirPath = Aria2c(address, name, path);
+                    break;
+                case ApplicationType.Transmission:
+                    torrentdirPath = Transmission(address, name, path);
+                    break;
+                default:
+                    throw new Exception("Specify \"Aria2c\" or \"Transmission\" for the app type.");
+            }
+            DirectoryFix(torrentdirPath);
+            return torrentdirPath;
         }
 
         private string Aria2c(string address, string? name = null, string? path = null)
@@ -160,7 +170,7 @@ namespace R5_Reloaded_Installer_Library.Get
             return resurtPath;
         }
 
-        public string HttpClientDownload(string address, string? name = null, string? path = null)
+        private string HttpClientDownload(string address, string? name = null, string? path = null)
         {
             var fileName = name == null ? Path.GetFileName(address) : name + Path.GetExtension(address);
             var dirPath = path ?? SaveingDirectoryPath;
