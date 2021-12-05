@@ -247,8 +247,8 @@ namespace R5_Reloaded_Installer_Library.Get
             if (ProcessReceives == null) return;
             var downloadedByteSize = StringProcessing.ByteToStringWithUnits(totalBytesDownloaded);
             var totalByteSize = StringProcessing.ByteToStringWithUnits(totalFileSize ?? 0);
-
-            ProcessReceives(ApplicationType.HttpClient, $"{progressPercentage ?? 0}% ({downloadedByteSize}/{totalByteSize})");
+            var progressPercent = ((int?)progressPercentage ?? 0).ToString().PadLeft(3);
+            ProcessReceives(ApplicationType.HttpClient, $"{downloadedByteSize} / {totalByteSize} ({progressPercent}%)");
         }
     }
 }
