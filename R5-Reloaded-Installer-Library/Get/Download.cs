@@ -69,7 +69,7 @@ namespace R5_Reloaded_Installer_Library.Get
                             torrentdirPath = Transmission(address, name, path);
                             break;
                         default:
-                            throw new Exception("Specify 0 or 1 for the app type.");
+                            throw new Exception("Specify \"aria2c\" or \"transmission\" for the app type.");
                     }
                     DirectoryFix(torrentdirPath);
                     return torrentdirPath;
