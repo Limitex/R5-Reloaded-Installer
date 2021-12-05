@@ -77,6 +77,7 @@ using (var download = new Download(DirectionPath))
     Directory.Move(scriptsR5DirPath, Path.Combine(apexClientDirPath, ScriptsDirectoryPath));
     DirectoryExpansion.MoveOverwrite(Path.Combine(worldsEdgeAfterDarkDirPath, WorldsEdgeAfterDarkPath), apexClientDirPath);
     DirectoryExpansion.DirectoryDelete(worldsEdgeAfterDarkDirPath);
+    download.DirectoryFix(DirectionPath);
     ConsoleExpansion.LogWrite("Done.");
 }
 ConsoleExpansion.Exit();
