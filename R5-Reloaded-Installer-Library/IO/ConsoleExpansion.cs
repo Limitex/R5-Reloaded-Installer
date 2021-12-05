@@ -40,11 +40,11 @@ namespace R5_Reloaded_Installer_Library.IO
             ColorEscape["Magenta"] + " ]" +
             ColorEscape["Default"] + " : " + value;
 
-        public static void LogWrite(string value) => Console.WriteLine(LogInfo("Info", "Green", value));
-        public static void LogNotes(string value) => Console.WriteLine(LogInfo("Notes", "Yellow", value));
-        public static void LogError(string value) => Console.WriteLine(LogInfo("Error", "Red", value));
-        public static void LogDebug(string value) => Console.WriteLine(LogInfo("Debug", "Blue", value));
-        public static void LogInput(string value) => Console.Write(LogInfo("Input", "Cyan", value));
+        public static void LogWrite(string value) => Console.Write('\n' + LogInfo("Info", "Green", value));
+        public static void LogNotes(string value) => Console.Write('\n' + LogInfo("Notes", "Yellow", value));
+        public static void LogError(string value) => Console.Write('\n' + LogInfo("Error", "Red", value));
+        public static void LogDebug(string value) => Console.Write('\n' + LogInfo("Debug", "Blue", value));
+        public static void LogInput(string value) => Console.Write('\n' + LogInfo("Input", "Cyan", value));
 
         public static bool ConsentInput(string? CanselMassage = null)
         {
@@ -55,7 +55,6 @@ namespace R5_Reloaded_Installer_Library.IO
                 ConsoleKey key;
                 do key = Console.ReadKey().Key;
                 while (key == ConsoleKey.Escape);
-                Console.WriteLine();
                 switch (key)
                 {
                     case ConsoleKey.Y:
@@ -87,7 +86,7 @@ namespace R5_Reloaded_Installer_Library.IO
                 outString += ' ' + text + ' ';
                 for (int i = 0; i <= size; i++) outString += c;
             }
-            Console.Write('\n' + outString + '\n');
+            Console.Write('\n' + outString);
         }
 
         public static void DisableEasyEditMode()
