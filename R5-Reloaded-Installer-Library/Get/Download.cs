@@ -33,6 +33,7 @@ namespace R5_Reloaded_Installer_Library.Get
         private ResourceProcess aria2c;
         private ResourceProcess sevenZip;
         private ResourceProcess transmission;
+
         private HttpClientProgress? httpClient = null;
 
         public Download(string saveingDirectoryPath)
@@ -249,6 +250,7 @@ namespace R5_Reloaded_Installer_Library.Get
             var totalByteSize = StringProcessing.ByteToStringWithUnits(totalFileSize ?? 0);
             var progressPercent = ((int?)progressPercentage ?? 0).ToString().PadLeft(3);
             ProcessReceives(ApplicationType.HttpClient, $"{downloadedByteSize} / {totalByteSize} ({progressPercent}%)");
+            Thread.Sleep(100);
         }
     }
 }
