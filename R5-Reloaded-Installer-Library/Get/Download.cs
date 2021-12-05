@@ -11,7 +11,14 @@ using System.Threading.Tasks;
 
 namespace R5_Reloaded_Installer_Library.Get
 {
-    public delegate void ProcessEventHandler(string outLine);
+    public enum ApplicationType
+    {
+        Aria2c,
+        Transmission,
+        SevenZip
+    }
+
+    public delegate void ProcessEventHandler(ApplicationType appType, string outLine);
 
     public class Download : IDisposable
     {
@@ -46,7 +53,7 @@ namespace R5_Reloaded_Installer_Library.Get
             DirectoryExpansion.DirectoryDelete(WorkingDirectoryPath);
         }
 
-        public string Run(string address, string? name = null, string? path = null, string? appType = null)
+        public string Run(string address, string? name = null, string? path = null, ApplicationType? appType = null)
         {
             switch (Path.GetExtension(address).ToLower())
             {
@@ -61,11 +68,11 @@ namespace R5_Reloaded_Installer_Library.Get
                     string torrentdirPath;
                     switch (appType) 
                     {
-                        case "aria2c":
+                        case ApplicationType.Aria2c:
                         case null:
                             torrentdirPath = Aria2c(address, name, path);
                             break;
-                        case "transmission":
+                        case ApplicationType.Transmission:
                             torrentdirPath = Transmission(address, name, path);
                             break;
                         default:
@@ -138,18 +145,18 @@ namespace R5_Reloaded_Installer_Library.Get
             {
                 var nakedLine = Regex.Replace(rawLine, @"((#.{6}( ))|\[|\])", "");
                 if (rawLine.Contains("FileAlloc"))
-                    ProcessReceives(nakedLine.Substring(nakedLine.IndexOf("FileAlloc")));
+                    ProcessReceives(ApplicationType.Aria2c ,nakedLine.Substring(nakedLine.IndexOf("FileAlloc")));
                 else
-                    ProcessReceives(nakedLine);
+                    ProcessReceives(ApplicationType.Aria2c, nakedLine);
             }
             else if (rawLine[0] == '(')
             {
-                ProcessReceives(rawLine);
+                ProcessReceives(ApplicationType.Aria2c, rawLine);
             }
             else if (rawLine.Contains("NOTICE"))
             {
                 var nakedLine = Regex.Replace(rawLine, @"([0-9]{2}/[0-9]{2})( )([0-9]{2}:[0-9]{2}:[0-9]{2})( )", string.Empty);
-                ProcessReceives(nakedLine);
+                ProcessReceives(ApplicationType.Aria2c, nakedLine);
             }
         }
 
@@ -159,7 +166,7 @@ namespace R5_Reloaded_Installer_Library.Get
             if (string.IsNullOrEmpty(outLine.Data)) return;
             var rawLine = FormattingLine(outLine.Data);
 
-            ProcessReceives(rawLine);
+            ProcessReceives(ApplicationType.SevenZip, rawLine);
         }
 
         private void TransmissionProcess_EventHandler(object sender, DataReceivedEventArgs outLine)
@@ -179,7 +186,7 @@ namespace R5_Reloaded_Installer_Library.Get
             var dirName = Path.GetFileNameWithoutExtension(Regex.Match(((string[])sender)[0], "http.*?(?=( ))").ToString());
             if (!Regex.Match(nakedLine, dirName + ":").Success)
             {
-                ProcessReceives(Regex.Replace(nakedLine, @", ul to 0 \(0 kB/s\) \[(0\.00|None)\]", string.Empty));
+                ProcessReceives(ApplicationType.Transmission, Regex.Replace(nakedLine, @", ul to 0 \(0 kB/s\) \[(0\.00|None)\]", string.Empty));
                 Thread.Sleep(200);
             }
         }
