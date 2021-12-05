@@ -104,7 +104,7 @@ using (var download = new Download(DirectionPath))
     ConsoleExpansion.WriteWidth('=', "Downloading scripts r5");
     var scriptsR5DirPath = download.Run(WebGetLink.ScriptsR5(), "scriptsR5", appType: fileAppType);
     ConsoleExpansion.WriteWidth('=', "Downloading Apex Client Season 3");
-    var apexClientDirPath = download.Run(WebGetLink.ApexClient(), FinalDirectoryName, appType: torrentAppType);
+    var apexClientDirPath = download.Run(WebGetLink.ApexClient(), "ApexClient", appType: torrentAppType);
     ConsoleExpansion.WriteWidth('=');
     ConsoleExpansion.LogWrite("Creating the R5-Reloaded");
     DirectoryExpansion.MoveOverwrite(detoursR5DirPath, apexClientDirPath);
