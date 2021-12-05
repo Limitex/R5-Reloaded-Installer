@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using IWshRuntimeLibrary;
 using System.Runtime.Versioning;
 
-namespace R5_Reloaded_Installer_Library
+namespace R5_Reloaded_Installer_Library.IO
 {
     public static class FileExpansion
     {
