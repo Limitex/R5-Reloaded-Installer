@@ -46,12 +46,13 @@ namespace R5_Reloaded_Installer_Library.Get
             DirectoryExpansion.DirectoryDelete(WorkingDirectoryPath);
         }
 
-        public string Run(string address, string? name = null, string? path = null, int? appType = null)
+        public string Run(string address, string? name = null, string? path = null, string? appType = null)
         {
             switch (Path.GetExtension(address).ToLower())
             {
                 case ".zip":
                 case ".7z":
+                    if(appType != null) throw new Exception("The app type can only be specified for torrents.");
                     var filePath = Aria2c(address, name, path);
                     var dirPath = SevenZip(filePath, name, path);
                     DirectoryFix(dirPath);
@@ -60,11 +61,11 @@ namespace R5_Reloaded_Installer_Library.Get
                     string torrentdirPath;
                     switch (appType) 
                     {
-                        case 0:
+                        case "aria2c":
                         case null:
                             torrentdirPath = Aria2c(address, name, path);
                             break;
-                        case 1:
+                        case "transmission":
                             torrentdirPath = Transmission(address, name, path);
                             break;
                         default:
@@ -79,14 +80,15 @@ namespace R5_Reloaded_Installer_Library.Get
 
         private string Aria2c(string address, string? name = null, string? path = null)
         {
-            var fileName = name == null ? Path.GetFileName(address) : name + Path.GetExtension(address);
+            var extension = Path.GetExtension(address);
+            var fileName = name == null ? Path.GetFileName(address) : name + extension;
             var dirPath = path ?? SaveingDirectoryPath;
             var dirName = Path.GetFileNameWithoutExtension(fileName);
             var resurtPath = Path.Combine(dirPath, dirName);
             var argument = " --dir=\"" + resurtPath + "\" --out=\"" + fileName + "\" --seed-time=0 --allow-overwrite=true --follow-torrent=mem";
             DirectoryExpansion.CreateOverwrite(resurtPath);
             aria2c.Run(address + argument, resurtPath);
-            return resurtPath;
+            return extension != ".torrent" ? Path.Combine(resurtPath, fileName) : resurtPath;
         }
 
         private string Transmission(string address, string? name = null, string? path = null)
@@ -103,10 +105,10 @@ namespace R5_Reloaded_Installer_Library.Get
         private string SevenZip(string address, string? name = null, string? path = null)
         {
             var dirPath = path ?? SaveingDirectoryPath;
-            var dirName = name ?? Path.GetFileName(address).Replace(Path.GetExtension(address), string.Empty);
+            var dirName = name ?? Path.GetFileNameWithoutExtension(address);
             var resurtPath = Path.Combine(dirPath, dirName);
             var argument = "x -y \"" + address + "\" -o\"" + resurtPath + "\"";
-            DirectoryExpansion.CreateOverwrite(resurtPath);
+            DirectoryExpansion.CreateIfNotFound(resurtPath);
             sevenZip.Run(argument, resurtPath);
             File.Delete(address);
             return resurtPath;
