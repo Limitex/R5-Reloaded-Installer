@@ -102,6 +102,7 @@ namespace R5_Reloaded_Installer_Library.IO
 
         public static void Exit()
         {
+            Console.WriteLine();
             Console.WriteLine("Press the key to exit.");
             Console.ReadKey();
             Environment.Exit(0x8020);
