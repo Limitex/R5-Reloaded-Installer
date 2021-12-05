@@ -11,9 +11,7 @@ if (DirectionPath == null) throw new Exception();
 
 using (var download = new Download(DirectionPath))
 {
-    download.ProcessReceives += (appType, outline) => {
-        ConsoleExpansion.LogWrite("[" + appType + "] : " + outline);
-    };
+    download.ProcessReceives += (appType, outline) => ConsoleExpansion.LogWrite("[ " + appType + " ] : " + outline);
     var worldsEdgeAfterDarkDirPath = download.Run(WebGetLink.WorldsEdgeAfterDark(), "WorldsEdgeAfterDark");
     var detoursR5DirPath = download.Run(WebGetLink.DetoursR5(), "detoursR5");
     var scriptsR5DirPath = download.Run(WebGetLink.ScriptsR5(), "scriptsR5");
