@@ -4,10 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+/// <summary>
+/// Source of "https://stackoverflow.com/questions/20661652/progress-bar-with-httpclient"
+/// </summary>
 namespace R5_Reloaded_Installer_Library.Other
 {
     public delegate void ProgressChangedHandler(long? totalFileSize, long totalBytesDownloaded, double? progressPercentage);
 
+    /// <summary>
+    /// A class to execute HttpClient with progress.
+    /// </summary>
     public class HttpClientProgress : IDisposable
     {
         public event ProgressChangedHandler? ProgressChanged;
