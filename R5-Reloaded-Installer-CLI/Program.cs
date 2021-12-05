@@ -81,7 +81,7 @@ if (!ConsoleExpansion.ConsentInput()) ConsoleExpansion.Exit();
 ConsoleExpansion.LogWrite("Preparing...");
 using (var download = new Download(DirectionPath))
 {
-    download.ProcessReceives += (appType, outline) => ConsoleExpansion.LogWrite("[ " + appType + " ] : " + outline);
+    download.ProcessReceives += (appType, outline) => ConsoleExpansion.LogWrite("(" + appType + ") >> " + outline);
     ConsoleExpansion.LogWrite("The download will start.");
     ConsoleExpansion.WriteWidth('=', "Downloading Worlds edge after dark");
     var worldsEdgeAfterDarkDirPath = download.Run(WebGetLink.WorldsEdgeAfterDark(), "WorldsEdgeAfterDark");
@@ -89,7 +89,7 @@ using (var download = new Download(DirectionPath))
     var detoursR5DirPath = download.Run(WebGetLink.DetoursR5(), "detoursR5");
     ConsoleExpansion.WriteWidth('=', "Downloading scripts r5");
     var scriptsR5DirPath = download.Run(WebGetLink.ScriptsR5(), "scriptsR5");
-    ConsoleExpansion.WriteWidth('=', "Downloading Apex Client Season3");
+    ConsoleExpansion.WriteWidth('=', "Downloading Apex Client Season 3");
     var apexClientDirPath = download.Run(WebGetLink.ApexClient(), FinalDirectoryName, appType: applicationType);
     ConsoleExpansion.WriteWidth('=');
     ConsoleExpansion.LogWrite("Creating the R5-Reloaded");
