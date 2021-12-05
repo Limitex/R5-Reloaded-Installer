@@ -25,5 +25,8 @@ namespace R5_Reloaded_Installer_Library.IO
             Marshal.FinalReleaseComObject(shortcut);
             Marshal.FinalReleaseComObject(shell);
         }
+
+        public static long GetDriveFreeSpace(string path) =>
+            new DriveInfo(Path.GetPathRoot(path) ?? string.Empty).AvailableFreeSpace;
     }
 }
