@@ -46,7 +46,7 @@ namespace R5_Reloaded_Installer_Library.Get
             DirectoryExpansion.DirectoryDelete(WorkingDirectoryPath);
         }
 
-        public void Run(string address, string? name = null, string? path = null)
+        public void Run(string address, string? name = null, string? path = null, int? appType = null)
         {
             switch (Path.GetExtension(address).ToLower())
             {
@@ -58,8 +58,24 @@ namespace R5_Reloaded_Installer_Library.Get
                     Console.WriteLine(dirPath);
                     break;
                 case ".torrent":
-
+                    string? dir = null;
+                    switch (appType) 
+                    {
+                        case 0:
+                        case null:
+                            dir = Aria2c(address, name, path);
+                            break;
+                        case 1:
+                            dir = Transmission(address, name, path);
+                            break;
+                        default:
+                            throw new Exception("Specify 0 or 1 for the app type.");
+                    }
+                    DirectoryFix(dir);
+                    Console.WriteLine(dir);
                     break;
+                default:
+                    throw new Exception("The specified address cannot be downloaded with.");
             }
         }
 
@@ -67,18 +83,23 @@ namespace R5_Reloaded_Installer_Library.Get
         {
             var dirPath = path ?? SaveingDirectoryPath;
             var fileName = name == null ? Path.GetFileName(address) : name + Path.GetExtension(address);
-            var argument = " --dir=\"" + dirPath + "\" --out=\"" + fileName + "\" --seed-time=0 --allow-overwrite=true";
+            var dirName = Path.GetFileNameWithoutExtension(fileName);
+            var resurtPath = Path.Combine(dirPath, dirName);
+            var argument = " --dir=\"" + resurtPath + "\" --out=\"" + fileName + "\" --seed-time=0 --allow-overwrite=true --follow-torrent=mem";
+            DirectoryExpansion.CreateOverwrite(resurtPath);
             aria2c.Run(address + argument, dirPath);
-            return Path.Combine(dirPath, fileName);
+            return resurtPath;
         }
 
         private string Transmission(string address, string? name = null, string? path = null)
         {
-            //var dirPath = path ?? SaveingDirectoryPath;
-            //var argument = " --download-dir \"" + dirPath + "\" --config-dir \"" + WorkingDirectoryPath + "\" -u 0";
-            //transmission.Run(address + argument, dirPath);
-            //return Path.Combine(dirPath, Path.GetFileNameWithoutExtension(address));
-            return "";
+            var dirPath = path ?? SaveingDirectoryPath;
+            var dirName = name ?? Path.GetFileNameWithoutExtension(address);
+            var resurtPath = Path.Combine(dirPath, dirName);
+            var argument = " --download-dir \"" + resurtPath + "\" --config-dir \"" + WorkingDirectoryPath + "\" -u 0";
+            DirectoryExpansion.CreateOverwrite(resurtPath);
+            transmission.Run(address + argument, dirPath);
+            return resurtPath;
         }
 
         private string SevenZip(string address, string? name = null, string? path = null)
