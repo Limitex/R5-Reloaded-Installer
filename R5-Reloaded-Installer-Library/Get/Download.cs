@@ -165,7 +165,7 @@ namespace R5_Reloaded_Installer_Library.Get
             }
             else if (rawLine.Contains("NOTICE"))
             {
-                var nakedLine = Regex.Replace(rawLine, @"([0-9]{2}/[0-9]{2})( )([0-9]{2}:[0-9]{2}:[0-9]{2})( )", string.Empty);
+                var nakedLine = Regex.Replace(rawLine, @"([0-9]{2}/[0-9]{2})( )([0-9]{2}:[0-9]{2}:[0-9]{2})( )\[NOTICE\]( )", string.Empty);
                 ProcessReceives(ApplicationType.Aria2c, nakedLine);
             }
         }
