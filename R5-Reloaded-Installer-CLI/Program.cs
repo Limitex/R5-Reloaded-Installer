@@ -95,7 +95,7 @@ if (!ConsoleExpansion.ConsentInput()) ConsoleExpansion.Exit();
 ConsoleExpansion.LogWrite("Preparing...");
 using (var download = new Download(DirectionPath))
 {
-    download.ProcessReceives += (appType, outline) => ConsoleExpansion.LogWrite("(" + appType + ") >> " + outline);
+    download.ProcessReceives += (appType, outline) => ConsoleExpansion.LogWrite("(" + appType + ") " + outline);
     ConsoleExpansion.LogWrite("The download will start.");
     ConsoleExpansion.WriteWidth('=', "Downloading Worlds edge after dark");
     var worldsEdgeAfterDarkDirPath = download.Run(WebGetLink.WorldsEdgeAfterDark(), "WorldsEdgeAfterDark", appType: fileAppType);

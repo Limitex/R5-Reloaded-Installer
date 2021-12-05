@@ -37,8 +37,8 @@ namespace R5_Reloaded_Installer_Library.IO
             ColorEscape["White"] +
                 DateTime.Now.ToString("yyyy/MM/dd") + " " +
                 DateTime.Now.ToString("HH:mm:ss") +
-            ColorEscape["Magenta"] + " ]" +
-            ColorEscape["Default"] + " : " + value;
+            ColorEscape["Magenta"] + " ] " +
+            ColorEscape["Default"] + value;
 
         public static void LogWrite(string value) => Console.Write('\n' + LogInfo("Info", "Green", value));
         public static void LogNotes(string value) => Console.Write('\n' + LogInfo("Notes", "Yellow", value));
