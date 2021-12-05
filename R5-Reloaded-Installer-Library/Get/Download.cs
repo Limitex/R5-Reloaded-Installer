@@ -1,5 +1,7 @@
 ﻿using R5_Reloaded_Installer_Library.External;
 using R5_Reloaded_Installer_Library.IO;
+using R5_Reloaded_Installer_Library.Other;
+using R5_Reloaded_Installer_Library.Text;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -15,7 +17,8 @@ namespace R5_Reloaded_Installer_Library.Get
     {
         Aria2c,
         Transmission,
-        SevenZip
+        SevenZip,
+        HttpClient
     }
 
     public delegate void ProcessEventHandler(ApplicationType appType, string outLine);
@@ -30,6 +33,7 @@ namespace R5_Reloaded_Installer_Library.Get
         private ResourceProcess aria2c;
         private ResourceProcess sevenZip;
         private ResourceProcess transmission;
+        private HttpClientProgress? httpClient = null;
 
         public Download(string saveingDirectoryPath)
         {
@@ -50,6 +54,7 @@ namespace R5_Reloaded_Installer_Library.Get
             aria2c.Dispose();
             sevenZip.Dispose();
             transmission.Dispose();
+            httpClient?.Dispose();
             DirectoryExpansion.DirectoryDelete(WorkingDirectoryPath);
         }
 
@@ -61,6 +66,7 @@ namespace R5_Reloaded_Installer_Library.Get
             sevenZip.Dispose();
             transmission.Kill();
             transmission.Dispose();
+            httpClient?.Dispose();
         }
 
         public string Run(string address, string? name = null, string? path = null, ApplicationType? appType = null)
@@ -69,9 +75,20 @@ namespace R5_Reloaded_Installer_Library.Get
             {
                 case ".zip":
                 case ".7z":
-                    if(appType != null) throw new Exception("The app type can only be specified for torrents.");
-                    var filePath = Aria2c(address, name, path);
-                    var dirPath = SevenZip(filePath, name, path);
+                    string filedirPath;
+                    switch (appType)
+                    {
+                        case ApplicationType.Aria2c:
+                        case null:
+                            filedirPath = Aria2c(address, name, path);
+                            break;
+                        case ApplicationType.HttpClient:
+                            filedirPath = HttpClientDownload(address, name, path);
+                            break;
+                        default:
+                            throw new Exception("Specify \"Aria2c\" or \"HttpClient\" for the app type.");
+                    }
+                    var dirPath = SevenZip(filedirPath, name, path);
                     DirectoryFix(dirPath);
                     return dirPath;
                 case ".torrent":
@@ -143,6 +160,20 @@ namespace R5_Reloaded_Installer_Library.Get
             return resurtPath;
         }
 
+        public string HttpClientDownload(string address, string? name = null, string? path = null)
+        {
+            var fileName = name == null ? Path.GetFileName(address) : name + Path.GetExtension(address);
+            var dirPath = path ?? SaveingDirectoryPath;
+            var dirName = Path.GetFileNameWithoutExtension(fileName);
+            var resurtPath = Path.Combine(dirPath, dirName);
+            var filePath = Path.Combine(resurtPath, fileName);
+            DirectoryExpansion.CreateOverwrite(resurtPath);
+            httpClient = new HttpClientProgress(address, filePath);
+            httpClient.ProgressChanged += new ProgressChangedHandler(HttpClientProcess_EventHandler);
+            httpClient.StartDownload().Wait();
+            return filePath;
+        }
+
         private string FormattingLine(string str) => Regex.Replace(str, @"(\r|\n|(  )|\t|\x1b\[.*?m)", string.Empty);
 
         private void Aria2cProcess_EventHandler(object sender, DataReceivedEventArgs outLine)
@@ -199,6 +230,15 @@ namespace R5_Reloaded_Installer_Library.Get
                 ProcessReceives(ApplicationType.Transmission, Regex.Replace(nakedLine, @", ul to 0 \(0 kB/s\) \[(0\.00|None)\]", string.Empty));
                 Thread.Sleep(200);
             }
+        }
+
+        private void HttpClientProcess_EventHandler(long? totalFileSize, long totalBytesDownloaded, double? progressPercentage)
+        {
+            if (ProcessReceives == null) return;
+            var downloadedByteSize = StringProcessing.ByteToStringWithUnits(totalBytesDownloaded);
+            var totalByteSize = StringProcessing.ByteToStringWithUnits(totalFileSize ?? 0);
+
+            ProcessReceives(ApplicationType.HttpClient, $"{progressPercentage ?? 0}% ({downloadedByteSize}/{totalByteSize})");
         }
     }
 }
