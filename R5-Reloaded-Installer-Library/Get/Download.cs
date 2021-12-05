@@ -95,6 +95,18 @@ namespace R5_Reloaded_Installer_Library.Get
             }
         }
 
+        public void DirectoryFix(string sourceDirName)
+        {
+            var files = Directory.GetFiles(sourceDirName);
+            var dirs = Directory.GetDirectories(sourceDirName);
+            if (files.Length == 0 && dirs.Length == 1)
+            {
+                Directory.Move(dirs[0], sourceDirName + "_buffer");
+                Directory.Delete(sourceDirName);
+                Directory.Move(sourceDirName + "_buffer", sourceDirName);
+            }
+        }
+
         private string Aria2c(string address, string? name = null, string? path = null)
         {
             var extension = Path.GetExtension(address);
@@ -129,18 +141,6 @@ namespace R5_Reloaded_Installer_Library.Get
             sevenZip.Run(argument, resurtPath);
             File.Delete(address);
             return resurtPath;
-        }
-
-        private void DirectoryFix(string sourceDirName)
-        {
-            var files = Directory.GetFiles(sourceDirName);
-            var dirs = Directory.GetDirectories(sourceDirName);
-            if (files.Length == 0 && dirs.Length == 1)
-            {
-                Directory.Move(dirs[0], sourceDirName + "_buffer");
-                Directory.Delete(sourceDirName);
-                Directory.Move(sourceDirName + "_buffer", sourceDirName);
-            }
         }
 
         private string FormattingLine(string str) => Regex.Replace(str, @"(\r|\n|(  )|\t|\x1b\[.*?m)", string.Empty);
