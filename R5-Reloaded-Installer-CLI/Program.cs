@@ -80,4 +80,3 @@ using (var download = new Download(DirectionPath))
     ConsoleExpansion.LogWrite("Done.");
 }
 ConsoleExpansion.Exit();
-
