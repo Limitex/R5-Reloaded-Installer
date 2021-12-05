@@ -12,6 +12,7 @@ var DirectionPath = Path.GetDirectoryName(Environment.ProcessPath);
 var AllAboutByteSize = 42f * 1024f * 1024f * 1024f;
 
 if (DirectionPath == null) throw new Exception();
+DirectionPath = Path.Combine(DirectionPath, FinalDirectoryName);
 
 ConsoleExpansion.DisableEasyEditMode();
 Console.WriteLine("\n" +
