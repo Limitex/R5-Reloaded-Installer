@@ -53,6 +53,16 @@ namespace R5_Reloaded_Installer_Library.Get
             DirectoryExpansion.DirectoryDelete(WorkingDirectoryPath);
         }
 
+        public void Kill()
+        {
+            aria2c.Kill();
+            aria2c.Dispose();
+            sevenZip.Kill();
+            sevenZip.Dispose();
+            transmission.Kill();
+            transmission.Dispose();
+        }
+
         public string Run(string address, string? name = null, string? path = null, ApplicationType? appType = null)
         {
             switch (Path.GetExtension(address).ToLower())
@@ -76,7 +86,7 @@ namespace R5_Reloaded_Installer_Library.Get
                             torrentdirPath = Transmission(address, name, path);
                             break;
                         default:
-                            throw new Exception("Specify \"aria2c\" or \"transmission\" for the app type.");
+                            throw new Exception("Specify \"Aria2c\" or \"Transmission\" for the app type.");
                     }
                     DirectoryFix(torrentdirPath);
                     return torrentdirPath;
