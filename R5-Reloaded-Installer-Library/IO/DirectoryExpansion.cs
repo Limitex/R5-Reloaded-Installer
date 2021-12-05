@@ -12,6 +12,11 @@ namespace R5_Reloaded_Installer_Library.IO
             Directory.CreateDirectory(path);
         }
 
+        public static void CreateIfNotFound(string path)
+        {
+            if (!Directory.Exists(path)) Directory.CreateDirectory(path);
+        }
+
         public static void MoveOverwrite(string sourcePath, string destinationPath)
         {
             DirectoryCopy(sourcePath, destinationPath);
