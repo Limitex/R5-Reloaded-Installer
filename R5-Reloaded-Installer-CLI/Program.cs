@@ -3,6 +3,8 @@ using R5_Reloaded_Installer_Library.Get;
 using R5_Reloaded_Installer_Library.IO;
 using R5_Reloaded_Installer_Library.Text;
 
+[assembly: System.Runtime.Versioning.SupportedOSPlatform("windows")]
+
 var FinalDirectoryName = "R5-Reloaded";
 var ScriptsDirectoryPath = Path.Combine("platform", "scripts");
 var WorldsEdgeAfterDarkPath = "package";
