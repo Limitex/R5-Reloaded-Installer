@@ -28,7 +28,7 @@ Console.WriteLine("\n" +
     "  https://github.com/Limitex/R5-Reloaded-Installer/releases \n\n" +
     "Welcome!\n");
 
-if (!(InstalledApps.DisplayNameList() ?? new string[0]).Contains("Origin"))
+if (!(InstalledApps.DisplayNameList() ?? Array.Empty<string>()).Contains("Origin"))
 {
     ConsoleExpansion.LogError("\'Origin\' is not installed.");
     ConsoleExpansion.LogError("Do you want to continue?");
@@ -106,6 +106,7 @@ using (var download = new Download(DirectionPath))
     ConsoleExpansion.WriteWidth('=', "Downloading Apex Client Season 3");
     var apexClientDirPath = download.Run(WebGetLink.ApexClient(), "ApexClient", appType: torrentAppType);
     ConsoleExpansion.WriteWidth('=');
+
     ConsoleExpansion.LogWrite("Creating the R5-Reloaded");
     DirectoryExpansion.MoveOverwrite(detoursR5DirPath, apexClientDirPath);
     Directory.Move(scriptsR5DirPath, Path.Combine(apexClientDirPath, ScriptsDirectoryPath));
