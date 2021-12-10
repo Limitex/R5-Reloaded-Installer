@@ -17,6 +17,7 @@ if (DirectionPath == null) throw new Exception();
 DirectionPath = Path.Combine(DirectionPath, FinalDirectoryName);
 
 ConsoleExpansion.DisableEasyEditMode();
+ConsoleExpansion.EnableVirtualTerminalProcessing();
 Console.WriteLine("\n" +
     "  -----------------------------------\n" +
     "  ||                               ||\n" +
