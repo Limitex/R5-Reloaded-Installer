@@ -99,6 +99,16 @@ namespace R5_Reloaded_Installer_Library.IO
             SetConsoleMode(consoleHandle, consoleMode & ~ENABLE_QUICK_EDIT);
         }
 
+        static void EnableVirtualTerminalProcessing()
+        {
+            const int STD_OUTPUT_HANDLE = -11;
+            const uint ENABLE_VIRTUAL_TERMINAL_PROCESSING = 0x0004;
+
+            var consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
+            GetConsoleMode(consoleHandle, out uint consoleMode);
+            SetConsoleMode(consoleHandle, consoleMode | ENABLE_VIRTUAL_TERMINAL_PROCESSING);
+        }
+
         public static void Exit()
         {
             Console.WriteLine();
