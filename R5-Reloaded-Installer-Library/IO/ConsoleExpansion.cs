@@ -1,4 +1,5 @@
-﻿using System;
+﻿using R5_Reloaded_Installer_Library.Text;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,24 +20,24 @@ namespace R5_Reloaded_Installer_Library.IO
 
         private static readonly Hashtable ColorEscape = new()
         {
-            ["Black"] = "\x1b[30m",
-            ["Red"] = "\x1b[31m",
-            ["Green"] = "\x1b[32m",
-            ["Yellow"] = "\x1b[33m",
-            ["Blue"] = "\x1b[34m",
-            ["Magenta"] = "\x1b[35m",
-            ["Cyan"] = "\x1b[36m",
-            ["White"] = "\x1b[37m",
-            ["Default"] = "\x1b[39m",
+            ["Black"] = Escape.Combine(Escape.Sequence.Initialize, Escape.Sequence.Foreground.Black),
+            ["Gray"] = Escape.Combine(Escape.Sequence.Initialize, Escape.Sequence.Foreground.White, Escape.Sequence.Lowlight),
+            ["Red"] = Escape.Combine(Escape.Sequence.Initialize, Escape.Sequence.Foreground.Red),
+            ["Green"] = Escape.Combine(Escape.Sequence.Initialize, Escape.Sequence.Foreground.Green),
+            ["Yellow"] = Escape.Combine(Escape.Sequence.Initialize, Escape.Sequence.Foreground.Yellow),
+            ["Blue"] = Escape.Combine(Escape.Sequence.Initialize, Escape.Sequence.Foreground.Blue),
+            ["Magenta"] = Escape.Combine(Escape.Sequence.Initialize, Escape.Sequence.Foreground.Magenta),
+            ["Cyan"] = Escape.Combine(Escape.Sequence.Initialize, Escape.Sequence.Foreground.Cyan),
+            ["White"] = Escape.Combine(Escape.Sequence.Initialize, Escape.Sequence.Foreground.White),
+            ["Default"] = Escape.Combine(Escape.Sequence.Initialize, Escape.Sequence.Foreground.Default),
         };
 
         private static string LogInfo(string info, string color, string value) =>
             ColorEscape["Magenta"] + "[ " +
             ColorEscape[color] + info.PadRight(InformationMaxWidth) +
             ColorEscape["Magenta"] + " ][ " +
-            ColorEscape["White"] +
-                DateTime.Now.ToString("yyyy/MM/dd") + " " +
-                DateTime.Now.ToString("HH:mm:ss") +
+            ColorEscape["Gray"] + DateTime.Now.ToString("yyyy/MM/dd") + " " +
+            ColorEscape["White"] + DateTime.Now.ToString("HH:mm:ss") +
             ColorEscape["Magenta"] + " ] " +
             ColorEscape["Default"] + value;
 
