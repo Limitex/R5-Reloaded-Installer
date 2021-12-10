@@ -10,6 +10,17 @@ namespace R5_Reloaded_Installer_Library.Text
     {
         public static string Combine(params int[] seq) => "\x1b[" + string.Join(';', seq) + 'm';
 
+        public static string Combine(string type, int red, int green, int blue)
+        {
+            var rgbType = type switch
+            {
+                "foreground" => Sequence.Foreground.Rgb,
+                "background" => Sequence.Background.Rgb,
+                _ => throw new NotImplementedException()
+            };
+            return Combine(Sequence.Initialize, rgbType, Sequence.RgbArg, red, green, blue);
+        }
+
         public static class Sequence
         {
             public const int Initialize = 0;
