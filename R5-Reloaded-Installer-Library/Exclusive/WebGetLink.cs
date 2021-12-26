@@ -13,7 +13,7 @@ namespace R5_Reloaded_Installer_Library.Exclusive
     {
         public static string DetoursR5()
         {
-            foreach (var link in GitHub.GetLatestRelease("Mauler125", "detours_r5"))
+            foreach (var link in GitHub.GetLatestRelease("Mauler125", "r5apexsdk"))
                 if (StringProcessing.GetExtension(link) == "zip")
                     return link;
             throw new("Unable to retrieve the link for detours_r5.");
