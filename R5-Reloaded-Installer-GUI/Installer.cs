@@ -14,6 +14,8 @@ namespace R5_Reloaded_Installer_GUI
         private MainForm mainForm;
         private const float FileSize_GB = 42f;
         public delegate void Delegate();
+        private static readonly string ScriptsDirectoryPath = Path.Combine("platform", "scripts");
+        private static readonly string WorldsEdgeAfterDarkPath = "package";
 
         public Installer(MainForm form)
         {
@@ -131,6 +133,11 @@ namespace R5_Reloaded_Installer_GUI
                         WebGetLink.ScriptsR5(), "scriptsR5", appType: fileAppType);
                     var apexClientDirPath = download.Run(
                         WebGetLink.ApexClient(), "ApexClient", appType: torrentAppType);
+                    DirectoryExpansion.MoveOverwrite(detoursR5DirPath, apexClientDirPath);
+                    Directory.Move(scriptsR5DirPath, Path.Combine(apexClientDirPath, ScriptsDirectoryPath));
+                    DirectoryExpansion.MoveOverwrite(Path.Combine(worldsEdgeAfterDarkDirPath, WorldsEdgeAfterDarkPath), apexClientDirPath);
+                    DirectoryExpansion.DirectoryDelete(worldsEdgeAfterDarkDirPath);
+                    download.DirectoryFix(installPath);
                 }
 
                 mainForm.Invoke(new Delegate(() => {
