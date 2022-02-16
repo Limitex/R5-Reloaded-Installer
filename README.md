@@ -2,11 +2,13 @@
 
 This is the installer for R5 Reloaded.
 
-It is an installer that even installs detours_r5 and scripts_r5 on the game client.
+It is an installer that even installs detours_r5, scripts_r5 and WordsEdgeAfterDark on the game client.
 
-Since the game client is in Torrent format, I use Transmission to download it.
+You can select the software to be used when downloading.
 
-The torrent file is generated when you run it.
+You can choose either Aria2 or Transmission to download the game client. For other downloads, you can select Aria2 or HttpClient.
+
+If you are unable to download the software selected by default, please select another software.
 
 # About Transmission
 Transmisson's original software doesn't officially build cli, so we're using a fork of the wrapper project.
@@ -18,13 +20,23 @@ Visual studio wrapper >> [depler/transmission-vs](https://github.com/depler/tran
 
 Dependent Project >> [Limitex/transmission-vs](https://github.com/Limitex/transmission-vs)
 
+# About Aria2
+
+Aria2 is a download manager that is commonly used in Linux and other applications.
+
+In this software, we are using the Windows CLI version.
+
+# About HttpClient
+
+Use and download HttpClient, which is a C# class library.
+
 # How to use
 
-There is a GUI and CUI in the release.
+There is a GUI and CLI in the release.
 
 The GUI can be installed like a Windows installer.
 
-CUI runs CLI-based and produces only R5R.
+CLI runs CLI-based and produces only R5R.
 
 1. Download and unzip the Zip file from the [release](https://github.com/Limitex/R5-Reloaded-Installer/releases).
 2. Click R5-Reloaded-Installer.exe to launch it.
