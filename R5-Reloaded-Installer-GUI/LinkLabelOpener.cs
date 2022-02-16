@@ -19,11 +19,7 @@ namespace R5_Reloaded_Installer_GUI
 
         private void _LinkClicked(object sender, LinkLabelLinkClickedEventArgs e, string value)
         {
-            Process.Start(new ProcessStartInfo
-            {
-                UseShellExecute = true,
-                FileName = value,
-            });
+            MainForm.ProcessStart(value);
         }
     }
 }

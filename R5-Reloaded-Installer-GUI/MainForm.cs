@@ -1,3 +1,5 @@
+using System.Diagnostics;
+
 namespace R5_Reloaded_Installer_GUI
 {
     public partial class MainForm : Form
@@ -24,6 +26,15 @@ namespace R5_Reloaded_Installer_GUI
                     e.Cancel = true;
                 }
             }
+        }
+
+        public static void ProcessStart(string fileName)
+        {
+            Process.Start(new ProcessStartInfo
+            {
+                UseShellExecute = true,
+                FileName = fileName,
+            });
         }
     }
 }

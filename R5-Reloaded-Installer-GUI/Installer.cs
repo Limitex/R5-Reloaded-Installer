@@ -3,6 +3,7 @@ using R5_Reloaded_Installer_Library.Get;
 using R5_Reloaded_Installer_Library.IO;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -105,6 +106,7 @@ namespace R5_Reloaded_Installer_GUI
                         MessageBoxIcon.Warning);
                     if (dr == DialogResult.Cancel)
                     {
+                        MainForm.ProcessStart(installPath);
                         ControlEnabled(true);
                         return;
                     }
@@ -123,6 +125,8 @@ namespace R5_Reloaded_Installer_GUI
                 "Transmission" => ApplicationType.Transmission,
                 _ => ApplicationType.Transmission
             };
+
+            MessageBox.Show("Start the installation.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             MainForm.InstallVisitedFlug = true;
             mainForm.FullStatusLabel.Text = "in preparation...";
