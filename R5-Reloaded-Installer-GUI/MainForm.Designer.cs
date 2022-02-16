@@ -95,8 +95,10 @@
             // 
             // PathSelectTextBox
             // 
+            this.PathSelectTextBox.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.PathSelectTextBox.Location = new System.Drawing.Point(12, 225);
             this.PathSelectTextBox.Name = "PathSelectTextBox";
+            this.PathSelectTextBox.ReadOnly = true;
             this.PathSelectTextBox.Size = new System.Drawing.Size(284, 23);
             this.PathSelectTextBox.TabIndex = 2;
             // 
@@ -112,6 +114,8 @@
             // CreateDesktopShortcutCheckBox
             // 
             this.CreateDesktopShortcutCheckBox.AutoSize = true;
+            this.CreateDesktopShortcutCheckBox.Checked = true;
+            this.CreateDesktopShortcutCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.CreateDesktopShortcutCheckBox.Location = new System.Drawing.Point(11, 369);
             this.CreateDesktopShortcutCheckBox.Name = "CreateDesktopShortcutCheckBox";
             this.CreateDesktopShortcutCheckBox.Size = new System.Drawing.Size(160, 19);
@@ -122,6 +126,8 @@
             // AddToStartMenuShortcutCheckBox
             // 
             this.AddToStartMenuShortcutCheckBox.AutoSize = true;
+            this.AddToStartMenuShortcutCheckBox.Checked = true;
+            this.AddToStartMenuShortcutCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.AddToStartMenuShortcutCheckBox.Location = new System.Drawing.Point(12, 394);
             this.AddToStartMenuShortcutCheckBox.Name = "AddToStartMenuShortcutCheckBox";
             this.AddToStartMenuShortcutCheckBox.Size = new System.Drawing.Size(121, 19);
