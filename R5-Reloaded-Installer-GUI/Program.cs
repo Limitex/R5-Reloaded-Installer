@@ -1,9 +1,6 @@
-using System;
-using System.Windows.Forms;
-
 namespace R5_Reloaded_Installer_GUI
 {
-    static class Program
+    internal static class Program
     {
         /// <summary>
         ///  The main entry point for the application.
@@ -11,9 +8,7 @@ namespace R5_Reloaded_Installer_GUI
         [STAThread]
         static void Main()
         {
-            Application.SetHighDpiMode(HighDpiMode.SystemAware);
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
+            ApplicationConfiguration.Initialize();
             Application.Run(new MainForm());
         }
     }

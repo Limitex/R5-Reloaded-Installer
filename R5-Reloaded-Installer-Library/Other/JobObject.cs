@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 /// <summary>
 /// Source of "https://qiita.com/kenichiuda/items/3079ab93dae564dd5d17"
 /// </summary>
-namespace R5_Reloaded_Installer_Library.JobObjectSharp
+namespace R5_Reloaded_Installer_Library.Other.JobObjectSharp
 {
     /// <summary>
     /// A class that automatically terminates child processes when the application exits.
@@ -35,7 +35,7 @@ namespace R5_Reloaded_Installer_Library.JobObjectSharp
 
         private JobObject(SafeJobHandle safeHandle) => SafeHandle = safeHandle;
 
-        private JobObject(string name = null)
+        private JobObject(string? name = null)
         {
             SafeHandle = Native.CreateJobObject(IntPtr.Zero, name);
             if (SafeHandle.IsInvalid)
@@ -219,7 +219,7 @@ namespace R5_Reloaded_Installer_Library.JobObjectSharp
              int processId);
 
         [DllImport("kernel32.dll", SetLastError = true)]
-        public static extern SafeJobHandle CreateJobObject(IntPtr lpJobAttributes, string lpName);
+        public static extern SafeJobHandle CreateJobObject(IntPtr lpJobAttributes, string? lpName);
 
         [DllImport("kernel32.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]

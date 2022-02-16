@@ -1,336 +1,256 @@
-﻿using R5_Reloaded_Installer_Library.IO;
-using R5_Reloaded_Installer_Library.JobObjectSharp;
+﻿using R5_Reloaded_Installer_Library.External;
+using R5_Reloaded_Installer_Library.IO;
+using R5_Reloaded_Installer_Library.Other;
+using R5_Reloaded_Installer_Library.Text;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.IO.Compression;
+using System.Linq;
 using System.Net;
-using System.Reflection;
+using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading;
+using System.Threading.Tasks;
 
 namespace R5_Reloaded_Installer_Library.Get
 {
-    public delegate void WebClientProcessEventHandler(object sender, DownloadProgressChangedEventArgs e);
-    public delegate void TransmissionProcessEventHandler(object sender, DataReceivedEventArgs outLine);
-    public delegate void SevenZipProcessEventHandler(object sender, DataReceivedEventArgs outLine);
-    //public delegate void Aria2ProcessEventHandler(object sender, DataReceivedEventArgs outLine);
+    public enum ApplicationType
+    {
+        Aria2c,
+        Transmission,
+        SevenZip,
+        HttpClient
+    }
+
+    public delegate void ProcessEventHandler(ApplicationType appType, string outLine);
 
     public class Download : IDisposable
     {
-        public string WorkingDirectoryPath { get; private set; }
-        public string SaveingDirectoryPath { get; private set; }
+        public event ProcessEventHandler? ProcessReceives = null;
 
-        public event WebClientProcessEventHandler WebClientReceives = null;
-        public event TransmissionProcessEventHandler TransmissionProcessReceives = null;
-        public event SevenZipProcessEventHandler SevenZipProcessReceives = null;
-        //public event Aria2ProcessEventHandler Aria2ProcessReceives = null;
+        private static string WorkingDirectoryPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "R5-Reloaded-Installer");
+        private string SaveingDirectoryPath;
 
-        //private static readonly string Aria2Argument = "--seed-time=0 --allow-overwrite=true";
-        //private static readonly string Aria2ExecutableFileName = "aria2c.exe";
+        private ResourceProcess aria2c;
+        private ResourceProcess sevenZip;
+        private ResourceProcess transmission;
 
-        private static readonly string TransmissionArgument = "-u 0";
-        private static readonly string TransmissionExecutableFileName = "transmission-cli.exe";
+        private HttpClientProgress? httpClient = null;
 
-        private static readonly string WorkingDirectoryName = "R5-Reloaded-Installer";
-
-        //private static string Aria2Path;
-        private static string TransmissionPath;
-
-        private static string SevenZipPath;
-        private Process SevenZip = null;
-
-        private Process Transmission = null;
-        //private Process Aria2c = null;
-
-        private bool IsRunning = true;
-
-        public Download(string saveingDirectoryPath = null)
+        public Download(string saveingDirectoryPath)
         {
-            WorkingDirectoryPath = Path.Combine(DirectoryExpansion.AppDataDirectoryPath, WorkingDirectoryName);
-            if (saveingDirectoryPath != null) SaveingDirectoryPath = saveingDirectoryPath;
-            else SaveingDirectoryPath = DirectoryExpansion.RunningDirectoryPath;
+            SaveingDirectoryPath = saveingDirectoryPath;
+            DirectoryExpansion.CreateOverwrite(WorkingDirectoryPath);
 
-            if (!Directory.Exists(SaveingDirectoryPath)) Directory.CreateDirectory(SaveingDirectoryPath);
+            aria2c = new(WorkingDirectoryPath, "aria2c");
+            sevenZip = new(WorkingDirectoryPath, "seven-za");
+            transmission = new(WorkingDirectoryPath, "transmission");
 
-            if (Directory.Exists(WorkingDirectoryPath)) DirectoryExpansion.DeleteAll(WorkingDirectoryPath);
-            Directory.CreateDirectory(WorkingDirectoryPath);
-
-            // Aria2Path = Path.Combine(RunZip(GetAria2Link(), "aria2", WorkingDirectoryPath), Aria2ExecutableFileName);
-
-            TransmissionPath = Path.Combine(RunZip(GetTransmissionLink(), "transmission", WorkingDirectoryPath),
-                    TransmissionExecutableFileName);
-
-            SevenZipPath = Path.Combine(WorkingDirectoryPath, "7za.exe");
-            using var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("R5_Reloaded_Installer_Library.Resources.7za.exe");
-            File.WriteAllBytes(SevenZipPath, GetByteArrayFromStream(stream));
+            aria2c.ResourceProcessReceives += new(Aria2cProcess_EventHandler);
+            sevenZip.ResourceProcessReceives += new(SevenZipProcess_EventHandler);
+            transmission.ResourceProcessReceives += new(TransmissionProcess_EventHandler);
         }
 
         public void Dispose()
         {
-            DirectoryExpansion.DeleteAll(WorkingDirectoryPath);
+            aria2c.Dispose();
+            sevenZip.Dispose();
+            transmission.Dispose();
+            httpClient?.Dispose();
+            DirectoryExpansion.DirectoryDelete(WorkingDirectoryPath);
         }
 
-        public static byte[] GetByteArrayFromStream(Stream stream)
+        public void Kill()
         {
-            using var ms = new MemoryStream();
-            stream.CopyTo(ms);
-            return ms.ToArray();
+            aria2c.Kill();
+            aria2c.Dispose();
+            sevenZip.Kill();
+            sevenZip.Dispose();
+            transmission.Kill();
+            transmission.Dispose();
+            httpClient?.Dispose();
         }
 
-        //private static string GetAria2Link()
-        //{
-        //    foreach (var link in GitHub.GetLatestRelease("aria2", "aria2"))
-        //        if (Path.GetFileName(link).Contains("win-64bit"))
-        //            return link;
-        //    return null;
-        //}
-
-        private static string GetTransmissionLink()
+        public string Run(string address, string? name = null, string? path = null, ApplicationType? appType = null)
         {
-            foreach (var link in GitHub.GetLatestRelease("Limitex", "transmission-vs"))
-                if (Path.GetFileName(link).Contains("cli"))
-                    return link;
-            return null;
-        }
-
-        private static bool IsUrl(string address) => Regex.IsMatch(address, @"^s?https?://[-_.!~*'()a-zA-Z0-9;/?:@&=+$,%#]+$");
-
-        public string Run(string address, string filePath)
-        {
-            if (File.Exists(filePath)) File.Delete(filePath);
-            using (var wc = new WebClient())
+            switch (Path.GetExtension(address).ToLower())
             {
-                if (WebClientReceives != null)
-                    wc.DownloadProgressChanged +=
-                        new DownloadProgressChangedEventHandler((sender, e) => WebClientReceives(new string[] { address, filePath }, e));
-                wc.DownloadFileTaskAsync(new Uri(address), filePath).Wait();
+                case ".zip":
+                case ".7z":
+                    return NormalDownload(address, name, path, appType);
+                case ".torrent":
+                    return TorrentDownload(address, name, path, appType);
+                default:
+                    throw new("The specified address cannot be downloaded with.");
             }
-            Thread.Sleep(100);
+        }
+
+        public void DirectoryFix(string sourceDirName)
+        {
+            var files = Directory.GetFiles(sourceDirName);
+            var dirs = Directory.GetDirectories(sourceDirName);
+            if (files.Length == 0 && dirs.Length == 1)
+            {
+                Directory.Move(dirs[0], sourceDirName + "_buffer");
+                Directory.Delete(sourceDirName);
+                Directory.Move(sourceDirName + "_buffer", sourceDirName);
+            }
+        }
+
+        private string NormalDownload(string address, string? name = null, string? path = null, ApplicationType? appType = null)
+        {
+            string filedirPath;
+            switch (appType)
+            {
+                case ApplicationType.Aria2c:
+                case null:
+                    filedirPath = Aria2c(address, name, path);
+                    break;
+                case ApplicationType.HttpClient:
+                    filedirPath = HttpClientDownload(address, name, path);
+                    break;
+                default:
+                    throw new("Specify \"Aria2c\" or \"HttpClient\" for the app type.");
+            }
+            var dirPath = SevenZip(filedirPath, name, path);
+            DirectoryFix(dirPath);
+            return dirPath;
+        }
+
+        private string TorrentDownload(string address, string? name = null, string? path = null, ApplicationType? appType = null)
+        {
+            string torrentdirPath;
+            switch (appType)
+            {
+                case ApplicationType.Aria2c:
+                case null:
+                    torrentdirPath = Aria2c(address, name, path);
+                    break;
+                case ApplicationType.Transmission:
+                    torrentdirPath = Transmission(address, name, path);
+                    break;
+                default:
+                    throw new("Specify \"Aria2c\" or \"Transmission\" for the app type.");
+            }
+            DirectoryFix(torrentdirPath);
+            return torrentdirPath;
+        }
+
+        private string Aria2c(string address, string? name = null, string? path = null)
+        {
+            var extension = Path.GetExtension(address);
+            var fileName = name == null ? Path.GetFileName(address) : name + extension;
+            var dirPath = path ?? SaveingDirectoryPath;
+            var dirName = Path.GetFileNameWithoutExtension(fileName);
+            var resurtPath = Path.Combine(dirPath, dirName);
+            var argument = " --dir=\"" + resurtPath + "\" --out=\"" + fileName + "\" --seed-time=0 --allow-overwrite=true --follow-torrent=mem";
+            DirectoryExpansion.CreateOverwrite(resurtPath);
+            aria2c.Run(address + argument, resurtPath);
+            return extension != ".torrent" ? Path.Combine(resurtPath, fileName) : resurtPath;
+        }
+
+        private string Transmission(string address, string? name = null, string? path = null)
+        {
+            var dirPath = path ?? SaveingDirectoryPath;
+            var dirName = name ?? Path.GetFileNameWithoutExtension(address);
+            var resurtPath = Path.Combine(dirPath, dirName);
+            var argument = " --download-dir \"" + resurtPath + "\" --config-dir \"" + WorkingDirectoryPath + "\" -u 0";
+            DirectoryExpansion.CreateOverwrite(resurtPath);
+            transmission.Run(address + argument, dirPath);
+            return resurtPath;
+        }
+
+        private string SevenZip(string address, string? name = null, string? path = null)
+        {
+            var dirPath = path ?? SaveingDirectoryPath;
+            var dirName = name ?? Path.GetFileNameWithoutExtension(address);
+            var resurtPath = Path.Combine(dirPath, dirName);
+            var argument = "x -y \"" + address + "\" -o\"" + resurtPath + "\"";
+            DirectoryExpansion.CreateIfNotFound(resurtPath);
+            sevenZip.Run(argument, resurtPath);
+            File.Delete(address);
+            return resurtPath;
+        }
+
+        private string HttpClientDownload(string address, string? name = null, string? path = null)
+        {
+            var fileName = name == null ? Path.GetFileName(address) : name + Path.GetExtension(address);
+            var dirPath = path ?? SaveingDirectoryPath;
+            var dirName = Path.GetFileNameWithoutExtension(fileName);
+            var resurtPath = Path.Combine(dirPath, dirName);
+            var filePath = Path.Combine(resurtPath, fileName);
+            DirectoryExpansion.CreateOverwrite(resurtPath);
+            httpClient = new(address, filePath);
+            httpClient.ProgressChanged += new(HttpClientProcess_EventHandler);
+            httpClient.StartDownload().Wait();
             return filePath;
         }
 
-        public string RunZip(string address, string name = null, string SavePath = null)
+        private string FormattingLine(string str) => Regex.Replace(str, @"(\r|\n|(  )|\t|\x1b\[.*?m)", string.Empty);
+
+        private void Aria2cProcess_EventHandler(object sender, DataReceivedEventArgs outLine)
         {
-            if (!IsRunning) return null;
-            if (!IsUrl(address) || FileExpansion.GetExtension(address) != "zip")
-                throw new Exception("The specified string does not download the ZIP file.");
-            if (name == null) name = Path.GetFileName(address);
-            else name += Path.GetExtension(address);
-            if (SavePath == null) SavePath = SaveingDirectoryPath;
+            if (ProcessReceives == null) return;
+            if (string.IsNullOrEmpty(outLine.Data)) return;
+            var rawLine = FormattingLine(outLine.Data);
 
-            var filePath = Run(address, Path.Combine(SavePath, name));
-
-            var directoryPath = filePath.Remove(filePath.IndexOf(Path.GetExtension(filePath)));
-            if (Directory.Exists(directoryPath)) DirectoryExpansion.DeleteAll(directoryPath);
-            Directory.CreateDirectory(directoryPath);
-            ZipFile.ExtractToDirectory(filePath, directoryPath);
-            File.Delete(filePath);
-            var files = Directory.GetFiles(directoryPath);
-            var dirs = Directory.GetDirectories(directoryPath);
-            if (files.Length == 0 && dirs.Length == 1)
+            if (rawLine[0] == '[')
             {
-                Directory.Move(dirs[0], directoryPath + "_buffer");
-                Directory.Delete(directoryPath);
-                Directory.Move(directoryPath + "_buffer", directoryPath);
+                var nakedLine = Regex.Replace(rawLine, @"((#.{6}( ))|\[|\])", "");
+                if (rawLine.Contains("FileAlloc"))
+                    ProcessReceives(ApplicationType.Aria2c ,nakedLine.Substring(nakedLine.IndexOf("FileAlloc")));
+                else
+                    ProcessReceives(ApplicationType.Aria2c, nakedLine);
             }
-            return directoryPath;
-        }
-
-        public string RunSevenZip(string address, string name = null, string SavePath = null)
-        {
-            if (!IsRunning) return null;
-            if (!IsUrl(address) || FileExpansion.GetExtension(address) != "7z")
-                throw new Exception("The specified string does not download the 7Z file.");
-            if (SavePath == null) SavePath = SaveingDirectoryPath;
-
-            var filePath = Run(address, Path.Combine(SavePath, Path.GetFileName(address)));
-            var directoryPath = filePath.Remove(filePath.IndexOf(Path.GetExtension(filePath)));
-
-            if (Directory.Exists(directoryPath)) DirectoryExpansion.DeleteAll(directoryPath);
-
-            using (var job = JobObject.CreateAsKillOnJobClose())
+            else if (rawLine[0] == '(')
             {
-                SevenZip = new Process();
-                SevenZip.StartInfo = new ProcessStartInfo()
-                {
-                    FileName = SevenZipPath,
-                    Arguments = "x " + filePath,
-                    WorkingDirectory = SavePath,
-                    CreateNoWindow = true,
-                    UseShellExecute = false,
-                    RedirectStandardInput = true,
-                    RedirectStandardOutput = true,
-                    RedirectStandardError = true
-                };
-                if (SevenZipProcessReceives != null)
-                {
-                    SevenZip.EnableRaisingEvents = true;
-                    SevenZip.ErrorDataReceived += new DataReceivedEventHandler(SevenZipProcessReceives);
-                    SevenZip.OutputDataReceived += new DataReceivedEventHandler(SevenZipProcessReceives);
-                }
-                SevenZipProcessReceives("Extracting Seven zip", null);
-                SevenZip.Start();
-                SevenZip.BeginOutputReadLine();
-                SevenZip.BeginErrorReadLine();
-                job.AssignProcess(SevenZip);
-                SevenZip.WaitForExit();
-                SevenZip.Close();
-                SevenZip = null;
+                ProcessReceives(ApplicationType.Aria2c, rawLine);
             }
-
-            SevenZipProcessReceives("Complete", null);
-            File.Delete(filePath);
-
-            if (name != null)
+            else if (rawLine.Contains("NOTICE"))
             {
-                var destinationPath = Path.Combine(SavePath, name);
-                if (Directory.Exists(destinationPath)) DirectoryExpansion.DeleteAll(destinationPath);
-                Directory.Move(directoryPath, destinationPath);
-                return destinationPath;
-            }
-            else
-            {
-                return directoryPath;
+                var nakedLine = Regex.Replace(rawLine, @"([0-9]{2}/[0-9]{2})( )([0-9]{2}:[0-9]{2}:[0-9]{2})( )\[NOTICE\]( )", string.Empty);
+                ProcessReceives(ApplicationType.Aria2c, nakedLine);
             }
         }
 
-        //public string RunTorrentOfAria2(string address, string name = null, string SavePath = null)
-        //{
-        //    if (!IsRunning) return null;
-        //    if (!IsUrl(address) || FileExpansion.GetExtension(address) != "torrent")
-        //        throw new Exception("The specified string does not download the Torrent file.");
-
-        //    if (SavePath == null) SavePath = SaveingDirectoryPath;
-
-        //    var filePath = Run(address, Path.Combine(SavePath, Path.GetFileName(address)));
-
-        //    var rawDirectoryPath = filePath.Replace(Path.GetExtension(filePath), string.Empty);
-        //    var directoryPath = rawDirectoryPath;
-        //    if (name != null) directoryPath = Path.Combine(Path.GetDirectoryName(filePath), name);
-
-        //    using (var job = JobObject.CreateAsKillOnJobClose())
-        //    {
-        //        Aria2c = new Process();
-        //        Aria2c.StartInfo = new ProcessStartInfo()
-        //        {
-        //            FileName = Aria2Path,
-        //            Arguments = filePath + " " + Aria2Argument,
-        //            WorkingDirectory = SavePath,
-        //            CreateNoWindow = true,
-        //            UseShellExecute = false,
-        //            RedirectStandardInput = true,
-        //            RedirectStandardOutput = true,
-        //            RedirectStandardError = true
-        //        };
-        //        if (Aria2ProcessReceives != null)
-        //        {
-        //            Aria2c.EnableRaisingEvents = true;
-        //            Aria2c.ErrorDataReceived += new DataReceivedEventHandler(Aria2ProcessReceives);
-        //            Aria2c.OutputDataReceived += new DataReceivedEventHandler(Aria2ProcessReceives);
-        //        }
-        //        Aria2c.Start();
-        //        Aria2c.BeginOutputReadLine();
-        //        Aria2c.BeginErrorReadLine();
-        //        job.AssignProcess(Aria2c);
-        //        Aria2c.WaitForExit();
-        //        Aria2c.Close();
-        //    }
-
-        //    if (IsRunning && (name != null))
-        //    {
-        //        Directory.Move(rawDirectoryPath, directoryPath);
-        //        return directoryPath;
-        //    }
-        //    else return rawDirectoryPath;
-        //}
-
-        public string RunTorrentOfTransmission(string address, string name = null)
+        private void SevenZipProcess_EventHandler(object sender, DataReceivedEventArgs outLine)
         {
-            if (!IsRunning) return null;
-            if (!IsUrl(address) || FileExpansion.GetExtension(address) != "torrent")
-                throw new Exception("The specified string does not download the Torrent file.");
+            if (ProcessReceives == null) return;
+            if (string.IsNullOrEmpty(outLine.Data)) return;
+            var rawLine = FormattingLine(outLine.Data);
 
-            var filePath = Run(address, Path.Combine(SaveingDirectoryPath, Path.GetFileName(address)));
-            var rawDirectoryPath = filePath.Replace(Path.GetExtension(filePath), string.Empty);
-            var directoryName = Path.GetFileName(rawDirectoryPath);
-            var directoryPath = rawDirectoryPath;
-            var TorrentFileSize = FileExpansion.ByteToMByte(FileExpansion.GetTorrentFileSize(address));
-
-            if (name != null) directoryPath = Path.Combine(Path.GetDirectoryName(filePath), name);
-
-            using (var job = JobObject.CreateAsKillOnJobClose())
-            {
-                Transmission = new Process
-                {
-                    StartInfo = new ProcessStartInfo()
-                    {
-                        FileName = TransmissionPath,
-                        Arguments = address + " " +
-                            "--download-dir \"" + SaveingDirectoryPath + "\" " +
-                            "--config-dir \"" + WorkingDirectoryPath + "\" " + 
-                            TransmissionArgument,
-                        WorkingDirectory = SaveingDirectoryPath,
-                        CreateNoWindow = true,
-                        UseShellExecute = false,
-                        RedirectStandardInput = true,
-                        RedirectStandardOutput = true,
-                        RedirectStandardError = true
-                    }
-                };
-                if (TransmissionProcessReceives != null)
-                {
-                    Transmission.EnableRaisingEvents = true;
-                    Transmission.ErrorDataReceived += new DataReceivedEventHandler((sender, outLine) => TransmissionProcess_EventHandler(new string[] { address, filePath, directoryName, TorrentFileSize.ToString() }, outLine));
-                    Transmission.OutputDataReceived += new DataReceivedEventHandler((sender, outLine) => TransmissionProcess_EventHandler(new string[] { address, filePath, directoryName, TorrentFileSize.ToString() }, outLine));
-                }
-                Transmission.Start();
-                Transmission.BeginOutputReadLine();
-                Transmission.BeginErrorReadLine();
-                job.AssignProcess(Transmission);
-                Transmission.WaitForExit();
-                Transmission.Close();
-                Transmission = null;
-            }
-
-            if (IsRunning && name != null)
-            {
-                Directory.Move(rawDirectoryPath, directoryPath);
-                return directoryPath;
-            }
-            else return rawDirectoryPath;
+            ProcessReceives(ApplicationType.SevenZip, rawLine);
         }
 
         private void TransmissionProcess_EventHandler(object sender, DataReceivedEventArgs outLine)
         {
-            if (!string.IsNullOrEmpty(outLine.Data) && outLine.Data.Contains("Seeding"))
+            if (ProcessReceives == null) return;
+            if (string.IsNullOrEmpty(outLine.Data)) return;
+            var rawLine = FormattingLine(outLine.Data);
+
+            if (rawLine.Contains("Seeding"))
             {
-                Transmission.Kill();
-                Transmission.Close();
+                transmission.Kill();
                 return;
             }
-            TransmissionProcessReceives(sender, outLine);
+
+            var nakedLine = Regex.Replace(rawLine, @"(\[([0-9]{4})-([0-9]{2})-([0-9]{2})( )([0-9]{2}):([0-9]{2}):([0-9]{2})\.(.*?)\])( )", string.Empty);
+            
+            var dirName = Path.GetFileNameWithoutExtension(Regex.Match(((string[])sender)[0], "http.*?(?=( ))").ToString());
+            if (!Regex.Match(nakedLine, dirName + ":").Success)
+            {
+                ProcessReceives(ApplicationType.Transmission, Regex.Replace(nakedLine, @", ul to 0 \(0 kB/s\) \[(0\.00|None)\]", string.Empty));
+                Thread.Sleep(200);
+            }
         }
 
-        public void ProcessKill()
+        private void HttpClientProcess_EventHandler(long? totalFileSize, long totalBytesDownloaded, double? progressPercentage)
         {
-            IsRunning = false;
-            //if (Aria2c != null && !Aria2c.HasExited)
-            //{
-            //    Aria2c.Kill();
-            //    Aria2c.Close();
-            //}
-            if (Transmission != null && !Transmission.HasExited)
-            {
-                Transmission.Kill();
-                Transmission.Close();
-            }
-            if (SevenZip != null && !SevenZip.HasExited)
-            {
-                SevenZip.Kill();
-                SevenZip.Close();
-            }
-            Environment.Exit(0x8020);
+            if (ProcessReceives == null) return;
+            var downloadedByteSize = StringProcessing.ByteToStringWithUnits(totalBytesDownloaded);
+            var totalByteSize = StringProcessing.ByteToStringWithUnits(totalFileSize ?? 0);
+            var progressPercent = ((int?)progressPercentage ?? 0).ToString().PadLeft(2);
+            ProcessReceives(ApplicationType.HttpClient, $"{downloadedByteSize} / {totalByteSize} ({progressPercent}%)");
+            Thread.Sleep(100);
         }
     }
 }

@@ -1,10 +1,13 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Runtime.Versioning;
 
 namespace R5_Reloaded_Installer_Library.Get
 {
+    [SupportedOSPlatform("windows")]
     public static class InstalledApps
     {
         private static string RegistryPath_64 = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall";
@@ -21,15 +24,18 @@ namespace R5_Reloaded_Installer_Library.Get
 
         private static List<string> GetUninstallList(string path)
         {
-            var nameList = new List<string>();
-            foreach (var subKey in Registry.LocalMachine.OpenSubKey(path, false).GetSubKeyNames())
+            var list = new List<string>();
+            var keys = Registry.LocalMachine.OpenSubKey(path, false);
+            if (keys == null) return list;
+            foreach (var subKey in keys.GetSubKeyNames())
             {
                 var subKeys = Registry.LocalMachine.OpenSubKey(path + @"\" + subKey, false);
+                if (subKeys == null) continue;
                 var displayName = subKeys.GetValue("DisplayName");
-                if (displayName != null) nameList.Add(displayName.ToString());
-                else nameList.Add(subKey);
+                if (displayName == null) list.Add(subKey);
+                else list.Add(displayName.ToString() ?? "NoName");
             }
-            return nameList;
+            return list;
         }
     }
 }

@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31727.386
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "R5-Reloaded-Installer-CUI", "R5-Reloaded-Installer-CUI\R5-Reloaded-Installer-CUI.csproj", "{E1A82DDC-AAA9-4771-B0B4-236FC8BA47AB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "R5-Reloaded-Installer-Library", "R5-Reloaded-Installer-Library\R5-Reloaded-Installer-Library.csproj", "{D99B02D8-8E11-4B18-9CCC-92C24F8DFCE7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "R5-Reloaded-Installer-GUI", "R5-Reloaded-Installer-GUI\R5-Reloaded-Installer-GUI.csproj", "{DBD1FF44-A928-4A20-A4B8-43DF289D2FC8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "R5-Reloaded-Installer-CLI", "R5-Reloaded-Installer-CLI\R5-Reloaded-Installer-CLI.csproj", "{3416C59C-BA14-433B-B26E-43A9DA51D127}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "R5-Reloaded-Installer-Library", "R5-Reloaded-Installer-Library\R5-Reloaded-Installer-Library.csproj", "{D2F1A615-F4CA-4FD8-A10A-1948F6AB3D14}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "R5-Reloaded-Installer-GUI", "R5-Reloaded-Installer-GUI\R5-Reloaded-Installer-GUI.csproj", "{51094596-1678-4D7A-89AE-511E8C80A797}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,23 +15,23 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{E1A82DDC-AAA9-4771-B0B4-236FC8BA47AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E1A82DDC-AAA9-4771-B0B4-236FC8BA47AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E1A82DDC-AAA9-4771-B0B4-236FC8BA47AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E1A82DDC-AAA9-4771-B0B4-236FC8BA47AB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DBD1FF44-A928-4A20-A4B8-43DF289D2FC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DBD1FF44-A928-4A20-A4B8-43DF289D2FC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DBD1FF44-A928-4A20-A4B8-43DF289D2FC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DBD1FF44-A928-4A20-A4B8-43DF289D2FC8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D2F1A615-F4CA-4FD8-A10A-1948F6AB3D14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D2F1A615-F4CA-4FD8-A10A-1948F6AB3D14}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D2F1A615-F4CA-4FD8-A10A-1948F6AB3D14}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D2F1A615-F4CA-4FD8-A10A-1948F6AB3D14}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D99B02D8-8E11-4B18-9CCC-92C24F8DFCE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D99B02D8-8E11-4B18-9CCC-92C24F8DFCE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D99B02D8-8E11-4B18-9CCC-92C24F8DFCE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D99B02D8-8E11-4B18-9CCC-92C24F8DFCE7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3416C59C-BA14-433B-B26E-43A9DA51D127}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3416C59C-BA14-433B-B26E-43A9DA51D127}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3416C59C-BA14-433B-B26E-43A9DA51D127}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3416C59C-BA14-433B-B26E-43A9DA51D127}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51094596-1678-4D7A-89AE-511E8C80A797}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51094596-1678-4D7A-89AE-511E8C80A797}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51094596-1678-4D7A-89AE-511E8C80A797}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51094596-1678-4D7A-89AE-511E8C80A797}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {E0C90696-32A0-47A2-92F2-5C2ADC107444}
+		SolutionGuid = {AC0AD23D-61DC-4889-827D-82AE870B9261}
 	EndGlobalSection
 EndGlobal

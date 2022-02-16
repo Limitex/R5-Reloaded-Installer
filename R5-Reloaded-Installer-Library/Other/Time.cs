@@ -16,3 +16,4 @@ namespace R5_Reloaded_Installer_Library.Other
         public static float deltaTime => getDelta();
     }
 }
+

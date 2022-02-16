@@ -4,20 +4,26 @@ using System.IO;
 
 namespace R5_Reloaded_Installer_Library.IO
 {
-    /// <summary>
-    /// "class System.IO.Directory" expansion and other
-    /// </summary>
     public static class DirectoryExpansion
     {
-        public static string AppDataDirectoryPath => Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-        public static string RunningDirectoryPath => Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName);
+        public static void CreateOverwrite(string path)
+        {
+            if (Directory.Exists(path)) DirectoryDelete(path);
+            Directory.CreateDirectory(path);
+        }
+
+        public static void CreateIfNotFound(string path)
+        {
+            if (!Directory.Exists(path)) Directory.CreateDirectory(path);
+        }
+
         public static void MoveOverwrite(string sourcePath, string destinationPath)
         {
             DirectoryCopy(sourcePath, destinationPath);
-            DeleteAll(sourcePath);
+            DirectoryDelete(sourcePath);
         }
 
-        public static void DeleteAll(string targetDirectoryPath)
+        public static void DirectoryDelete(string targetDirectoryPath)
         {
             if (!Directory.Exists(targetDirectoryPath)) return;
 
@@ -29,12 +35,12 @@ namespace R5_Reloaded_Installer_Library.IO
             }
 
             string[] directoryPaths = Directory.GetDirectories(targetDirectoryPath);
-            foreach (string directoryPath in directoryPaths) DeleteAll(directoryPath);
+            foreach (string directoryPath in directoryPaths) DirectoryDelete(directoryPath);
 
             Directory.Delete(targetDirectoryPath, false);
         }
 
-        private static void DirectoryCopy(string sourcePath, string destinationPath)
+        public static void DirectoryCopy(string sourcePath, string destinationPath)
         {
             var sourceDirectory = new DirectoryInfo(sourcePath);
             var destinationDirectory = new DirectoryInfo(destinationPath);

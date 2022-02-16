@@ -1,46 +1,17 @@
-﻿using BencodeNET.Parsing;
-using BencodeNET.Torrents;
-using IWshRuntimeLibrary;
-using System;
-using System.IO;
-using System.Net;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices;
+using System.Text;
+using System.Threading.Tasks;
+using IWshRuntimeLibrary;
+using System.Runtime.Versioning;
 
 namespace R5_Reloaded_Installer_Library.IO
 {
-    /// <summary>
-    /// "class System.IO.File" expansion and other
-    /// </summary>
     public static class FileExpansion
     {
-        public static float ByteToGByte(long value) => value / 1024f / 1024f / 1024f;
-        public static float ByteToMByte(long value) => value / 1024f / 1024f;
-        public static float ByteToKByte(long value) => value / 1024f;
-
-        public static string GetExtension(string address) => Path.GetExtension(address).Replace(".", "").ToLower();
-
-        public static long GetDriveFreeSpace(string path)
-        {
-            return new DriveInfo(Path.GetPathRoot(path)).AvailableFreeSpace;
-        }
-
-        public static long GetTorrentFileSize(string url)
-        {
-            using (var wc = new WebClient())
-            {
-                return new BencodeParser().Parse<Torrent>(wc.OpenRead(url)).TotalSize;
-            }
-        }
-
-        public static long GetZipFileSize(string url)
-        {
-            using (var wc = new WebClient())
-            {
-                wc.OpenRead(url);
-                return Convert.ToInt64(wc.ResponseHeaders["Content-Length"]);
-            }
-        }
-
+        [SupportedOSPlatform("windows")]
         public static void CreateShortcut(string path, string name, string LinkDestination, string arguments)
         {
             var shell = new WshShell();
@@ -54,5 +25,8 @@ namespace R5_Reloaded_Installer_Library.IO
             Marshal.FinalReleaseComObject(shortcut);
             Marshal.FinalReleaseComObject(shell);
         }
+
+        public static long GetDriveFreeSpace(string path) =>
+            new DriveInfo(Path.GetPathRoot(path) ?? string.Empty).AvailableFreeSpace;
     }
 }
