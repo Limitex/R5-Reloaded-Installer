@@ -258,7 +258,7 @@
         public LinkLabel OfficialDiscordLinkLabel;
         public LinkLabel OfficialWebsiteLinkLabel;
         private Label label6;
-        private Button InstallButton;
+        public Button InstallButton;
         private ComboBox SelectFileDownloaderComboBox;
         private Label label7;
         private Label label8;

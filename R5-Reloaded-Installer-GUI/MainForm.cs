@@ -9,6 +9,7 @@ namespace R5_Reloaded_Installer_GUI
             SelectTorrentDownloaderComboBox.SelectedIndex = 1;
             _ = new LinkLabelOpener(this);
             _ = new DirectorySelector(this);
+            _ = new Installer(this);
         }
     }
 }
