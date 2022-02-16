@@ -145,6 +145,7 @@ namespace R5_Reloaded_Installer_GUI
                     mainForm.FullStatusLabel.Text = "Done.";
                     mainForm.MonoProgressBar.Value = 100;
                     mainForm.FullProgressBar.Value = 100;
+                    MessageBox.Show("Complete!", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     ControlEnabled(true);
                 }));
             });
