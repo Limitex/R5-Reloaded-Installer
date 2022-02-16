@@ -8,7 +8,6 @@ namespace R5_Reloaded_Installer_GUI
 {
     public class DirectorySelector
     {
-        private string DirName = "R5-Reloaded";
         private TextBox PathTextBox;
         private Button BrowseButton;
 
@@ -17,7 +16,7 @@ namespace R5_Reloaded_Installer_GUI
             PathTextBox = form.PathSelectTextBox;
             BrowseButton = form.BrowseButton;
             PathTextBox.Text = Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), DirName);
+                Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), Installer.DirName);
             BrowseButton.Click += new EventHandler(BrowseButton_Click);
         }
 
@@ -27,7 +26,7 @@ namespace R5_Reloaded_Installer_GUI
             fbd.SelectedPath = new DirectoryInfo(PathTextBox.Text)?.Parent?.FullName ?? string.Empty;
             if (fbd.ShowDialog() == DialogResult.OK)
             {
-                PathTextBox.Text = Path.Combine(fbd.SelectedPath, DirName);
+                PathTextBox.Text = Path.Combine(fbd.SelectedPath, Installer.DirName);
             }
         }
     }

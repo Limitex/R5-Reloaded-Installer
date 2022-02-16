@@ -14,8 +14,10 @@ namespace R5_Reloaded_Installer_GUI
         private MainForm mainForm;
         private const float FileSize_GB = 42f;
         public delegate void Delegate();
+        public static readonly string DirName = "R5-Reloaded";
         private static readonly string ScriptsDirectoryPath = Path.Combine("platform", "scripts");
         private static readonly string WorldsEdgeAfterDarkPath = "package";
+        private static readonly string ExecutableFileName = "r5reloaded.exe";
 
         public Installer(MainForm form)
         {
@@ -32,6 +34,15 @@ namespace R5_Reloaded_Installer_GUI
             mainForm.SelectTorrentDownloaderComboBox.Enabled = status;
             mainForm.CreateDesktopShortcutCheckBox.Enabled = status;
             mainForm.AddToStartMenuShortcutCheckBox.Enabled = status;
+        }
+
+        private void CreateR5Shortcut(string path, string LinkDestination, string scriptsPath)
+        {
+            FileExpansion.CreateShortcut(path, "R5-Reloaded", LinkDestination, "");
+            FileExpansion.CreateShortcut(path, "R5-Reloaded (Debug)", LinkDestination, "-debug");
+            FileExpansion.CreateShortcut(path, "R5-Reloaded (Release)", LinkDestination, "-release");
+            FileExpansion.CreateShortcut(path, "R5-Reloaded (Dedicated)", LinkDestination, "-dedicated");
+            FileExpansion.CreateShortcut(path, "Scripts", scriptsPath, "");
         }
 
         private void InstallButton_Click(object? sender, EventArgs e)
@@ -88,7 +99,7 @@ namespace R5_Reloaded_Installer_GUI
                 else
                 {
                     var dr = MessageBox.Show("The file already exists in the specified directory. " +
-                        "\nDo you want to continue?", "Warning", 
+                        "\nDo you want to continue without deleting?", "Warning", 
                         MessageBoxButtons.OKCancel, 
                         MessageBoxIcon.Warning);
                     if (dr == DialogResult.Cancel)
@@ -121,10 +132,10 @@ namespace R5_Reloaded_Installer_GUI
             {
                 using (var download = new Download(installPath))
                 {
-                    download.ProcessReceives += new ProcessEventHandler((appType, outLine) => 
-                        mainForm.Invoke(new Delegate(() => 
+                    download.ProcessReceives += new ProcessEventHandler((appType, outLine) =>
+                        mainForm.Invoke(new Delegate(() =>
                             Download_ProcessEventHandler(appType, outLine))));
-
+                
                     var worldsEdgeAfterDarkDirPath = download.Run(
                         WebGetLink.WorldsEdgeAfterDark(), "WorldsEdgeAfterDark", appType: fileAppType);
                     var detoursR5DirPath = download.Run(
@@ -138,6 +149,23 @@ namespace R5_Reloaded_Installer_GUI
                     DirectoryExpansion.MoveOverwrite(Path.Combine(worldsEdgeAfterDarkDirPath, WorldsEdgeAfterDarkPath), apexClientDirPath);
                     DirectoryExpansion.DirectoryDelete(worldsEdgeAfterDarkDirPath);
                     download.DirectoryFix(installPath);
+                }
+
+                var AppPath = Path.Combine(installPath, ExecutableFileName);
+                var scriptsPath = Path.Combine(installPath, ScriptsDirectoryPath);
+
+                if (shortcutCreate_desktop)
+                {
+                    var desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
+                    CreateR5Shortcut(desktopPath, AppPath, scriptsPath);
+                }
+
+                if (shortcutCreate_startmenu)
+                {
+                    var startMenuPath = Directory.GetDirectories(Environment.GetFolderPath(Environment.SpecialFolder.StartMenu))[0];
+                    var startmenuShortcutPath = Path.Combine(startMenuPath, DirName);
+                    Directory.CreateDirectory(startmenuShortcutPath);
+                    CreateR5Shortcut(startmenuShortcutPath, AppPath, scriptsPath);
                 }
 
                 mainForm.Invoke(new Delegate(() => {
