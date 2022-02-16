@@ -110,6 +110,12 @@ namespace R5_Reloaded_Installer_GUI
                 _ => ApplicationType.Transmission
             };
 
+            MainForm.InstallVisitedFlug = true;
+            mainForm.MonoStatusLabel.Text = "in preparation...";
+            mainForm.FullStatusLabel.Text = "in preparation...";
+            mainForm.MonoProgressBar.Value = 0;
+            mainForm.FullProgressBar.Value = 0;
+
             Task.Run(() => 
             {
                 using (var download = new Download(installPath))
@@ -127,7 +133,11 @@ namespace R5_Reloaded_Installer_GUI
                     var apexClientDirPath = download.Run(
                         WebGetLink.ApexClient(), "ApexClient", appType: torrentAppType);
                 }
-                mainForm.Invoke(new Delegate(() => ControlEnabled(true)));
+
+                mainForm.Invoke(new Delegate(() => {
+                    MainForm.InstallVisitedFlug = false;
+                    ControlEnabled(true);
+                }));
             });
         }
 
