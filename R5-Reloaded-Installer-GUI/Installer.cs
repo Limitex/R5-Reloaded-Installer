@@ -136,20 +136,30 @@ namespace R5_Reloaded_Installer_GUI
                     download.ProcessReceives += new ProcessEventHandler((appType, outLine) =>
                         mainForm.Invoke(new Delegate(() =>
                             Download_ProcessEventHandler(appType, outLine))));
+                    mainForm.Invoke(new Delegate(() => mainForm.FullProgressBar.Value = 10));
 
                     var worldsEdgeAfterDarkDirPath = download.Run(
                         WebGetLink.WorldsEdgeAfterDark(), "WorldsEdgeAfterDark", appType: fileAppType);
+                    mainForm.Invoke(new Delegate(() => mainForm.FullProgressBar.Value = 20));
+
                     var detoursR5DirPath = download.Run(
                         WebGetLink.DetoursR5(), "detoursR5", appType: fileAppType);
+                    mainForm.Invoke(new Delegate(() => mainForm.FullProgressBar.Value = 30));
+
                     var scriptsR5DirPath = download.Run(
                         WebGetLink.ScriptsR5(), "scriptsR5", appType: fileAppType);
+                    mainForm.Invoke(new Delegate(() => mainForm.FullProgressBar.Value = 40));
+
                     var apexClientDirPath = download.Run(
                         WebGetLink.ApexClient(), "ApexClient", appType: torrentAppType);
+                    mainForm.Invoke(new Delegate(() => mainForm.FullProgressBar.Value = 80));
+
                     DirectoryExpansion.MoveOverwrite(detoursR5DirPath, apexClientDirPath);
                     Directory.Move(scriptsR5DirPath, Path.Combine(apexClientDirPath, ScriptsDirectoryPath));
                     DirectoryExpansion.MoveOverwrite(Path.Combine(worldsEdgeAfterDarkDirPath, WorldsEdgeAfterDarkPath), apexClientDirPath);
                     DirectoryExpansion.DirectoryDelete(worldsEdgeAfterDarkDirPath);
                     download.DirectoryFix(installPath);
+                    mainForm.Invoke(new Delegate(() => mainForm.FullProgressBar.Value = 90));
                 }
 
                 var AppPath = Path.Combine(installPath, ExecutableFileName);
