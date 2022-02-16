@@ -45,6 +45,10 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.SelectTorrentDownloaderComboBox = new System.Windows.Forms.ComboBox();
+            this.MonoProgressBar = new System.Windows.Forms.ProgressBar();
+            this.FullProgressBar = new System.Windows.Forms.ProgressBar();
+            this.MonoStatusLabel = new System.Windows.Forms.Label();
+            this.FullStatusLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -166,7 +170,7 @@
             // 
             // InstallButton
             // 
-            this.InstallButton.Location = new System.Drawing.Point(302, 417);
+            this.InstallButton.Location = new System.Drawing.Point(302, 518);
             this.InstallButton.Name = "InstallButton";
             this.InstallButton.Size = new System.Drawing.Size(75, 23);
             this.InstallButton.TabIndex = 3;
@@ -178,7 +182,7 @@
             this.SelectFileDownloaderComboBox.FormattingEnabled = true;
             this.SelectFileDownloaderComboBox.Items.AddRange(new object[] {
             "Aria2",
-            "Http Client"});
+            "HttpClient"});
             this.SelectFileDownloaderComboBox.Location = new System.Drawing.Point(12, 279);
             this.SelectFileDownloaderComboBox.Name = "SelectFileDownloaderComboBox";
             this.SelectFileDownloaderComboBox.Size = new System.Drawing.Size(284, 23);
@@ -213,11 +217,45 @@
             this.SelectTorrentDownloaderComboBox.Size = new System.Drawing.Size(284, 23);
             this.SelectTorrentDownloaderComboBox.TabIndex = 6;
             // 
+            // MonoProgressBar
+            // 
+            this.MonoProgressBar.Location = new System.Drawing.Point(12, 428);
+            this.MonoProgressBar.Name = "MonoProgressBar";
+            this.MonoProgressBar.Size = new System.Drawing.Size(365, 23);
+            this.MonoProgressBar.TabIndex = 7;
+            // 
+            // FullProgressBar
+            // 
+            this.FullProgressBar.Location = new System.Drawing.Point(12, 472);
+            this.FullProgressBar.Name = "FullProgressBar";
+            this.FullProgressBar.Size = new System.Drawing.Size(365, 23);
+            this.FullProgressBar.TabIndex = 7;
+            // 
+            // MonoStatusLabel
+            // 
+            this.MonoStatusLabel.AutoSize = true;
+            this.MonoStatusLabel.Location = new System.Drawing.Point(12, 454);
+            this.MonoStatusLabel.Name = "MonoStatusLabel";
+            this.MonoStatusLabel.Size = new System.Drawing.Size(39, 15);
+            this.MonoStatusLabel.TabIndex = 1;
+            this.MonoStatusLabel.Text = "Status";
+            // 
+            // FullStatusLabel
+            // 
+            this.FullStatusLabel.AutoSize = true;
+            this.FullStatusLabel.Location = new System.Drawing.Point(12, 498);
+            this.FullStatusLabel.Name = "FullStatusLabel";
+            this.FullStatusLabel.Size = new System.Drawing.Size(39, 15);
+            this.FullStatusLabel.TabIndex = 1;
+            this.FullStatusLabel.Text = "Status";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(389, 452);
+            this.ClientSize = new System.Drawing.Size(389, 553);
+            this.Controls.Add(this.FullProgressBar);
+            this.Controls.Add(this.MonoProgressBar);
             this.Controls.Add(this.SelectTorrentDownloaderComboBox);
             this.Controls.Add(this.SelectFileDownloaderComboBox);
             this.Controls.Add(this.OfficialWebsiteLinkLabel);
@@ -228,6 +266,8 @@
             this.Controls.Add(this.BrowseButton);
             this.Controls.Add(this.PathSelectTextBox);
             this.Controls.Add(this.label8);
+            this.Controls.Add(this.FullStatusLabel);
+            this.Controls.Add(this.MonoStatusLabel);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
@@ -253,15 +293,19 @@
         private Label label5;
         public TextBox PathSelectTextBox;
         public Button BrowseButton;
-        private CheckBox CreateDesktopShortcutCheckBox;
-        private CheckBox AddToStartMenuShortcutCheckBox;
+        public CheckBox CreateDesktopShortcutCheckBox;
+        public CheckBox AddToStartMenuShortcutCheckBox;
         public LinkLabel OfficialDiscordLinkLabel;
         public LinkLabel OfficialWebsiteLinkLabel;
         private Label label6;
         public Button InstallButton;
-        private ComboBox SelectFileDownloaderComboBox;
+        public ComboBox SelectFileDownloaderComboBox;
         private Label label7;
         private Label label8;
-        private ComboBox SelectTorrentDownloaderComboBox;
+        public ComboBox SelectTorrentDownloaderComboBox;
+        public ProgressBar MonoProgressBar;
+        public ProgressBar FullProgressBar;
+        public Label MonoStatusLabel;
+        public Label FullStatusLabel;
     }
 }
