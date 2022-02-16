@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace R5_Reloaded_Installer_GUI
@@ -135,7 +136,7 @@ namespace R5_Reloaded_Installer_GUI
                     download.ProcessReceives += new ProcessEventHandler((appType, outLine) =>
                         mainForm.Invoke(new Delegate(() =>
                             Download_ProcessEventHandler(appType, outLine))));
-                
+
                     var worldsEdgeAfterDarkDirPath = download.Run(
                         WebGetLink.WorldsEdgeAfterDark(), "WorldsEdgeAfterDark", appType: fileAppType);
                     var detoursR5DirPath = download.Run(
@@ -181,18 +182,23 @@ namespace R5_Reloaded_Installer_GUI
 
         private void Download_ProcessEventHandler(ApplicationType appType, string outLine)
         {
+            int progress = 0;
+            mainForm.FullStatusLabel.Text = "[" + appType + "] ";
             switch (appType)
             {
                 case ApplicationType.Aria2c:
+                case ApplicationType.HttpClient:
+                    int.TryParse(Regex.Match(outLine, @"(?<=\().*?(?=%\))").Value, out progress);
                     break;
                 case ApplicationType.Transmission:
+                    int.TryParse(Regex.Match(outLine, @"(?<=Progress:).*?(?=..%,)").Value, out progress);
                     break;
                 case ApplicationType.SevenZip:
-                    break;
-                case ApplicationType.HttpClient:
+                    mainForm.FullStatusLabel.Text += "Uncompressing. ";
                     break;
             }
-            mainForm.FullStatusLabel.Text = "(" + appType + ") " + outLine;
+            mainForm.MonoProgressBar.Value = progress;
+            mainForm.FullStatusLabel.Text += outLine;
         }
     }
 }

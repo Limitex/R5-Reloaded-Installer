@@ -169,7 +169,7 @@
             // 
             // InstallButton
             // 
-            this.InstallButton.Location = new System.Drawing.Point(302, 502);
+            this.InstallButton.Location = new System.Drawing.Point(302, 516);
             this.InstallButton.Name = "InstallButton";
             this.InstallButton.Size = new System.Drawing.Size(75, 23);
             this.InstallButton.TabIndex = 3;
@@ -232,10 +232,9 @@
             // 
             // FullStatusLabel
             // 
-            this.FullStatusLabel.AutoSize = true;
-            this.FullStatusLabel.Location = new System.Drawing.Point(12, 483);
+            this.FullStatusLabel.Location = new System.Drawing.Point(11, 483);
             this.FullStatusLabel.Name = "FullStatusLabel";
-            this.FullStatusLabel.Size = new System.Drawing.Size(39, 15);
+            this.FullStatusLabel.Size = new System.Drawing.Size(366, 30);
             this.FullStatusLabel.TabIndex = 1;
             this.FullStatusLabel.Text = "Status";
             // 
@@ -243,7 +242,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(389, 537);
+            this.ClientSize = new System.Drawing.Size(389, 551);
             this.Controls.Add(this.FullProgressBar);
             this.Controls.Add(this.MonoProgressBar);
             this.Controls.Add(this.SelectTorrentDownloaderComboBox);
