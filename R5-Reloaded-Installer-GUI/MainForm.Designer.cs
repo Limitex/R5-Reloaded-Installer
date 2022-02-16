@@ -255,8 +255,8 @@
         private Button BrowseButton;
         private CheckBox CreateDesktopShortcutCheckBox;
         private CheckBox AddToStartMenuShortcutCheckBox;
-        private LinkLabel OfficialDiscordLinkLabel;
-        private LinkLabel OfficialWebsiteLinkLabel;
+        public LinkLabel OfficialDiscordLinkLabel;
+        public LinkLabel OfficialWebsiteLinkLabel;
         private Label label6;
         private Button InstallButton;
         private ComboBox SelectFileDownloaderComboBox;
