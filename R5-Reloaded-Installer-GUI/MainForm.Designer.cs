@@ -41,6 +41,10 @@
             this.OfficialWebsiteLinkLabel = new System.Windows.Forms.LinkLabel();
             this.label6 = new System.Windows.Forms.Label();
             this.InstallButton = new System.Windows.Forms.Button();
+            this.SelectFileDownloaderComboBox = new System.Windows.Forms.ComboBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.SelectTorrentDownloaderComboBox = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // label1
@@ -83,7 +87,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(12, 143);
+            this.label5.Location = new System.Drawing.Point(12, 153);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(222, 15);
             this.label5.TabIndex = 1;
@@ -91,14 +95,14 @@
             // 
             // PathSelectTextBox
             // 
-            this.PathSelectTextBox.Location = new System.Drawing.Point(12, 215);
+            this.PathSelectTextBox.Location = new System.Drawing.Point(12, 225);
             this.PathSelectTextBox.Name = "PathSelectTextBox";
             this.PathSelectTextBox.Size = new System.Drawing.Size(284, 23);
             this.PathSelectTextBox.TabIndex = 2;
             // 
             // BrowseButton
             // 
-            this.BrowseButton.Location = new System.Drawing.Point(302, 215);
+            this.BrowseButton.Location = new System.Drawing.Point(302, 225);
             this.BrowseButton.Name = "BrowseButton";
             this.BrowseButton.Size = new System.Drawing.Size(75, 23);
             this.BrowseButton.TabIndex = 3;
@@ -108,7 +112,7 @@
             // CreateDesktopShortcutCheckBox
             // 
             this.CreateDesktopShortcutCheckBox.AutoSize = true;
-            this.CreateDesktopShortcutCheckBox.Location = new System.Drawing.Point(12, 258);
+            this.CreateDesktopShortcutCheckBox.Location = new System.Drawing.Point(11, 369);
             this.CreateDesktopShortcutCheckBox.Name = "CreateDesktopShortcutCheckBox";
             this.CreateDesktopShortcutCheckBox.Size = new System.Drawing.Size(160, 19);
             this.CreateDesktopShortcutCheckBox.TabIndex = 4;
@@ -118,7 +122,7 @@
             // AddToStartMenuShortcutCheckBox
             // 
             this.AddToStartMenuShortcutCheckBox.AutoSize = true;
-            this.AddToStartMenuShortcutCheckBox.Location = new System.Drawing.Point(12, 283);
+            this.AddToStartMenuShortcutCheckBox.Location = new System.Drawing.Point(12, 394);
             this.AddToStartMenuShortcutCheckBox.Name = "AddToStartMenuShortcutCheckBox";
             this.AddToStartMenuShortcutCheckBox.Size = new System.Drawing.Size(121, 19);
             this.AddToStartMenuShortcutCheckBox.TabIndex = 4;
@@ -138,7 +142,7 @@
             // OfficialWebsiteLinkLabel
             // 
             this.OfficialWebsiteLinkLabel.AutoSize = true;
-            this.OfficialWebsiteLinkLabel.Location = new System.Drawing.Point(12, 158);
+            this.OfficialWebsiteLinkLabel.Location = new System.Drawing.Point(12, 168);
             this.OfficialWebsiteLinkLabel.Name = "OfficialWebsiteLinkLabel";
             this.OfficialWebsiteLinkLabel.Size = new System.Drawing.Size(165, 15);
             this.OfficialWebsiteLinkLabel.TabIndex = 5;
@@ -148,7 +152,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(12, 197);
+            this.label6.Location = new System.Drawing.Point(12, 207);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(159, 15);
             this.label6.TabIndex = 1;
@@ -156,18 +160,60 @@
             // 
             // InstallButton
             // 
-            this.InstallButton.Location = new System.Drawing.Point(302, 307);
+            this.InstallButton.Location = new System.Drawing.Point(302, 417);
             this.InstallButton.Name = "InstallButton";
             this.InstallButton.Size = new System.Drawing.Size(75, 23);
             this.InstallButton.TabIndex = 3;
             this.InstallButton.Text = "Install";
             this.InstallButton.UseVisualStyleBackColor = true;
             // 
+            // SelectFileDownloaderComboBox
+            // 
+            this.SelectFileDownloaderComboBox.FormattingEnabled = true;
+            this.SelectFileDownloaderComboBox.Items.AddRange(new object[] {
+            "Aria2",
+            "Http Client"});
+            this.SelectFileDownloaderComboBox.Location = new System.Drawing.Point(12, 279);
+            this.SelectFileDownloaderComboBox.Name = "SelectFileDownloaderComboBox";
+            this.SelectFileDownloaderComboBox.Size = new System.Drawing.Size(284, 23);
+            this.SelectFileDownloaderComboBox.TabIndex = 6;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(12, 261);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(304, 15);
+            this.label7.TabIndex = 1;
+            this.label7.Text = "Select the software you want to use to download the file.";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(12, 315);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(310, 15);
+            this.label8.TabIndex = 1;
+            this.label8.Text = "Select the software you want to use to download torrents.";
+            // 
+            // SelectTorrentDownloaderComboBox
+            // 
+            this.SelectTorrentDownloaderComboBox.FormattingEnabled = true;
+            this.SelectTorrentDownloaderComboBox.Items.AddRange(new object[] {
+            "Aria2",
+            "Transmission"});
+            this.SelectTorrentDownloaderComboBox.Location = new System.Drawing.Point(12, 333);
+            this.SelectTorrentDownloaderComboBox.Name = "SelectTorrentDownloaderComboBox";
+            this.SelectTorrentDownloaderComboBox.Size = new System.Drawing.Size(284, 23);
+            this.SelectTorrentDownloaderComboBox.TabIndex = 6;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(389, 342);
+            this.ClientSize = new System.Drawing.Size(389, 452);
+            this.Controls.Add(this.SelectTorrentDownloaderComboBox);
+            this.Controls.Add(this.SelectFileDownloaderComboBox);
             this.Controls.Add(this.OfficialWebsiteLinkLabel);
             this.Controls.Add(this.OfficialDiscordLinkLabel);
             this.Controls.Add(this.AddToStartMenuShortcutCheckBox);
@@ -175,6 +221,8 @@
             this.Controls.Add(this.InstallButton);
             this.Controls.Add(this.BrowseButton);
             this.Controls.Add(this.PathSelectTextBox);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
@@ -205,5 +253,9 @@
         private LinkLabel OfficialWebsiteLinkLabel;
         private Label label6;
         private Button InstallButton;
+        private ComboBox SelectFileDownloaderComboBox;
+        private Label label7;
+        private Label label8;
+        private ComboBox SelectTorrentDownloaderComboBox;
     }
 }
