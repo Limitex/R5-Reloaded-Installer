@@ -28,19 +28,182 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.PathSelectTextBox = new System.Windows.Forms.TextBox();
+            this.BrowseButton = new System.Windows.Forms.Button();
+            this.CreateDesktopShortcutCheckBox = new System.Windows.Forms.CheckBox();
+            this.AddToStartMenuShortcutCheckBox = new System.Windows.Forms.CheckBox();
+            this.OfficialDiscordLinkLabel = new System.Windows.Forms.LinkLabel();
+            this.OfficialWebsiteLinkLabel = new System.Windows.Forms.LinkLabel();
+            this.label6 = new System.Windows.Forms.Label();
+            this.InstallButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Yu Gothic UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label1.Location = new System.Drawing.Point(12, 9);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(105, 30);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Welcome!";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(12, 49);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(252, 15);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "Welcome to the installer for your R5-Reloaded.";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(12, 64);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(295, 15);
+            this.label3.TabIndex = 1;
+            this.label3.Text = "The installer will install R5-Reloaded on your computer.";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(12, 99);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(225, 15);
+            this.label4.TabIndex = 1;
+            this.label4.Text = "Join us for the official Discord server here.";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(12, 143);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(222, 15);
+            this.label5.TabIndex = 1;
+            this.label5.Text = "Reference us for the official website here.";
+            // 
+            // PathSelectTextBox
+            // 
+            this.PathSelectTextBox.Location = new System.Drawing.Point(12, 215);
+            this.PathSelectTextBox.Name = "PathSelectTextBox";
+            this.PathSelectTextBox.Size = new System.Drawing.Size(284, 23);
+            this.PathSelectTextBox.TabIndex = 2;
+            // 
+            // BrowseButton
+            // 
+            this.BrowseButton.Location = new System.Drawing.Point(302, 215);
+            this.BrowseButton.Name = "BrowseButton";
+            this.BrowseButton.Size = new System.Drawing.Size(75, 23);
+            this.BrowseButton.TabIndex = 3;
+            this.BrowseButton.Text = "Browse";
+            this.BrowseButton.UseVisualStyleBackColor = true;
+            // 
+            // CreateDesktopShortcutCheckBox
+            // 
+            this.CreateDesktopShortcutCheckBox.AutoSize = true;
+            this.CreateDesktopShortcutCheckBox.Location = new System.Drawing.Point(12, 258);
+            this.CreateDesktopShortcutCheckBox.Name = "CreateDesktopShortcutCheckBox";
+            this.CreateDesktopShortcutCheckBox.Size = new System.Drawing.Size(160, 19);
+            this.CreateDesktopShortcutCheckBox.TabIndex = 4;
+            this.CreateDesktopShortcutCheckBox.Text = "Create a desktop shortcut";
+            this.CreateDesktopShortcutCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // AddToStartMenuShortcutCheckBox
+            // 
+            this.AddToStartMenuShortcutCheckBox.AutoSize = true;
+            this.AddToStartMenuShortcutCheckBox.Location = new System.Drawing.Point(12, 283);
+            this.AddToStartMenuShortcutCheckBox.Name = "AddToStartMenuShortcutCheckBox";
+            this.AddToStartMenuShortcutCheckBox.Size = new System.Drawing.Size(121, 19);
+            this.AddToStartMenuShortcutCheckBox.TabIndex = 4;
+            this.AddToStartMenuShortcutCheckBox.Text = "Add to start menu";
+            this.AddToStartMenuShortcutCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // OfficialDiscordLinkLabel
+            // 
+            this.OfficialDiscordLinkLabel.AutoSize = true;
+            this.OfficialDiscordLinkLabel.Location = new System.Drawing.Point(12, 114);
+            this.OfficialDiscordLinkLabel.Name = "OfficialDiscordLinkLabel";
+            this.OfficialDiscordLinkLabel.Size = new System.Drawing.Size(215, 15);
+            this.OfficialDiscordLinkLabel.TabIndex = 5;
+            this.OfficialDiscordLinkLabel.TabStop = true;
+            this.OfficialDiscordLinkLabel.Text = "https://discord.com/invite/jqMkUdXrBr";
+            // 
+            // OfficialWebsiteLinkLabel
+            // 
+            this.OfficialWebsiteLinkLabel.AutoSize = true;
+            this.OfficialWebsiteLinkLabel.Location = new System.Drawing.Point(12, 158);
+            this.OfficialWebsiteLinkLabel.Name = "OfficialWebsiteLinkLabel";
+            this.OfficialWebsiteLinkLabel.Size = new System.Drawing.Size(165, 15);
+            this.OfficialWebsiteLinkLabel.TabIndex = 5;
+            this.OfficialWebsiteLinkLabel.TabStop = true;
+            this.OfficialWebsiteLinkLabel.Text = "https://r5reloaded.gitbook.io/";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(12, 197);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(159, 15);
+            this.label6.TabIndex = 1;
+            this.label6.Text = "Select the directory to install.";
+            // 
+            // InstallButton
+            // 
+            this.InstallButton.Location = new System.Drawing.Point(302, 307);
+            this.InstallButton.Name = "InstallButton";
+            this.InstallButton.Size = new System.Drawing.Size(75, 23);
+            this.InstallButton.TabIndex = 3;
+            this.InstallButton.Text = "Install";
+            this.InstallButton.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(389, 342);
+            this.Controls.Add(this.OfficialWebsiteLinkLabel);
+            this.Controls.Add(this.OfficialDiscordLinkLabel);
+            this.Controls.Add(this.AddToStartMenuShortcutCheckBox);
+            this.Controls.Add(this.CreateDesktopShortcutCheckBox);
+            this.Controls.Add(this.InstallButton);
+            this.Controls.Add(this.BrowseButton);
+            this.Controls.Add(this.PathSelectTextBox);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Text = "R5-Reloaded-Installer";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
+
+        private Label label1;
+        private Label label2;
+        private Label label3;
+        private Label label4;
+        private Label label5;
+        private TextBox PathSelectTextBox;
+        private Button BrowseButton;
+        private CheckBox CreateDesktopShortcutCheckBox;
+        private CheckBox AddToStartMenuShortcutCheckBox;
+        private LinkLabel OfficialDiscordLinkLabel;
+        private LinkLabel OfficialWebsiteLinkLabel;
+        private Label label6;
+        private Button InstallButton;
     }
 }
