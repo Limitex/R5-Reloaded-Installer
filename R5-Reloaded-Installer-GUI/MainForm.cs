@@ -8,8 +8,6 @@ namespace R5_Reloaded_Installer_GUI
             InitializeComponent();
             SelectFileDownloaderComboBox.SelectedIndex = 1;
             SelectTorrentDownloaderComboBox.SelectedIndex = 1;
-            MonoStatusLabel.Text = "";
-            FullStatusLabel.Text = "";
             _ = new LinkLabelOpener(this);
             _ = new DirectorySelector(this);
             _ = new Installer(this);

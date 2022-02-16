@@ -47,7 +47,6 @@
             this.SelectTorrentDownloaderComboBox = new System.Windows.Forms.ComboBox();
             this.MonoProgressBar = new System.Windows.Forms.ProgressBar();
             this.FullProgressBar = new System.Windows.Forms.ProgressBar();
-            this.MonoStatusLabel = new System.Windows.Forms.Label();
             this.FullStatusLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
@@ -170,7 +169,7 @@
             // 
             // InstallButton
             // 
-            this.InstallButton.Location = new System.Drawing.Point(302, 518);
+            this.InstallButton.Location = new System.Drawing.Point(302, 502);
             this.InstallButton.Name = "InstallButton";
             this.InstallButton.Size = new System.Drawing.Size(75, 23);
             this.InstallButton.TabIndex = 3;
@@ -226,24 +225,15 @@
             // 
             // FullProgressBar
             // 
-            this.FullProgressBar.Location = new System.Drawing.Point(12, 472);
+            this.FullProgressBar.Location = new System.Drawing.Point(12, 457);
             this.FullProgressBar.Name = "FullProgressBar";
             this.FullProgressBar.Size = new System.Drawing.Size(365, 23);
             this.FullProgressBar.TabIndex = 7;
             // 
-            // MonoStatusLabel
-            // 
-            this.MonoStatusLabel.AutoSize = true;
-            this.MonoStatusLabel.Location = new System.Drawing.Point(12, 454);
-            this.MonoStatusLabel.Name = "MonoStatusLabel";
-            this.MonoStatusLabel.Size = new System.Drawing.Size(39, 15);
-            this.MonoStatusLabel.TabIndex = 1;
-            this.MonoStatusLabel.Text = "Status";
-            // 
             // FullStatusLabel
             // 
             this.FullStatusLabel.AutoSize = true;
-            this.FullStatusLabel.Location = new System.Drawing.Point(12, 498);
+            this.FullStatusLabel.Location = new System.Drawing.Point(12, 483);
             this.FullStatusLabel.Name = "FullStatusLabel";
             this.FullStatusLabel.Size = new System.Drawing.Size(39, 15);
             this.FullStatusLabel.TabIndex = 1;
@@ -253,7 +243,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(389, 553);
+            this.ClientSize = new System.Drawing.Size(389, 537);
             this.Controls.Add(this.FullProgressBar);
             this.Controls.Add(this.MonoProgressBar);
             this.Controls.Add(this.SelectTorrentDownloaderComboBox);
@@ -267,7 +257,6 @@
             this.Controls.Add(this.PathSelectTextBox);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.FullStatusLabel);
-            this.Controls.Add(this.MonoStatusLabel);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
@@ -306,7 +295,6 @@
         public ComboBox SelectTorrentDownloaderComboBox;
         public ProgressBar MonoProgressBar;
         public ProgressBar FullProgressBar;
-        public Label MonoStatusLabel;
         public Label FullStatusLabel;
     }
 }

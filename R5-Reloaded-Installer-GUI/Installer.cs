@@ -111,7 +111,6 @@ namespace R5_Reloaded_Installer_GUI
             };
 
             MainForm.InstallVisitedFlug = true;
-            mainForm.MonoStatusLabel.Text = "in preparation...";
             mainForm.FullStatusLabel.Text = "in preparation...";
             mainForm.MonoProgressBar.Value = 0;
             mainForm.FullProgressBar.Value = 0;
@@ -136,6 +135,9 @@ namespace R5_Reloaded_Installer_GUI
 
                 mainForm.Invoke(new Delegate(() => {
                     MainForm.InstallVisitedFlug = false;
+                    mainForm.FullStatusLabel.Text = "Done.";
+                    mainForm.MonoProgressBar.Value = 100;
+                    mainForm.FullProgressBar.Value = 100;
                     ControlEnabled(true);
                 }));
             });
@@ -154,7 +156,7 @@ namespace R5_Reloaded_Installer_GUI
                 case ApplicationType.HttpClient:
                     break;
             }
-            mainForm.MonoStatusLabel.Text = "(" + appType + ") " + outLine;
+            mainForm.FullStatusLabel.Text = "(" + appType + ") " + outLine;
         }
     }
 }
