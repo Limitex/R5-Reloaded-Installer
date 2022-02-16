@@ -42,6 +42,3 @@ CLI runs CLI-based and produces only R5R.
 2. Click R5-Reloaded-Installer.exe to launch it.
 3. You will be asked for firewall permission immediately, so please allow it.
 4. All you have to do is wait. R5 is stored in the R5-Reloaded directory in the directory.
-
-### Please if possible
-Launch another torrent software and select the torrent file in the directory to download and seed.
