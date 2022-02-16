@@ -251,8 +251,8 @@
         private Label label3;
         private Label label4;
         private Label label5;
-        private TextBox PathSelectTextBox;
-        private Button BrowseButton;
+        public TextBox PathSelectTextBox;
+        public Button BrowseButton;
         private CheckBox CreateDesktopShortcutCheckBox;
         private CheckBox AddToStartMenuShortcutCheckBox;
         public LinkLabel OfficialDiscordLinkLabel;
