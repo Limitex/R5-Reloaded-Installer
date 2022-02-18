@@ -236,7 +236,7 @@
             this.FullStatusLabel.Name = "FullStatusLabel";
             this.FullStatusLabel.Size = new System.Drawing.Size(366, 59);
             this.FullStatusLabel.TabIndex = 1;
-            this.FullStatusLabel.Text = "Status";
+            this.FullStatusLabel.Text = "...";
             // 
             // MainForm
             // 
