@@ -22,8 +22,11 @@ namespace R5_Reloaded_Installer_Library.Exclusive
         public static string ScriptsR5() => 
             "https://github.com/Mauler125/scripts_r5/archive/refs/heads/S3_N1094.zip";
 
-        public static string ApexClient() =>
+        public static string ApexClient_Torrent() =>
             "https://cdn.discordapp.com/attachments/876546839304888362/877972293844893786/R5pc_r5launch_N1094_CL456479_2019_10_30_05_20_PM.torrent";
+
+        public static string ApexClient_Binary() =>
+            "https://downloads.r5reloaded.com/builds/R5pc_r5launch_N1094_CL456479_2019_10_30_05_20_PM.zip";
 
         public static string WorldsEdgeAfterDark() =>
             "https://eax.re/r5/mp_rr_desertlands_64k_x_64k_nx.7z";

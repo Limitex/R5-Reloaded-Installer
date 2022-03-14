@@ -155,7 +155,7 @@ namespace R5_Reloaded_Installer_GUI
                     mainForm.Invoke(new Delegate(() => mainForm.FullProgressBar.Value = 40));
 
                     var apexClientDirPath = download.Run(
-                        WebGetLink.ApexClient(), "ApexClient", appType: torrentAppType);
+                        WebGetLink.ApexClient_Torrent(), "ApexClient", appType: torrentAppType);
                     mainForm.Invoke(new Delegate(() => mainForm.FullProgressBar.Value = 80));
 
                     DirectoryExpansion.MoveOverwrite(detoursR5DirPath, apexClientDirPath);
