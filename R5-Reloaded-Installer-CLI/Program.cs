@@ -9,17 +9,17 @@ namespace R5_Reloaded_Installer_CLI
 {
     class Program
     {
+        private static string FinalDirectoryName = "R5-Reloaded";
+        private static string ScriptsDirectoryPath = Path.Combine("platform", "scripts");
+        private static string WorldsEdgeAfterDarkPath = "package";
+        private static string DirectionPath = Path.GetDirectoryName(Environment.ProcessPath) ?? string.Empty;
+        private static float AllAboutByteSize = 42f * 1024f * 1024f * 1024f;
+        private static ApplicationType torrentAppType;
+        private static ApplicationType fileAppType;
+
         static void Main(string[] args)
         {
-            var FinalDirectoryName = "R5-Reloaded";
-            var ScriptsDirectoryPath = Path.Combine("platform", "scripts");
-            var WorldsEdgeAfterDarkPath = "package";
-            var DirectionPath = Path.GetDirectoryName(Environment.ProcessPath);
-            var AllAboutByteSize = 42f * 1024f * 1024f * 1024f;
-            ApplicationType torrentAppType;
-            ApplicationType fileAppType;
-
-            if (DirectionPath == null) throw new Exception();
+            if (DirectionPath == string.Empty) throw new Exception();
             DirectionPath = Path.Combine(DirectionPath, FinalDirectoryName);
 
             ConsoleExpansion.DisableEasyEditMode();
