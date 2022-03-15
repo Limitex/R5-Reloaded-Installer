@@ -27,7 +27,7 @@ namespace R5_Reloaded_Installer_Library.Get
     {
         public event ProcessEventHandler? ProcessReceives = null;
 
-        private static string WorkingDirectoryPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "R5-Reloaded-Installer");
+        private static string WorkingDirectoryPath = Path.Combine(Path.GetTempPath(), "R5-Reloaded-Installer");
         private string SaveingDirectoryPath;
 
         private ResourceProcess aria2c;
