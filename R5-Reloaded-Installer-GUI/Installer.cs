@@ -36,6 +36,7 @@ namespace R5_Reloaded_Installer_GUI
             mainForm.SelectTorrentDownloaderComboBox.Enabled = status;
             mainForm.CreateDesktopShortcutCheckBox.Enabled = status;
             mainForm.AddToStartMenuShortcutCheckBox.Enabled = status;
+            mainForm.UseTorrentCheckBox.Enabled = status;
         }
 
         private void CreateR5Shortcut(string path, string LinkDestination, string scriptsPath)
@@ -154,8 +155,14 @@ namespace R5_Reloaded_Installer_GUI
                         WebGetLink.ScriptsR5(), "scriptsR5", appType: fileAppType);
                     mainForm.Invoke(new Delegate(() => mainForm.FullProgressBar.Value = 40));
 
-                    var apexClientDirPath = download.Run(
-                        WebGetLink.ApexClient_Torrent(), "ApexClient", appType: torrentAppType);
+                    string apexClientDirPath;
+                    if (mainForm.UseTorrentCheckBox.Checked)
+                        apexClientDirPath = download.Run(
+                            WebGetLink.ApexClient_Torrent(), "ApexClient", appType: torrentAppType);
+                    else
+                        apexClientDirPath = download.Run(
+                            WebGetLink.ApexClient_Binary(), "ApexClient", appType: fileAppType);
+                    
                     mainForm.Invoke(new Delegate(() => mainForm.FullProgressBar.Value = 80));
 
                     DirectoryExpansion.MoveOverwrite(detoursR5DirPath, apexClientDirPath);
@@ -208,6 +215,7 @@ namespace R5_Reloaded_Installer_GUI
                     int.TryParse(Regex.Match(outLine, @"(?<=Progress:).*?(?=..%,)").Value, out progress);
                     break;
                 case ApplicationType.SevenZip:
+                    int.TryParse(Regex.Match(outLine, @".*?(?=%)").Value, out progress);
                     mainForm.FullStatusLabel.Text += "Uncompressing. ";
                     break;
             }

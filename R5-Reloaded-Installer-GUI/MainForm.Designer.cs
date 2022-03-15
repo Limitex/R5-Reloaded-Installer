@@ -48,6 +48,7 @@
             this.MonoProgressBar = new System.Windows.Forms.ProgressBar();
             this.FullProgressBar = new System.Windows.Forms.ProgressBar();
             this.FullStatusLabel = new System.Windows.Forms.Label();
+            this.UseTorrentCheckBox = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // label1
@@ -102,14 +103,14 @@
             this.PathSelectTextBox.Location = new System.Drawing.Point(12, 225);
             this.PathSelectTextBox.Name = "PathSelectTextBox";
             this.PathSelectTextBox.ReadOnly = true;
-            this.PathSelectTextBox.Size = new System.Drawing.Size(284, 23);
+            this.PathSelectTextBox.Size = new System.Drawing.Size(274, 23);
             this.PathSelectTextBox.TabIndex = 2;
             // 
             // BrowseButton
             // 
-            this.BrowseButton.Location = new System.Drawing.Point(302, 225);
+            this.BrowseButton.Location = new System.Drawing.Point(292, 225);
             this.BrowseButton.Name = "BrowseButton";
-            this.BrowseButton.Size = new System.Drawing.Size(75, 23);
+            this.BrowseButton.Size = new System.Drawing.Size(85, 23);
             this.BrowseButton.TabIndex = 3;
             this.BrowseButton.Text = "Browse";
             this.BrowseButton.UseVisualStyleBackColor = true;
@@ -184,7 +185,7 @@
             "HttpClient"});
             this.SelectFileDownloaderComboBox.Location = new System.Drawing.Point(12, 279);
             this.SelectFileDownloaderComboBox.Name = "SelectFileDownloaderComboBox";
-            this.SelectFileDownloaderComboBox.Size = new System.Drawing.Size(284, 23);
+            this.SelectFileDownloaderComboBox.Size = new System.Drawing.Size(274, 23);
             this.SelectFileDownloaderComboBox.TabIndex = 6;
             // 
             // label7
@@ -207,13 +208,14 @@
             // 
             // SelectTorrentDownloaderComboBox
             // 
+            this.SelectTorrentDownloaderComboBox.Enabled = false;
             this.SelectTorrentDownloaderComboBox.FormattingEnabled = true;
             this.SelectTorrentDownloaderComboBox.Items.AddRange(new object[] {
             "Aria2",
             "Transmission"});
             this.SelectTorrentDownloaderComboBox.Location = new System.Drawing.Point(12, 333);
             this.SelectTorrentDownloaderComboBox.Name = "SelectTorrentDownloaderComboBox";
-            this.SelectTorrentDownloaderComboBox.Size = new System.Drawing.Size(284, 23);
+            this.SelectTorrentDownloaderComboBox.Size = new System.Drawing.Size(274, 23);
             this.SelectTorrentDownloaderComboBox.TabIndex = 6;
             // 
             // MonoProgressBar
@@ -238,11 +240,23 @@
             this.FullStatusLabel.TabIndex = 1;
             this.FullStatusLabel.Text = "...";
             // 
+            // UseTorrentCheckBox
+            // 
+            this.UseTorrentCheckBox.AutoSize = true;
+            this.UseTorrentCheckBox.Location = new System.Drawing.Point(292, 335);
+            this.UseTorrentCheckBox.Name = "UseTorrentCheckBox";
+            this.UseTorrentCheckBox.Size = new System.Drawing.Size(85, 19);
+            this.UseTorrentCheckBox.TabIndex = 0;
+            this.UseTorrentCheckBox.Text = "Use Torrent";
+            this.UseTorrentCheckBox.UseVisualStyleBackColor = true;
+            this.UseTorrentCheckBox.CheckedChanged += new System.EventHandler(this.UseTorrentCheckBox_CheckedChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(389, 551);
+            this.Controls.Add(this.UseTorrentCheckBox);
             this.Controls.Add(this.FullProgressBar);
             this.Controls.Add(this.MonoProgressBar);
             this.Controls.Add(this.SelectTorrentDownloaderComboBox);
@@ -295,5 +309,6 @@
         public ProgressBar MonoProgressBar;
         public ProgressBar FullProgressBar;
         public Label FullStatusLabel;
+        public CheckBox UseTorrentCheckBox;
     }
 }

@@ -36,5 +36,10 @@ namespace R5_Reloaded_Installer_GUI
                 FileName = fileName,
             });
         }
+
+        private void UseTorrentCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            SelectTorrentDownloaderComboBox.Enabled = UseTorrentCheckBox.Checked;
+        }
     }
 }
