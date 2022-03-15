@@ -218,7 +218,9 @@ namespace R5_Reloaded_Installer_Library.Get
             if (string.IsNullOrEmpty(outLine.Data)) return;
             var rawLine = FormattingLine(outLine.Data);
 
-            ProcessReceives(ApplicationType.SevenZip, rawLine);
+            if (string.IsNullOrWhiteSpace(rawLine) == false)
+                ProcessReceives(ApplicationType.SevenZip, rawLine.Trim());
+            
         }
 
         private void TransmissionProcess_EventHandler(object sender, DataReceivedEventArgs outLine)
