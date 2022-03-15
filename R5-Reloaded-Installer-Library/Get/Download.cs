@@ -164,7 +164,7 @@ namespace R5_Reloaded_Installer_Library.Get
             var dirPath = path ?? SaveingDirectoryPath;
             var dirName = name ?? Path.GetFileNameWithoutExtension(address);
             var resurtPath = Path.Combine(dirPath, dirName);
-            var argument = "x -y \"" + address + "\" -o\"" + resurtPath + "\"";
+            var argument = "x -bsp1 -y \"" + address + "\" -o\"" + resurtPath + "\"";
             DirectoryExpansion.CreateIfNotFound(resurtPath);
             sevenZip.Run(argument, resurtPath);
             File.Delete(address);
