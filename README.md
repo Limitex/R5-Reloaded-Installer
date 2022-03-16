@@ -5,6 +5,12 @@ This is safer and more accurate than R5-Reloaded-Installer (now).
 
 It's still Pre-Release, so it's named Downloader, but after release, this repository will be renamed to "R5-Reloaded-installer-with-Torrent" and R5-Reloaded-Downloader will be renamed to R5-Reloaded-installer.
 
+↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+
+https://github.com/Limitex/R5-Reloaded-Downloader
+
+↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+
 # R5-Reloaded-Installer
 
 This is the installer for R5 Reloaded.
