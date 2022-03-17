@@ -19,7 +19,7 @@ namespace R5_Reloaded_Installer_GUI
         public static readonly string DirName = "R5-Reloaded";
         private static readonly string ScriptsDirectoryPath = Path.Combine("platform", "scripts");
         private static readonly string WorldsEdgeAfterDarkPath = "package";
-        private static readonly string ExecutableFileName = "r5reloaded.exe";
+        private static readonly string ExecutableFileName = "launcher.exe";
 
         public Installer(MainForm form)
         {
