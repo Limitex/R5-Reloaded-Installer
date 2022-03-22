@@ -3,7 +3,9 @@
 I created a new project because I no longer need to download torrents and I don't need to use the external application I was building in.
 This is safer and more accurate than R5-Reloaded-Installer (now).
 
-It's still Pre-Release, so it's named Downloader, but after release, this repository will be renamed to "R5-Reloaded-installer-with-Torrent" and R5-Reloaded-Downloader will be renamed to R5-Reloaded-installer.
+~~It's still Pre-Release, so it's named Downloader, but after release, this repository will be renamed to "R5-Reloaded-installer-with-Torrent" and R5-Reloaded-Downloader will be renamed to R5-Reloaded-installer.~~
+
+The repository name remains the same
 
 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 
